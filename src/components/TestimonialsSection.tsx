@@ -16,6 +16,10 @@ import {
 } from 'lucide-react';
 import { scrollToSection } from '../utils/scroll';
 import { useBodyScrollLock } from '../utils/bodyScrollLock';
+import {
+  EDGE_FADE_MASK_STYLE,
+  EDGE_FADE_CONTAINER_CLASS,
+} from '../utils/edgeFade';
 
 interface TestimonialsSectionProps {
   onOpenBooking?: () => void;
