@@ -355,32 +355,33 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               </div>
             </div>
 
-            {/* Six Equal-Sized Statistics Cards (3x2 Desktop, 2x3 Tablet & Mobile) */}
-            <div className="grid grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-3 sm:gap-3.5">
+            {/* Six Equal-Sized Statistics Cards (3x2 Mobile & Desktop, 2x3 Tablet) */}
+            <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-2 min-[390px]:gap-2.5 sm:gap-3.5">
               {statisticsCards.map((stat) => {
                 const Icon = stat.icon;
                 return (
                   <div
                     key={stat.number}
-                    className={`h-full rounded-[22px] ${stat.tint} border p-4 sm:p-4.5 flex flex-col justify-between shadow-[0_8px_24px_-10px_rgba(9,9,11,0.05)] transition-all duration-300 hover:-translate-y-0.5`}
+                    className={`h-full rounded-[16px] sm:rounded-[22px] ${stat.tint} border p-2.5 min-[375px]:p-3 sm:p-4.5 flex flex-col shadow-[0_8px_24px_-10px_rgba(9,9,11,0.05)] transition-all duration-300 hover:-translate-y-0.5`}
                   >
-                    <div>
+                    {/* Top Block: Fixed Min-Heights so Metric, Label & Divider Align Identically */}
+                    <div className="flex-1 flex flex-col">
                       {/* Card Top Row: Category & Icon */}
-                      <div className="flex items-center justify-between gap-1.5 mb-2.5">
+                      <div className="min-h-[1.6rem] sm:min-h-[1.75rem] flex items-start sm:items-center justify-between gap-1 sm:gap-1.5 mb-1.5 sm:mb-2.5">
                         <span
-                          className={`font-mono text-[9.5px] sm:text-[10px] font-bold uppercase tracking-wider truncate ${stat.categoryColor}`}
+                          className={`font-mono text-[7.5px] min-[375px]:text-[8.5px] sm:text-[10px] font-bold uppercase leading-[1.2] tracking-[0.02em] sm:tracking-wider sm:truncate break-words ${stat.categoryColor}`}
                         >
                           {stat.category}
                         </span>
-                        <div className="w-7 h-7 rounded-lg bg-white/90 border border-black/10 flex items-center justify-center text-[#09090B] shrink-0 shadow-2xs">
-                          <Icon className="w-3.5 h-3.5" />
+                        <div className="w-5 h-5 min-[390px]:w-6 min-[390px]:h-6 sm:w-7 sm:h-7 rounded-md sm:rounded-lg bg-white/90 border border-black/10 flex items-center justify-center text-[#09090B] shrink-0 shadow-2xs">
+                          <Icon className="w-2.5 h-2.5 min-[390px]:w-3 min-[390px]:h-3 sm:w-3.5 sm:h-3.5" />
                         </div>
                       </div>
 
                       {/* Prominent Numerical / Recognition Figure */}
-                      <div className="font-display font-extrabold text-xl sm:text-2xl xl:text-[26px] text-emerald-700 tracking-tight leading-none">
+                      <div className="min-h-[1.25rem] sm:min-h-[1.75rem] flex items-center font-display font-extrabold text-[15px] min-[360px]:text-[17px] min-[414px]:text-[19px] sm:text-2xl xl:text-[26px] text-emerald-700 tracking-tight leading-none">
                         {stat.textValue ? (
-                          <span>{stat.textValue}</span>
+                          <span className="whitespace-nowrap">{stat.textValue}</span>
                         ) : (
                           <NumberTicker
                             value={stat.value}
@@ -392,25 +393,23 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                       </div>
 
                       {/* Concise Label */}
-                      <div className="mt-1.5 font-display font-bold text-xs text-[#09090B] leading-snug">
+                      <div className="mt-1 sm:mt-1.5 min-h-[1.75rem] sm:min-h-[2rem] flex items-start font-display font-bold text-[9px] min-[375px]:text-[10.5px] sm:text-xs text-[#09090B] leading-[1.25] sm:leading-snug break-words">
                         {stat.label}
                       </div>
                     </div>
 
-                    {/* Supporting Text (present on Cards 04-06) */}
-                    {stat.description ? (
-                      <div className={`mt-3 pt-2.5 border-t ${stat.dividerColor}`}>
-                        <p className="text-[11px] text-zinc-700 leading-relaxed">
+                    {/* Consistent Footer & Divider Position Across All Six Cards */}
+                    <div className={`mt-2 pt-1.5 sm:mt-3 sm:pt-2.5 border-t ${stat.dividerColor} min-h-[4rem] min-[375px]:min-h-[3.6rem] sm:min-h-[3.75rem] flex items-start`}>
+                      {stat.description ? (
+                        <p className="text-[9.5px] min-[375px]:text-[10px] sm:text-[11px] text-zinc-700 leading-[1.35] sm:leading-relaxed">
                           {stat.description}
                         </p>
-                      </div>
-                    ) : (
-                      <div className={`mt-3 pt-2.5 border-t ${stat.dividerColor}`}>
-                        <p className="text-[10px] font-mono uppercase tracking-wider text-zinc-500">
-                          Verified Record
+                      ) : (
+                        <p className="text-[8.5px] min-[375px]:text-[9px] sm:text-[10px] font-mono uppercase tracking-wide sm:tracking-wider text-zinc-500">
+                          Fiverr &amp; Upwork
                         </p>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                 );
               })}

@@ -342,7 +342,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* MAIN FLOATING DOCK CAPSULE */}
           <nav
             aria-label="Primary floating navigation"
-            className="relative flex items-center justify-between gap-1 sm:gap-2 px-2.5 sm:px-4 py-2 rounded-2xl bg-[#09090D]/92 backdrop-blur-2xl border border-white/12 shadow-[0_20px_50px_rgba(0,0,0,0.55)] overflow-hidden"
+            className="relative flex items-center justify-between gap-0.5 min-[375px]:gap-1 sm:gap-2 px-1.5 min-[375px]:px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-2xl bg-[#09090D]/92 backdrop-blur-2xl border border-white/12 shadow-[0_20px_50px_rgba(0,0,0,0.55)] overflow-hidden"
           >
             {/* Design Monks Signature Top Specular Emerald/Lime Rim */}
             <div
@@ -358,7 +358,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   key={link.href}
                   href={link.href}
                   onClick={(e) => handleNavigate(e, link.href)}
-                  className={`px-2.5 sm:px-3.5 py-2 rounded-xl text-xs sm:text-[13px] font-display font-medium transition-colors whitespace-nowrap ${
+                  className={`px-1.5 min-[375px]:px-2.5 sm:px-3.5 py-2 rounded-xl text-[11px] min-[375px]:text-xs sm:text-[13px] font-display font-medium transition-colors whitespace-nowrap ${
                     isActive
                       ? 'text-white bg-white/[0.08]'
                       : 'text-zinc-300 hover:text-white hover:bg-white/[0.04]'
@@ -373,11 +373,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               type="button"
               onClick={onOpenBooking}
-              className="group relative inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl bg-[#14161F] hover:bg-[#1C1F2B] text-white text-xs sm:text-[13px] font-display font-semibold border border-white/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_4px_15px_rgba(0,0,0,0.4)] transition-all cursor-pointer shrink-0"
+              className="group relative inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 min-[375px]:px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-[#14161F] hover:bg-[#1C1F2B] text-white text-[11px] min-[375px]:text-xs sm:text-[13px] font-display font-semibold border border-white/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_4px_15px_rgba(0,0,0,0.4)] transition-all cursor-pointer shrink-0"
             >
               <Sparkles className="w-3.5 h-3.5 text-lime-400 hidden sm:inline" />
               <span>Let&apos;s Talk</span>
-              <ArrowRight className="w-3.5 h-3.5 text-white transition-transform duration-200 group-hover:translate-x-0.5" />
+              <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white transition-transform duration-200 group-hover:translate-x-0.5" />
             </button>
 
             {/* Right Link: Process */}
@@ -388,7 +388,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   key={link.href}
                   href={link.href}
                   onClick={(e) => handleNavigate(e, link.href)}
-                  className={`px-2.5 sm:px-3.5 py-2 rounded-xl text-xs sm:text-[13px] font-display font-medium transition-colors whitespace-nowrap ${
+                  className={`px-1.5 min-[375px]:px-2.5 sm:px-3.5 py-2 rounded-xl text-[11px] min-[375px]:text-xs sm:text-[13px] font-display font-medium transition-colors whitespace-nowrap ${
                     isActive
                       ? 'text-white bg-white/[0.08]'
                       : 'text-zinc-300 hover:text-white hover:bg-white/[0.04]'
@@ -404,7 +404,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               type="button"
               onClick={() => setMoreOpen((prev) => !prev)}
               aria-expanded={moreOpen}
-              className={`inline-flex items-center gap-1 px-2.5 sm:px-3.5 py-2 rounded-xl text-xs sm:text-[13px] font-display font-medium transition-colors cursor-pointer whitespace-nowrap ${
+              className={`inline-flex items-center gap-0.5 sm:gap-1 px-1.5 min-[375px]:px-2.5 sm:px-3.5 py-2 rounded-xl text-[11px] min-[375px]:text-xs sm:text-[13px] font-display font-medium transition-colors cursor-pointer whitespace-nowrap ${
                 moreOpen
                   ? 'text-lime-400 bg-white/[0.08]'
                   : 'text-zinc-300 hover:text-white hover:bg-white/[0.04]'
@@ -412,7 +412,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <span>More</span>
               <ChevronUp
-                className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                className={`w-3 h-3 sm:w-3.5 sm:h-3.5 transition-transform duration-200 ${
                   moreOpen ? 'rotate-180 text-lime-400' : 'text-zinc-400'
                 }`}
               />

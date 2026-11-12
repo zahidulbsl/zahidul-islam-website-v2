@@ -81,7 +81,43 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
   const [selectedServiceIndex, setSelectedServiceIndex] = useState<
     number | null
   >(null);
+  const [activeServiceSlide, setActiveServiceSlide] = useState(0);
   const serviceModalContentRef = useRef<HTMLDivElement>(null);
+  const servicesSliderRef = useRef<HTMLDivElement>(null);
+
+  const handleServicesScroll = () => {
+    if (!servicesSliderRef.current) return;
+    const container = servicesSliderRef.current;
+    const cards = container.querySelectorAll<HTMLElement>('[data-service-card="true"]');
+    if (!cards.length) return;
+    const containerLeft = container.getBoundingClientRect().left;
+    let closestIndex = 0;
+    let minDiff = Infinity;
+    cards.forEach((card, idx) => {
+      const diff = Math.abs(card.getBoundingClientRect().left - containerLeft);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIndex = idx;
+      }
+    });
+    setActiveServiceSlide(closestIndex);
+  };
+
+  const scrollToServiceSlide = (index: number) => {
+    if (!servicesSliderRef.current) return;
+    const container = servicesSliderRef.current;
+    const cards = container.querySelectorAll<HTMLElement>('[data-service-card="true"]');
+    const card = cards[index];
+    if (card) {
+      const containerRect = container.getBoundingClientRect();
+      const cardRect = card.getBoundingClientRect();
+      container.scrollTo({
+        left: container.scrollLeft + (cardRect.left - containerRect.left),
+        behavior: 'smooth',
+      });
+      setActiveServiceSlide(index);
+    }
+  };
 
   // Reset modal scroll position to top whenever service changes
   useEffect(() => {
@@ -187,20 +223,25 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
         </motion.div>
 
         {/* ===================================================================
-            2. ARCHITECTURAL 6-CARD SERVICE SPECIFICATION GRID (Section 6)
+            2. ARCHITECTURAL 6-CARD SERVICE SPECIFICATION (Horizontal Swipe on Mobile, Grid on Tablet/Desktop)
         =================================================================== */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7 items-stretch">
+        <motion.div
+          ref={servicesSliderRef}
+          onScroll={handleServicesScroll}
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          className="flex sm:grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 overflow-x-auto sm:overflow-x-visible snap-x snap-mandatory sm:snap-none scroll-pl-4 sm:scroll-pl-0 gap-3.5 sm:gap-6 lg:gap-7 items-stretch -mx-4 px-4 pb-2 sm:mx-0 sm:px-0 sm:pb-0 scrollbar-none slider-touch-track"
+        >
           {SERVICES.map((service, idx) => {
             const meta = SERVICE_META[idx % SERVICE_META.length];
             const Icon = meta.icon;
 
             return (
-              <motion.article
+              <article
                 key={service.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.5, delay: idx * 0.06 }}
+                data-service-card="true"
                 onClick={() => setSelectedServiceIndex(idx)}
                 role="button"
                 tabIndex={0}
@@ -211,48 +252,48 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
                   }
                 }}
                 aria-label={`Explore service: ${service.title}`}
-                className={`group relative h-full rounded-[26px] bg-[#0C0F17] hover:bg-[#101420] border border-white/10 ${meta.accentBorder} p-6 sm:px-7 sm:py-7 flex flex-col justify-between cursor-pointer transition-all duration-300 hover:-translate-y-1 shadow-[0_18px_45px_-18px_rgba(0,0,0,0.65)]`}
+                className={`group relative w-[84vw] max-w-[340px] shrink-0 snap-start sm:w-auto sm:max-w-none sm:shrink h-full rounded-[24px] sm:rounded-[26px] bg-[#0C0F17] hover:bg-[#101420] border border-white/10 ${meta.accentBorder} p-5 sm:px-7 sm:py-7 flex flex-col justify-between cursor-pointer transition-all duration-300 hover:-translate-y-1 shadow-[0_18px_45px_-18px_rgba(0,0,0,0.65)]`}
               >
                 <div>
                   {/* Top Bar: Numbering, Platform Logo & Verified Proof Pill */}
-                  <div className="flex items-center justify-between gap-2 pb-4.5 mb-4.5 border-b border-white/[0.08]">
-                    <div className="flex items-center gap-2.5">
-                      <span className="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#09090B] transition-colors shrink-0">
-                        <Icon className="w-5 h-5" />
+                  <div className="flex items-center justify-between gap-2 pb-3.5 sm:pb-4.5 mb-3.5 sm:mb-4.5 border-b border-white/[0.08]">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <span className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#09090B] transition-colors shrink-0">
+                        <Icon className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
                       </span>
-                      <div>
-                        <span className="block font-mono text-[10px] uppercase tracking-widest text-zinc-400">
+                      <div className="min-w-0">
+                        <span className="block font-mono text-[9.5px] sm:text-[10px] uppercase tracking-widest text-zinc-400">
                           Service {service.number} / 06
                         </span>
-                        <span className="font-serif italic text-xs text-zinc-300">
+                        <span className="block font-serif italic text-[11px] sm:text-xs text-zinc-300 truncate">
                           {meta.eyebrow}
                         </span>
                       </div>
                     </div>
 
                     <span
-                      className={`px-2.5 py-1 rounded-full border font-mono text-[10px] font-semibold shrink-0 ${meta.badgeBg}`}
+                      className={`px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full border font-mono text-[9.5px] sm:text-[10px] font-semibold shrink-0 ${meta.badgeBg}`}
                     >
                       {service.proof.metric}
                     </span>
                   </div>
 
                   {/* Service Title */}
-                  <h3 className="font-display font-bold text-xl sm:text-[22px] text-white tracking-[-0.02em] leading-snug">
+                  <h3 className="font-display font-bold text-lg sm:text-[22px] text-white tracking-[-0.02em] leading-snug">
                     {service.title}
                   </h3>
 
                   {/* Supporting Description */}
-                  <p className="mt-2.5 text-xs sm:text-sm text-zinc-400 leading-relaxed line-clamp-3">
+                  <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-zinc-400 leading-relaxed line-clamp-3">
                     {service.shortDescription}
                   </p>
 
                   {/* Core Capabilities Checklist */}
-                  <div className="mt-4.5 pt-4 border-t border-white/[0.06] space-y-2">
+                  <div className="mt-3.5 sm:mt-4.5 pt-3.5 sm:pt-4 border-t border-white/[0.06] space-y-2">
                     {service.coreCapabilities.slice(0, 3).map((cap) => (
                       <div
                         key={cap}
-                        className="flex items-start gap-2.5 text-xs sm:text-[13px] text-zinc-300 leading-snug"
+                        className="flex items-start gap-2 sm:gap-2.5 text-xs sm:text-[13px] text-zinc-300 leading-snug"
                       >
                         <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
                         <span>{cap}</span>
@@ -262,7 +303,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
                 </div>
 
                 {/* Card Footer: Technologies & Explore Service Button */}
-                <div className="mt-6 pt-4 border-t border-white/[0.08] flex items-center justify-between gap-3">
+                <div className="mt-5 sm:mt-6 pt-3.5 sm:pt-4 border-t border-white/[0.08] flex items-center justify-between gap-2.5 sm:gap-3">
                   <div className="flex items-center gap-1.5 min-w-0">
                     <img
                       src={meta.logo}
@@ -271,19 +312,52 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
                       height={15}
                       className="w-3.5 h-3.5 object-contain shrink-0"
                     />
-                    <span className="font-mono text-[11px] text-zinc-400 truncate">
+                    <span className="font-mono text-[10.5px] sm:text-[11px] text-zinc-400 truncate">
                       {service.technologies.slice(0, 2).join(' · ')}
                     </span>
                   </div>
 
-                  <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/[0.06] group-hover:bg-white text-white group-hover:text-[#09090B] font-display font-bold text-xs border border-white/10 group-hover:border-white transition-all shrink-0">
+                  <span className="inline-flex items-center gap-1.5 px-3.5 py-2 sm:px-4 rounded-xl bg-white/[0.06] group-hover:bg-white text-white group-hover:text-[#09090B] font-display font-bold text-[11.5px] sm:text-xs border border-white/10 group-hover:border-white transition-all shrink-0">
                     <span>Explore Service</span>
                     <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </span>
                 </div>
-              </motion.article>
+              </article>
             );
           })}
+        </motion.div>
+
+        {/* Mobile Swipe Navigation & Pagination Indicators */}
+        <div className="sm:hidden pt-3 flex items-center justify-between px-1">
+          <div className="flex items-center gap-1.5 font-mono text-[10.5px] text-zinc-400">
+            <span className="font-bold text-white">
+              0{activeServiceSlide + 1}
+            </span>
+            <span>/</span>
+            <span>0{SERVICES.length}</span>
+            <span className="ml-1">· Swipe services</span>
+          </div>
+
+          <div
+            className="flex items-center gap-1.5"
+            role="tablist"
+            aria-label="Services pagination"
+          >
+            {SERVICES.map((svc, i) => (
+              <button
+                key={svc.id}
+                type="button"
+                onClick={() => scrollToServiceSlide(i)}
+                aria-label={`Go to service ${i + 1}`}
+                aria-selected={activeServiceSlide === i}
+                className={`h-1.5 transition-all duration-300 rounded-full cursor-pointer ${
+                  activeServiceSlide === i
+                    ? 'w-5 bg-lime-400'
+                    : 'w-1.5 bg-zinc-700'
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* ===================================================================

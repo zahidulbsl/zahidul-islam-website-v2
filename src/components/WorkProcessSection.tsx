@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Search,
   Target,
@@ -83,6 +83,43 @@ export const WorkProcessSection: React.FC<WorkProcessSectionProps> = ({
   onOpenBooking,
   onRequestAudit,
 }) => {
+  const [activeProcessSlide, setActiveProcessSlide] = useState(0);
+  const processSliderRef = useRef<HTMLDivElement>(null);
+
+  const handleProcessScroll = () => {
+    if (!processSliderRef.current) return;
+    const container = processSliderRef.current;
+    const cards = container.querySelectorAll<HTMLElement>('[data-process-card="true"]');
+    if (!cards.length) return;
+    const containerLeft = container.getBoundingClientRect().left;
+    let closestIndex = 0;
+    let minDiff = Infinity;
+    cards.forEach((card, idx) => {
+      const diff = Math.abs(card.getBoundingClientRect().left - containerLeft);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIndex = idx;
+      }
+    });
+    setActiveProcessSlide(closestIndex);
+  };
+
+  const scrollToProcessSlide = (index: number) => {
+    if (!processSliderRef.current) return;
+    const container = processSliderRef.current;
+    const cards = container.querySelectorAll<HTMLElement>('[data-process-card="true"]');
+    const card = cards[index];
+    if (card) {
+      const containerRect = container.getBoundingClientRect();
+      const cardRect = card.getBoundingClientRect();
+      container.scrollTo({
+        left: container.scrollLeft + (cardRect.left - containerRect.left),
+        behavior: 'smooth',
+      });
+      setActiveProcessSlide(index);
+    }
+  };
+
   const handleAuditClick = () => {
     if (onRequestAudit) {
       onRequestAudit();
@@ -123,8 +160,12 @@ export const WorkProcessSection: React.FC<WorkProcessSectionProps> = ({
           </p>
         </div>
 
-        {/* 2. ASYMMETRIC BENTO PROCESS GRID (7/5 and 5/7 on Desktop) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
+        {/* 2. ASYMMETRIC BENTO PROCESS GRID (Horizontal Swipe on Mobile, 7/5 and 5/7 on Desktop) */}
+        <div
+          ref={processSliderRef}
+          onScroll={handleProcessScroll}
+          className="flex sm:grid sm:grid-cols-1 lg:grid-cols-12 overflow-x-auto sm:overflow-x-visible snap-x snap-mandatory sm:snap-none scroll-pl-4 sm:scroll-pl-0 gap-3.5 sm:gap-6 items-stretch -mx-4 px-4 pb-2 sm:mx-0 sm:px-0 sm:pb-0 scrollbar-none slider-touch-track"
+        >
           {steps.map((step, index) => {
             const Icon = step.icon;
             const featured = step.featured;
@@ -141,18 +182,19 @@ export const WorkProcessSection: React.FC<WorkProcessSectionProps> = ({
             return (
               <article
                 key={step.stepNumber}
+                data-process-card="true"
                 onClick={onOpenBooking}
-                className={`group relative overflow-hidden ${gridSpan} rounded-[28px] border p-6 sm:p-8 lg:p-9 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 cursor-pointer ${
+                className={`group relative overflow-hidden w-[85vw] max-w-[345px] shrink-0 snap-start sm:w-auto sm:max-w-none sm:shrink ${gridSpan} rounded-[24px] sm:rounded-[28px] border p-5 sm:p-8 lg:p-9 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 cursor-pointer ${
                   featured
                     ? 'bg-[#09090B] border-zinc-800 text-white shadow-[0_20px_50px_-15px_rgba(9,9,11,0.35)]'
                     : 'bg-white border-zinc-200/90 hover:border-zinc-400 text-[#09090B] shadow-[0_12px_32px_-10px_rgba(9,9,11,0.05)]'
                 }`}
               >
                 {/* TOP ROW: STAGE NUMBER & ICON */}
-                <div className="flex items-start justify-between gap-4 mb-8">
+                <div className="flex items-start justify-between gap-4 mb-4 sm:mb-8">
                   <div>
                     <span
-                      className={`text-[11px] font-mono uppercase tracking-[0.18em] font-semibold ${
+                      className={`text-[10.5px] sm:text-[11px] font-mono uppercase tracking-[0.16em] sm:tracking-[0.18em] font-semibold ${
                         featured ? 'text-lime-400' : 'text-emerald-700'
                       }`}
                     >
@@ -160,7 +202,7 @@ export const WorkProcessSection: React.FC<WorkProcessSectionProps> = ({
                     </span>
 
                     <span
-                      className={`block mt-1 font-display font-extrabold text-5xl sm:text-6xl leading-none tracking-tighter tabular-nums ${
+                      className={`block mt-1 font-display font-extrabold text-4xl sm:text-6xl leading-none tracking-tighter tabular-nums ${
                         featured ? 'text-white/20' : 'text-zinc-900/12'
                       }`}
                     >
@@ -169,21 +211,21 @@ export const WorkProcessSection: React.FC<WorkProcessSectionProps> = ({
                   </div>
 
                   <div
-                    className={`w-11 h-11 rounded-2xl border flex items-center justify-center transition-colors ${
+                    className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl border flex items-center justify-center transition-colors shrink-0 ${
                       featured
                         ? 'bg-white/10 border-white/15 text-lime-400 group-hover:bg-white group-hover:text-[#09090B]'
                         : 'bg-zinc-100 border-zinc-200 text-[#09090B] group-hover:bg-[#09090B] group-hover:text-white'
                     }`}
                   >
-                    <Icon className="w-5 h-5" />
+                    <Icon className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
                   </div>
                 </div>
 
                 {/* BOTTOM ROW: TITLE, SUBTITLE & KEY ACTIVITIES */}
-                <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-end">
+                <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 sm:gap-6 items-end">
                   <div className="sm:col-span-5">
                     <h3
-                      className={`font-display font-bold text-xl sm:text-2xl tracking-tight leading-snug ${
+                      className={`font-display font-bold text-lg sm:text-2xl tracking-tight leading-snug ${
                         featured ? 'text-white' : 'text-[#09090B]'
                       }`}
                     >
@@ -191,7 +233,7 @@ export const WorkProcessSection: React.FC<WorkProcessSectionProps> = ({
                     </h3>
 
                     <p
-                      className={`mt-2.5 text-xs sm:text-sm leading-relaxed ${
+                      className={`mt-2 sm:mt-2.5 text-xs sm:text-sm leading-relaxed ${
                         featured ? 'text-zinc-300' : 'text-zinc-600'
                       }`}
                     >
@@ -201,18 +243,18 @@ export const WorkProcessSection: React.FC<WorkProcessSectionProps> = ({
 
                   <div className="sm:col-span-7">
                     <span
-                      className={`block mb-2.5 text-[10px] font-mono uppercase tracking-[0.16em] font-semibold ${
+                      className={`block mb-2 sm:mb-2.5 text-[10px] font-mono uppercase tracking-[0.16em] font-semibold ${
                         featured ? 'text-zinc-400' : 'text-zinc-400'
                       }`}
                     >
                       Key Deliverables &amp; Actions
                     </span>
 
-                    <div className="space-y-2">
+                    <div className="space-y-1.5 sm:space-y-2">
                       {step.activities.map((activity, i) => (
-                        <div key={i} className="flex items-start gap-2.5">
+                        <div key={i} className="flex items-start gap-2 sm:gap-2.5">
                           <CheckCircle2
-                            className={`w-4 h-4 shrink-0 mt-0.5 ${
+                            className={`w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 mt-0.5 ${
                               featured ? 'text-lime-400' : 'text-emerald-600'
                             }`}
                           />
@@ -231,6 +273,39 @@ export const WorkProcessSection: React.FC<WorkProcessSectionProps> = ({
               </article>
             );
           })}
+        </div>
+
+        {/* Mobile Swipe Navigation & Pagination Indicators */}
+        <div className="sm:hidden pt-3 flex items-center justify-between px-1">
+          <div className="flex items-center gap-1.5 font-mono text-[10.5px] text-zinc-600">
+            <span className="font-bold text-[#09090B]">
+              0{activeProcessSlide + 1}
+            </span>
+            <span>/</span>
+            <span>0{steps.length}</span>
+            <span className="ml-1">· Swipe process</span>
+          </div>
+
+          <div
+            className="flex items-center gap-1.5"
+            role="tablist"
+            aria-label="Process stages pagination"
+          >
+            {steps.map((st, i) => (
+              <button
+                key={st.stepNumber}
+                type="button"
+                onClick={() => scrollToProcessSlide(i)}
+                aria-label={`Go to stage ${i + 1}`}
+                aria-selected={activeProcessSlide === i}
+                className={`h-1.5 transition-all duration-300 rounded-full cursor-pointer ${
+                  activeProcessSlide === i
+                    ? 'w-5 bg-[#09090B]'
+                    : 'w-1.5 bg-zinc-300'
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* 3. PREMIUM CONVERSION CTA BANNER */}
@@ -270,21 +345,22 @@ export const WorkProcessSection: React.FC<WorkProcessSectionProps> = ({
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 shrink-0">
                 <button
                   type="button"
-                  onClick={onOpenBooking}
+                  onClick={handleAuditClick}
                   className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-zinc-100 text-[#09090B] text-xs sm:text-sm font-display font-bold transition-all cursor-pointer shadow-lg"
                 >
-                  <span>Book a Strategy Call</span>
+                  <span>Request an Ads Audit</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
 
-                <button
-                  type="button"
-                  onClick={handleAuditClick}
+                <a
+                  href="https://wa.me/8801911184235?text=Hello%20Zahidul%2C%20I%20would%20like%20to%20discuss%20a%20marketing%20project."
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white/[0.07] hover:bg-white/[0.14] border border-white/15 text-white text-xs sm:text-sm font-display font-semibold transition-all cursor-pointer"
                 >
-                  <span>Request an Ads Audit</span>
+                  <span>WhatsApp Me</span>
                   <ArrowUpRight className="w-4 h-4 text-emerald-300" />
-                </button>
+                </a>
               </div>
             </div>
           </div>

@@ -85,6 +85,15 @@ const SESSION_PILLARS = [
   },
 ];
 
+const SERVICE_OPTIONS = [
+  "Google Ads Management",
+  "Meta Ads Management",
+  "Google Shopping & eCommerce Ads",
+  "Lead Generation Advertising",
+  "GA4, GTM & Conversion Tracking",
+  "Google Ads Audit & Optimization",
+];
+
 export function StrategyCallModal({
   isOpen,
   onClose,
@@ -100,7 +109,9 @@ export function StrategyCallModal({
     name: "",
     email: "",
     whatsappNumber: "",
-    businessInfo: "",
+    websiteUrl: "",
+    service: SERVICE_OPTIONS[0],
+    projectDetails: "",
   });
 
   const modalRef = useRef<HTMLDivElement>(null);
@@ -279,20 +290,17 @@ export function StrategyCallModal({
     const trimmedEmail = form.email.trim();
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!trimmedEmail || !emailPattern.test(trimmedEmail)) {
-      setError("Please enter a valid work email address.");
+      setError("Please enter a valid email address.");
       return false;
     }
 
-    const trimmedInfo = form.businessInfo.trim();
-    if (!trimmedInfo) {
-      setError("Please share your business information and advertising goals.");
+    if (!form.service.trim()) {
+      setError("Please select a primary service needed.");
       return false;
     }
 
-    if (trimmedInfo.length < 10) {
-      setError(
-        "Please provide a little more detail about your business requirements."
-      );
+    if (!form.projectDetails.trim()) {
+      setError("Please share your project details.");
       return false;
     }
 
@@ -311,13 +319,13 @@ export function StrategyCallModal({
         name: form.name.trim(),
         email: form.email.trim().toLowerCase(),
         whatsappNumber: form.whatsappNumber.trim(),
-        service: "Free 1:1 Strategy Consultation",
-        website: "",
+        service: form.service.trim(),
+        website: form.websiteUrl.trim(),
         monthlyBudget: "",
         preferredDate: "",
         preferredTime: "",
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC",
-        notes: form.businessInfo.trim(),
+        notes: form.projectDetails.trim(),
       };
 
       if (onSubmit) {
@@ -331,6 +339,7 @@ export function StrategyCallModal({
             fullName: requestPayload.name,
             email: requestPayload.email,
             whatsappNumber: requestPayload.whatsappNumber,
+            websiteUrl: requestPayload.website,
             service: requestPayload.service,
             projectDetails: requestPayload.notes,
           }),
@@ -718,7 +727,7 @@ export function StrategyCallModal({
                       </div>
                     )}
 
-                    {/* Row 1: Field 1 (Full Name) & Field 2 (Work Email) */}
+                    {/* Row 1: Field 1 (Full Name *) & Field 2 (Email Address *) */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label
@@ -742,7 +751,8 @@ export function StrategyCallModal({
 
                       <div>
                         <label htmlFor="strategy-email" className={labelClass}>
-                          Work Email <span className="text-emerald-600">*</span>
+                          Email Address{" "}
+                          <span className="text-emerald-600">*</span>
                         </label>
                         <input
                           id="strategy-email"
@@ -757,122 +767,173 @@ export function StrategyCallModal({
                       </div>
                     </div>
 
-                    {/* Field 3: WhatsApp Number (Optional) */}
-                    <div>
-                      <label className={labelClass}>
-                        WhatsApp Number{" "}
-                        <span className="text-zinc-400 font-normal">
-                          (Optional)
-                        </span>
-                      </label>
-                      <div className="zp-modal-phone" ref={countryDropdownRef}>
-                        <button
-                          type="button"
-                          className="zp-modal-country-btn"
-                          onClick={() => {
-                            setIsCountryOpen((prev) => !prev);
-                            setCountrySearch("");
-                          }}
-                          aria-label="Select country calling code"
-                          aria-expanded={isCountryOpen}
-                        >
-                          <span className="text-base leading-none">
-                            {getCountryFlag(activeCountry.iso2)}
+                    {/* Row 2: Field 3 (WhatsApp Number (Optional)) & Field 4 (Website / Store URL (Optional)) */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className={labelClass}>
+                          WhatsApp Number{" "}
+                          <span className="text-zinc-400 font-normal">
+                            (Optional)
                           </span>
-                          <ChevronDown size={13} className="text-zinc-500" />
-                        </button>
-
-                        {isCountryOpen && (
-                          <div
-                            className="zp-modal-country-popover"
-                            onWheel={(e) => e.stopPropagation()}
-                            onTouchMove={(e) => e.stopPropagation()}
+                        </label>
+                        <div className="zp-modal-phone" ref={countryDropdownRef}>
+                          <button
+                            type="button"
+                            className="zp-modal-country-btn"
+                            onClick={() => {
+                              setIsCountryOpen((prev) => !prev);
+                              setCountrySearch("");
+                            }}
+                            aria-label="Select country calling code"
+                            aria-expanded={isCountryOpen}
                           >
-                            <div className="zp-modal-country-search">
-                              <Search
-                                size={14}
-                                className="shrink-0 text-zinc-400"
-                              />
-                              <input
-                                ref={countrySearchInputRef}
-                                type="text"
-                                value={countrySearch}
-                                onChange={(e) =>
-                                  setCountrySearch(e.target.value)
-                                }
-                                placeholder="Search country or code..."
-                                aria-label="Search countries or calling codes"
-                              />
-                            </div>
+                            <span className="text-base leading-none">
+                              {getCountryFlag(activeCountry.iso2)}
+                            </span>
+                            <ChevronDown size={13} className="text-zinc-500" />
+                          </button>
 
-                            <div className="zp-modal-country-list">
-                              {filteredCountries.length > 0 ? (
-                                filteredCountries.map((country) => (
-                                  <button
-                                    key={country.iso2}
-                                    type="button"
-                                    className={`zp-modal-country-option ${
-                                      selectedCountry === country.iso2
-                                        ? "active"
-                                        : ""
-                                    }`}
-                                    onClick={() =>
-                                      handleCountrySelect(country.iso2)
-                                    }
-                                  >
-                                    <span>{getCountryFlag(country.iso2)}</span>
-                                    <span className="flex-1 truncate">
-                                      {country.name}
-                                    </span>
-                                    <span className="font-mono text-[11px] opacity-70">
-                                      +{country.dialCode}
-                                    </span>
-                                  </button>
-                                ))
-                              ) : (
-                                <div className="p-3 text-center text-xs text-zinc-500">
-                                  No country found.
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        )}
+                          {isCountryOpen && (
+                            <div
+                              className="zp-modal-country-popover"
+                              onWheel={(e) => e.stopPropagation()}
+                              onTouchMove={(e) => e.stopPropagation()}
+                            >
+                              <div className="zp-modal-country-search">
+                                <Search
+                                  size={14}
+                                  className="shrink-0 text-zinc-400"
+                                />
+                                <input
+                                  ref={countrySearchInputRef}
+                                  type="text"
+                                  value={countrySearch}
+                                  onChange={(e) =>
+                                    setCountrySearch(e.target.value)
+                                  }
+                                  placeholder="Search country or code..."
+                                  aria-label="Search countries or calling codes"
+                                />
+                              </div>
 
-                        <PhoneInput
-                          ref={phoneRef}
-                          defaultCountry="us"
-                          value={form.whatsappNumber}
-                          onChange={(value, meta) => {
-                            updateField("whatsappNumber", value);
-                            if (meta?.country?.iso2) {
-                              setSelectedCountry(meta.country.iso2);
-                            }
-                          }}
-                          placeholder="WhatsApp number"
-                          forceDialCode
-                          hideDropdown
+                              <div className="zp-modal-country-list">
+                                {filteredCountries.length > 0 ? (
+                                  filteredCountries.map((country) => (
+                                    <button
+                                      key={country.iso2}
+                                      type="button"
+                                      className={`zp-modal-country-option ${
+                                        selectedCountry === country.iso2
+                                          ? "active"
+                                          : ""
+                                      }`}
+                                      onClick={() =>
+                                        handleCountrySelect(country.iso2)
+                                      }
+                                    >
+                                      <span>{getCountryFlag(country.iso2)}</span>
+                                      <span className="flex-1 truncate">
+                                        {country.name}
+                                      </span>
+                                      <span className="font-mono text-[11px] opacity-70">
+                                        +{country.dialCode}
+                                      </span>
+                                    </button>
+                                  ))
+                                ) : (
+                                  <div className="p-3 text-center text-xs text-zinc-500">
+                                    No country found.
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          )}
+
+                          <PhoneInput
+                            ref={phoneRef}
+                            defaultCountry="us"
+                            value={form.whatsappNumber}
+                            onChange={(value, meta) => {
+                              updateField("whatsappNumber", value);
+                              if (meta?.country?.iso2) {
+                                setSelectedCountry(meta.country.iso2);
+                              }
+                            }}
+                            placeholder="WhatsApp number"
+                            forceDialCode
+                            hideDropdown
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label
+                          htmlFor="strategy-website"
+                          className={labelClass}
+                        >
+                          Website / Store URL{" "}
+                          <span className="text-zinc-400 font-normal">
+                            (Optional)
+                          </span>
+                        </label>
+                        <input
+                          id="strategy-website"
+                          type="url"
+                          placeholder="https://yourwebsite.com"
+                          value={form.websiteUrl}
+                          onChange={(e) =>
+                            updateField("websiteUrl", e.target.value)
+                          }
+                          className={inputClass}
                         />
                       </div>
                     </div>
 
-                    {/* Field 4: Business Information (Required) */}
+                    {/* Row 3: Field 5 (Primary Service Needed) */}
                     <div>
                       <label
-                        htmlFor="strategy-business-info"
+                        htmlFor="strategy-service"
                         className={labelClass}
                       >
-                        Business Information{" "}
+                        Primary Service Needed
+                      </label>
+                      <div className="relative">
+                        <select
+                          id="strategy-service"
+                          value={form.service}
+                          onChange={(e) =>
+                            updateField("service", e.target.value)
+                          }
+                          className={`${inputClass} pr-10 font-medium appearance-none cursor-pointer`}
+                        >
+                          {SERVICE_OPTIONS.map((service) => (
+                            <option key={service} value={service}>
+                              {service}
+                            </option>
+                          ))}
+                        </select>
+                        <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                      </div>
+                    </div>
+
+                    {/* Row 4: Field 6 (Project Details *) */}
+                    <div>
+                      <label
+                        htmlFor="strategy-project-details"
+                        className={labelClass}
+                      >
+                        Project Details{" "}
                         <span className="text-emerald-600">*</span>
                       </label>
                       <textarea
-                        id="strategy-business-info"
+                        id="strategy-project-details"
                         rows={4}
-                        placeholder="Tell me about your business, website, current advertising activities, goals, and challenges."
-                        value={form.businessInfo}
+                        placeholder="Tell me about your business, current advertising setup, tracking needs, or campaign goals..."
+                        value={form.projectDetails}
                         onChange={(e) =>
-                          updateField("businessInfo", e.target.value)
+                          updateField("projectDetails", e.target.value)
                         }
-                        className="w-full p-3.5 rounded-xl bg-[#FAFAFA] focus:bg-white border border-zinc-200 hover:border-zinc-400 focus:border-[#09090B] focus:ring-3 focus:ring-[#09090B]/10 text-sm text-[#09090B] placeholder:text-zinc-400 focus:outline-none transition-all duration-200 resize-y min-h-[118px] leading-relaxed"
+                        className="w-full p-3.5 rounded-xl bg-[#FAFAFA] focus:bg-white border border-zinc-200 hover:border-zinc-400 focus:border-[#09090B] focus:ring-3 focus:ring-[#09090B]/10 text-sm text-[#09090B] placeholder:text-zinc-400 focus:outline-none transition-all duration-200 resize-y min-h-[120px] leading-relaxed"
                         required
                       />
                     </div>

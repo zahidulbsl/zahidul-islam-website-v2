@@ -53,10 +53,10 @@ export const Footer: React.FC<FooterProps> = ({
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* 1. MAIN FOOTER CONTENT — THREE-COLUMN DIRECTORY GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-y-10 md:gap-x-8 lg:gap-x-12 pb-12 sm:pb-14">
+        {/* 1. MAIN FOOTER CONTENT — TWO-COLUMN MOBILE DIRECTORY, THREE-COLUMN DESKTOP GRID */}
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-y-9 gap-x-4 sm:gap-x-6 md:gap-y-10 md:gap-x-8 lg:gap-x-12 pb-12 sm:pb-14">
           {/* COLUMN 1: ZAHIDUL ISLAM INTRODUCTION & DESCRIPTION (6 COLS) */}
-          <div className="md:col-span-12 lg:col-span-6 space-y-4">
+          <div className="col-span-2 md:col-span-12 lg:col-span-6 space-y-4">
             <button
               type="button"
               onClick={scrollToTop}
@@ -88,18 +88,18 @@ export const Footer: React.FC<FooterProps> = ({
             </div>
           </div>
 
-          {/* COLUMN 2: NAVIGATION LINKS (3 COLS) */}
-          <div className="md:col-span-5 lg:col-span-3 space-y-4">
-            <h3 className="text-xs font-mono uppercase tracking-[0.16em] text-white font-bold">
+          {/* COLUMN 2: NAVIGATION LINKS (LEFT ON MOBILE, 3 COLS ON DESKTOP) */}
+          <div className="col-span-1 md:col-span-5 lg:col-span-3 h-full flex flex-col space-y-3 sm:space-y-4 min-w-0">
+            <h3 className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.14em] sm:tracking-[0.16em] text-white font-bold">
               Navigation
             </h3>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2 sm:space-y-2.5 text-[12.5px] min-[375px]:text-[13px] sm:text-sm leading-snug sm:leading-normal">
               {quickNav.map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
-                    className="text-zinc-400 hover:text-white transition-colors inline-flex items-center gap-1.5"
+                    className="text-zinc-400 hover:text-white transition-colors inline-flex items-center gap-1.5 break-words"
                   >
                     <span>{link.label}</span>
                   </a>
@@ -108,18 +108,18 @@ export const Footer: React.FC<FooterProps> = ({
             </ul>
           </div>
 
-          {/* COLUMN 3: SERVICES LINKS (3 COLS) */}
-          <div className="md:col-span-7 lg:col-span-3 space-y-4">
-            <h3 className="text-xs font-mono uppercase tracking-[0.16em] text-white font-bold">
+          {/* COLUMN 3: SERVICES LINKS (RIGHT ON MOBILE, 3 COLS ON DESKTOP) */}
+          <div className="col-span-1 md:col-span-7 lg:col-span-3 h-full flex flex-col space-y-3 sm:space-y-4 min-w-0">
+            <h3 className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.14em] sm:tracking-[0.16em] text-white font-bold">
               Services
             </h3>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2 sm:space-y-2.5 text-[12.5px] min-[375px]:text-[13px] sm:text-sm leading-snug sm:leading-normal">
               {coreServices.map((service) => (
                 <li key={service} className="text-zinc-400">
                   <a
                     href="#services"
                     onClick={(e) => handleNavClick(e, '#services')}
-                    className="hover:text-white transition-colors"
+                    className="hover:text-white transition-colors inline-block break-words"
                   >
                     {service}
                   </a>

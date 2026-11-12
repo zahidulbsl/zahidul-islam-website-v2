@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import type { CaseStudy } from '../data/caseStudies';
 import { CASE_STUDIES } from '../data/caseStudies';
@@ -100,13 +100,58 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
 }) => {
   const [filter, setFilter] = useState<Category>('All');
   const [showAllProjects, setShowAllProjects] = useState(false);
+  const [activeCaseSlide, setActiveCaseSlide] = useState(0);
+  const caseSliderRef = useRef<HTMLDivElement>(null);
+
+  const handleCaseScroll = () => {
+    if (!caseSliderRef.current) return;
+    const container = caseSliderRef.current;
+    const cards = container.querySelectorAll<HTMLElement>('[data-case-card="true"]');
+    if (!cards.length) return;
+    const containerLeft = container.getBoundingClientRect().left;
+    let closestIndex = 0;
+    let minDiff = Infinity;
+    cards.forEach((card, idx) => {
+      const diff = Math.abs(card.getBoundingClientRect().left - containerLeft);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIndex = idx;
+      }
+    });
+    setActiveCaseSlide(closestIndex);
+  };
+
+  const scrollToCaseSlide = (index: number) => {
+    if (!caseSliderRef.current) return;
+    const container = caseSliderRef.current;
+    const cards = container.querySelectorAll<HTMLElement>('[data-case-card="true"]');
+    const card = cards[index];
+    if (card) {
+      const containerRect = container.getBoundingClientRect();
+      const cardRect = card.getBoundingClientRect();
+      container.scrollTo({
+        left: container.scrollLeft + (cardRect.left - containerRect.left),
+        behavior: 'smooth',
+      });
+      setActiveCaseSlide(index);
+    }
+  };
+
+  useEffect(() => {
+    setActiveCaseSlide(0);
+    if (caseSliderRef.current) {
+      caseSliderRef.current.scrollLeft = 0;
+    }
+  }, [filter]);
 
   const filteredProjects = PROJECTS.filter((project) =>
     matchesCategory(project, filter)
   );
 
-  // 1 Featured Case Study + 6 Initial Regular Cards + Remaining Cards
+  // 1 Featured Case Study + 6 Initial Regular Cards + Remaining Cards (Desktop/Tablet)
+  // Mobile renders all remaining cards in one continuous swipeable carousel
   const featuredProject = filteredProjects[0] ?? null;
+  const mobileCarouselProjects = filteredProjects.slice(1);
   const initialRegularProjects = filteredProjects.slice(1, 7);
   const additionalProjects = filteredProjects.slice(7);
 
@@ -122,6 +167,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
     return (
       <article
         key={project.id}
+        data-case-card="true"
         onClick={() => onSelectCaseStudy(project)}
         role="button"
         tabIndex={0}
@@ -132,11 +178,11 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
           }
         }}
         aria-label={`View case study: ${project.title}`}
-        className="group h-full rounded-[26px] bg-white hover:bg-[#FAFAFA] border border-zinc-200/90 hover:border-[#09090B]/40 p-5 sm:p-6 flex flex-col justify-between cursor-pointer transition-all duration-300 hover:-translate-y-1 shadow-[0_10px_30px_-12px_rgba(9,9,11,0.06)] hover:shadow-[0_24px_48px_-14px_rgba(9,9,11,0.13)]"
+        className="group w-[82vw] max-w-[330px] shrink-0 snap-start sm:w-auto sm:max-w-none sm:shrink h-full rounded-[22px] sm:rounded-[26px] bg-white hover:bg-[#FAFAFA] border border-zinc-200/90 hover:border-[#09090B]/40 p-4 sm:p-6 flex flex-col justify-between cursor-pointer transition-all duration-300 hover:-translate-y-1 shadow-[0_10px_30px_-12px_rgba(9,9,11,0.06)] hover:shadow-[0_24px_48px_-14px_rgba(9,9,11,0.13)]"
       >
         <div className="flex flex-col flex-1">
           {/* 1. CAMPAIGN IMAGE (Consistent 16:10 Aspect Ratio) */}
-          <div className="relative aspect-[16/10] w-full rounded-[18px] overflow-hidden bg-[#090D16] border border-zinc-900/10 mb-5 shrink-0">
+          <div className="relative aspect-[16/10] w-full rounded-[16px] sm:rounded-[18px] overflow-hidden bg-[#090D16] border border-zinc-900/10 mb-3.5 sm:mb-5 shrink-0">
             <img
               src={project.coverImage.src}
               alt={project.coverImage.alt}
@@ -356,27 +402,27 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#07090F]/85 via-transparent to-transparent" />
 
                     {/* Top Floating Category & Platform Identification */}
-                    <div className="absolute top-3.5 left-3.5 right-3.5 flex flex-wrap items-center justify-between gap-2">
-                      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#090B10]/90 backdrop-blur-md border border-white/15">
+                    <div className="absolute top-2.5 left-2.5 right-2.5 sm:top-3.5 sm:left-3.5 sm:right-3.5 flex flex-wrap items-center justify-between gap-1.5 sm:gap-2">
+                      <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#090B10]/90 backdrop-blur-md border border-white/15">
                         <img
                           src={primaryLogo.src}
                           alt={primaryLogo.name}
                           width={16}
                           height={16}
-                          className="w-4 h-4 object-contain"
+                          className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain"
                         />
-                        <span className="font-mono text-xs font-semibold text-white">
+                        <span className="font-mono text-[10px] sm:text-xs font-semibold text-white">
                           {primaryLogo.name} · {featuredProject.category}
                         </span>
                       </div>
 
-                      <span className="px-3 py-1 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-400/35 font-mono text-[10px] font-semibold text-emerald-300 uppercase tracking-wider">
-                        Featured Case Study · #01
+                      <span className="px-2.5 py-1 sm:px-3 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-400/35 font-mono text-[9.5px] sm:text-[10px] font-semibold text-emerald-300 uppercase tracking-wider">
+                        Featured · #01
                       </span>
                     </div>
 
                     {/* Bottom Main Campaign Result Bar */}
-                    <div className="absolute bottom-3.5 left-3.5 right-3.5 flex flex-wrap items-center justify-between gap-3 px-4 py-3 rounded-2xl bg-[#090B10]/92 backdrop-blur-md border border-white/15">
+                    <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-3.5 sm:left-3.5 sm:right-3.5 flex flex-wrap items-center justify-between gap-3 px-3 py-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl bg-[#090B10]/92 backdrop-blur-md border border-white/15">
                       <div className="flex items-baseline gap-2.5">
                         <span className="font-display font-extrabold text-2xl sm:text-4xl text-white tracking-tight">
                           {featuredProject.primaryMetric}
@@ -482,11 +528,60 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
         })()}
 
         {/* ===================================================================
-            4. SIX ADDITIONAL CASE STUDIES IN 3-COLUMN GRID (Section 5.2)
-               (Row 1: 3 Cards, Row 2: 3 Cards -> 1 Featured + 6 Regular = 7 Initial)
+            4. REMAINING CASE STUDIES
+               Mobile (<640px): All remaining projects in one horizontal swipe carousel
+               Tablet/Desktop (>=640px): Initial 6 cards + expandable See All Projects
         =================================================================== */}
+        {mobileCarouselProjects.length > 0 && (
+          <div className="sm:hidden">
+            <div
+              ref={caseSliderRef}
+              onScroll={handleCaseScroll}
+              className="flex overflow-x-auto snap-x snap-mandatory scroll-pl-4 gap-3.5 items-stretch -mx-4 px-4 pb-2 scrollbar-none slider-touch-track"
+            >
+              {mobileCarouselProjects.map((project, idx) =>
+                renderRegularCard(project, idx + 2)
+              )}
+            </div>
+
+            {mobileCarouselProjects.length > 1 && (
+              <div className="pt-3 flex items-center justify-between px-1">
+                <div className="flex items-center gap-1.5 font-mono text-[10.5px] text-zinc-600">
+                  <span className="font-bold text-[#09090B]">
+                    {String(activeCaseSlide + 1).padStart(2, '0')}
+                  </span>
+                  <span>/</span>
+                  <span>{String(mobileCarouselProjects.length).padStart(2, '0')}</span>
+                  <span className="ml-1">· Swipe projects</span>
+                </div>
+
+                <div
+                  className="flex items-center gap-1.5"
+                  role="tablist"
+                  aria-label="Case studies pagination"
+                >
+                  {mobileCarouselProjects.map((proj, i) => (
+                    <button
+                      key={proj.id}
+                      type="button"
+                      onClick={() => scrollToCaseSlide(i)}
+                      aria-label={`Go to project ${i + 1}`}
+                      aria-selected={activeCaseSlide === i}
+                      className={`h-1.5 transition-all duration-300 rounded-full cursor-pointer ${
+                        activeCaseSlide === i
+                          ? 'w-5 bg-[#09090B]'
+                          : 'w-1.5 bg-zinc-300'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         {initialRegularProjects.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7 items-stretch">
+          <div className="hidden sm:grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7 items-stretch">
             {initialRegularProjects.map((project, idx) =>
               renderRegularCard(project, idx + 2)
             )}
@@ -494,7 +589,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
         )}
 
         {/* ===================================================================
-            5. REMAINING FIVE CASE STUDIES (Revealed when SEE ALL PROJECTS is clicked)
+            5. REMAINING FIVE CASE STUDIES (Tablet/Desktop Only — Revealed when SEE ALL PROJECTS is clicked)
         =================================================================== */}
         <AnimatePresence initial={false}>
           {showAllProjects && additionalProjects.length > 0 && (
@@ -504,7 +599,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
               animate={{ opacity: 1, height: 'auto', marginTop: 28 }}
               exit={{ opacity: 0, height: 0, marginTop: 0 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="overflow-hidden"
+              className="hidden sm:block overflow-hidden"
             >
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7 items-stretch pt-1">
                 {additionalProjects.map((project, idx) =>
@@ -516,10 +611,10 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
         </AnimatePresence>
 
         {/* ===================================================================
-            6. SEE ALL PROJECTS / SHOW LESS BUTTON (Section 5.3)
+            6. SEE ALL PROJECTS / SHOW LESS BUTTON (Tablet/Desktop Only — Removed on Mobile)
         =================================================================== */}
         {additionalProjects.length > 0 && (
-          <div className="mt-10 sm:mt-12 flex flex-col items-center justify-center">
+          <div className="hidden sm:flex mt-10 sm:mt-12 flex-col items-center justify-center">
             <button
               type="button"
               onClick={() => setShowAllProjects((prev) => !prev)}
@@ -542,7 +637,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
         )}
 
         {/* ===================================================================
-            7. BOTTOM VERIFIED PORTFOLIO & CONSULTATION BAR
+            7. BOTTOM CONSULTATION CTA BAR
         =================================================================== */}
         <div className="mt-14 sm:mt-16 rounded-[24px] bg-white border border-zinc-200/90 p-6 sm:p-8 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-xs">
           <div className="flex items-start sm:items-center gap-4 text-center sm:text-left">
@@ -550,12 +645,13 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
               <ShieldCheck className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="font-display font-bold text-base sm:text-lg text-[#09090B]">
-                Want to Verify Live Marketplace History or Discuss Your Campaign?
+              <h3 className="font-display font-bold text-base sm:text-lg text-[#09090B] leading-snug">
+                Ready to Turn Your Ad Spend Into Profitable Growth?
               </h3>
-              <p className="text-xs sm:text-sm text-zinc-600 mt-1 max-w-2xl">
-                Inspect my live Fiverr Portfolio and Upwork Top Rated contract
-                history directly, or schedule a strategy consultation.
+              <p className="text-xs sm:text-sm text-zinc-600 mt-1 max-w-2xl leading-relaxed">
+                Let&apos;s discuss your business goals, identify growth
+                opportunities, and build a performance-driven advertising
+                strategy tailored to your business.
               </p>
             </div>
           </div>
@@ -570,21 +666,12 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
               <ArrowRight className="w-4 h-4" />
             </button>
             <a
-              href="https://www.fiverr.com/users/studio_2d2u/portfolio"
+              href="https://wa.me/8801911184235?text=Hello%20Zahidul%2C%20I%20would%20like%20to%20discuss%20a%20marketing%20project."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl bg-[#FAFAFA] hover:bg-zinc-100 border border-zinc-300 text-[#09090B] text-xs sm:text-sm font-display font-semibold transition-colors"
             >
-              <span>Fiverr Portfolio</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </a>
-            <a
-              href="https://www.upwork.com/freelancers/zahidulpro"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl bg-[#FAFAFA] hover:bg-zinc-100 border border-zinc-300 text-[#09090B] text-xs sm:text-sm font-display font-semibold transition-colors"
-            >
-              <span>Upwork Top Rated</span>
+              <span>Chat on WhatsApp</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
           </div>
