@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 178 36" fill="none" role="img" aria-label="Google Analytics 4">
+  <g fill="#94A3B8">
+    <!-- GA4 bars -->
+    <rect x="6" y="20" width="4.5" height="9" rx="2.25" opacity="0.6"/>
+    <rect x="13.5" y="14" width="4.5" height="15" rx="2.25" opacity="0.8"/>
+    <rect x="21" y="8" width="4.5" height="21" rx="2.25"/>
+    <!-- Wordmark -->
+    <text x="32" y="23" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14.5" font-weight="700" letter-spacing="-0.2px">Google Analytics 4</text>
+  </g>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 36" fill="none" role="img" aria-label="WooCommerce">
+  <g fill="#94A3B8">
+    <!-- WooCommerce iconic rounded speech bubble -->
+    <rect x="3" y="6" width="24" height="19" rx="5" fill="#94A3B8"/>
+    <path d="M7 25l-2 5 6-3h11a5 5 0 0 0 5-5V11a5 5 0 0 0-5-5H8a5 5 0 0 0-5 5v14z" fill="#94A3B8"/>
+    <!-- Knockout "woo" text inside bubble -->
+    <text x="5.5" y="19" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="9" font-weight="900" fill="#090D14">WOO</text>
+    <!-- Wordmark -->
+    <text x="34" y="23" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14.5" font-weight="700" letter-spacing="-0.2px">WooCommerce</text>
+  </g>
+</svg>

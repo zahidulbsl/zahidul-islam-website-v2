@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 162 36" fill="none" role="img" aria-label="Looker Studio">
+  <g fill="#94A3B8">
+    <!-- Looker geometric circles/loops -->
+    <circle cx="8" cy="18" r="4.5" stroke="#94A3B8" stroke-width="2"/>
+    <circle cx="16" cy="11" r="3" stroke="#94A3B8" stroke-width="1.8"/>
+    <circle cx="21" cy="21" r="4.5" stroke="#94A3B8" stroke-width="2"/>
+    <!-- Wordmark -->
+    <text x="32" y="23" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14.5" font-weight="700" letter-spacing="-0.2px">Looker Studio</text>
+  </g>
+</svg>

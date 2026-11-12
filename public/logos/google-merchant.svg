@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 178 36" fill="none" role="img" aria-label="Google Merchant Center">
+  <g fill="#94A3B8">
+    <!-- Merchant tag icon -->
+    <path d="M7 11.5L16.5 2H26v9.5L16.5 21 7 11.5z" stroke="#94A3B8" stroke-width="2" fill="none"/>
+    <circle cx="21" cy="7" r="1.5" fill="#94A3B8"/>
+    <!-- Wordmark -->
+    <text x="32" y="23" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="700" letter-spacing="-0.2px">Google Merchant</text>
+  </g>
+</svg>

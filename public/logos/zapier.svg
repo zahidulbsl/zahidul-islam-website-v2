@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 36" fill="none" role="img" aria-label="Zapier">
+  <g fill="#94A3B8">
+    <!-- Zapier asterisk/star mark -->
+    <path d="M14 8v20M4 18h20M7 11l14 14M21 11L7 25" stroke="#94A3B8" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- Wordmark -->
+    <text x="30" y="23" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="16" font-weight="800" letter-spacing="-0.4px">zapier</text>
+  </g>
+</svg>

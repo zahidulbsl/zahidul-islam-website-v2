@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 36" fill="none" role="img" aria-label="Klaviyo">
+  <g fill="#94A3B8">
+    <!-- Klaviyo corner-cut banner mark -->
+    <path d="M4 8h16v13l-4 4H4V8z"/>
+    <!-- Wordmark -->
+    <text x="26" y="23" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" letter-spacing="-0.2px">klaviyo</text>
+  </g>
+</svg>
