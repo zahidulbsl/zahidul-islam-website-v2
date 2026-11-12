@@ -5,6 +5,7 @@ import {
   ROW_2_LOGOS,
 } from '../data/platforms';
 import type { PlatformLogo } from '../data/platforms';
+import { EDGE_FADE_MASK_STYLE } from '../utils/edgeFade';
 
 interface MarqueeRowProps {
   logos: PlatformLogo[];
@@ -23,12 +24,7 @@ const MarqueeRow: React.FC<MarqueeRowProps> = ({
     <div
       className="relative w-full overflow-hidden py-2.5 sm:py-3"
       aria-label={rowLabel}
-      style={{
-        maskImage:
-          'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.2) 8%, black 20%, black 80%, rgba(0,0,0,0.2) 92%, transparent 100%)',
-        WebkitMaskImage:
-          'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.2) 8%, black 20%, black 80%, rgba(0,0,0,0.2) 92%, transparent 100%)',
-      }}
+      style={EDGE_FADE_MASK_STYLE}
     >
       <div
         className={`flex w-max shrink-0 items-center justify-start gap-4 sm:gap-6 lg:gap-8 ${speedClass} hover:[animation-play-state:paused] motion-reduce:animate-none`}

@@ -3,11 +3,14 @@ import { motion } from 'motion/react';
 import {
   Target,
   Share2,
+  Megaphone,
   ChartNoAxesCombined,
   ShieldCheck,
   ArrowUpRight,
   ArrowRight,
-  CheckCircle2,
+  PackageCheck,
+  Star,
+  Award,
 } from 'lucide-react';
 import { NumberTicker } from './ui/NumberTicker';
 import { scrollToSection } from '../utils/scroll';
@@ -23,49 +26,6 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
 }) => {
   const [activePillarSlide, setActivePillarSlide] = useState(0);
   const pillarsSliderRef = useRef<HTMLDivElement>(null);
-
-  const [activeStatSlide, setActiveStatSlide] = useState(0);
-  const statSliderRef = useRef<HTMLDivElement>(null);
-
-  const handleStatScroll = () => {
-    if (!statSliderRef.current) return;
-    const container = statSliderRef.current;
-    const cards = container.querySelectorAll<HTMLElement>(
-      '[data-stat-card="true"]'
-    );
-    if (!cards.length) return;
-    const containerLeft = container.getBoundingClientRect().left;
-    let closestIndex = 0;
-    let minDiff = Infinity;
-    cards.forEach((card, idx) => {
-      const diff = Math.abs(card.getBoundingClientRect().left - containerLeft);
-      if (diff < minDiff) {
-        minDiff = diff;
-        closestIndex = idx;
-      }
-    });
-    setActiveStatSlide(closestIndex);
-  };
-
-  const scrollToStatSlide = (index: number) => {
-    if (!statSliderRef.current) return;
-    const container = statSliderRef.current;
-    const cards = container.querySelectorAll<HTMLElement>(
-      '[data-stat-card="true"]'
-    );
-    const card = cards[index];
-    if (card) {
-      const containerRect = container.getBoundingClientRect();
-      const cardRect = card.getBoundingClientRect();
-      const targetScrollLeft =
-        container.scrollLeft + (cardRect.left - containerRect.left);
-      container.scrollTo({
-        left: targetScrollLeft,
-        behavior: 'smooth',
-      });
-      setActiveStatSlide(index);
-    }
-  };
 
   const handlePillarsScroll = () => {
     if (!pillarsSliderRef.current) return;
@@ -131,101 +91,142 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
     }
   };
 
-  // Left Column — Three Equal-Sized Statistics Cards
+  // Left Column — Six Equal-Sized Statistics Cards (3x2 Desktop, 2x3 Tablet/Mobile)
+  // Row 1: Soft Pastel Blue, Soft Pastel Green, Soft Pastel Yellow
+  // Row 2: Soft Pastel Yellow, Soft Pastel Blue, Soft Pastel Green
   const statisticsCards = [
     {
       number: '01',
-      category: 'GOOGLE ADS',
-      prefix: '$',
-      value: 10,
-      suffix: 'M+',
-      label: 'Ad Spend Managed',
-      description: 'Google Search, Shopping & Performance Max',
-      icon: Target,
-      tint: 'bg-[#E0F2FE]/65 border-sky-200/80 hover:border-sky-300',
+      category: 'COMPLETED ORDERS',
+      prefix: '',
+      value: 800,
+      suffix: '+',
+      textValue: undefined as string | undefined,
+      label: 'Completed Orders',
+      description: undefined as string | undefined,
+      icon: PackageCheck,
+      tint: 'bg-[#E0F2FE]/60 border-sky-200/80 hover:border-sky-300',
       categoryColor: 'text-sky-900/75',
       dividerColor: 'border-sky-200/75',
     },
     {
       number: '02',
-      category: 'META ADS',
-      prefix: '$',
-      value: 12,
-      suffix: 'M+',
-      label: 'Ad Spend Managed',
-      description: 'Facebook, Instagram & Lead Generation',
-      icon: Share2,
-      tint: 'bg-[#ECFCCB]/70 border-lime-300/80 hover:border-lime-400',
+      category: 'CLIENT REVIEWS',
+      prefix: '',
+      value: 650,
+      suffix: '+',
+      textValue: undefined as string | undefined,
+      label: '5-Star Reviews',
+      description: undefined as string | undefined,
+      icon: Star,
+      tint: 'bg-[#ECFCCB]/65 border-lime-300/80 hover:border-lime-400',
       categoryColor: 'text-emerald-900/75',
       dividerColor: 'border-lime-300/70',
     },
     {
       number: '03',
+      category: 'RECOGNITION',
+      prefix: '',
+      value: 0,
+      suffix: '',
+      textValue: 'Top Rated',
+      label: 'FIVERR · UPWORK',
+      description: undefined as string | undefined,
+      icon: Award,
+      tint: 'bg-[#FEF3C7]/65 border-amber-200/85 hover:border-amber-300',
+      categoryColor: 'text-amber-900/75',
+      dividerColor: 'border-amber-200/80',
+    },
+    {
+      number: '04',
+      category: 'GOOGLE ADS',
+      prefix: '$',
+      value: 10,
+      suffix: 'M+',
+      textValue: undefined as string | undefined,
+      label: 'Ad Spend Managed',
+      description: 'Google Search, Shopping & Performance Max.',
+      icon: Target,
+      tint: 'bg-[#FEF3C7]/65 border-amber-200/85 hover:border-amber-300',
+      categoryColor: 'text-amber-900/75',
+      dividerColor: 'border-amber-200/80',
+    },
+    {
+      number: '05',
+      category: 'META ADS',
+      prefix: '$',
+      value: 12,
+      suffix: 'M+',
+      textValue: undefined as string | undefined,
+      label: 'Ad Spend Managed',
+      description: 'Facebook, Instagram & Lead Generation.',
+      icon: Share2,
+      tint: 'bg-[#E0F2FE]/60 border-sky-200/80 hover:border-sky-300',
+      categoryColor: 'text-sky-900/75',
+      dividerColor: 'border-sky-200/75',
+    },
+    {
+      number: '06',
       category: 'ANALYTICS & TRACKING',
       prefix: '',
       value: 300,
       suffix: '+',
+      textValue: undefined as string | undefined,
       label: 'Tracking Implementations',
-      description: 'GA4, GTM, Meta CAPI & Server-Side Tracking',
+      description: 'GA4, GTM, Meta CAPI & Server-Side Tracking.',
       icon: ChartNoAxesCombined,
-      tint: 'bg-[#FEF3C7]/70 border-amber-200/85 hover:border-amber-300',
-      categoryColor: 'text-amber-900/75',
-      dividerColor: 'border-amber-200/80',
+      tint: 'bg-[#ECFCCB]/65 border-lime-300/80 hover:border-lime-400',
+      categoryColor: 'text-emerald-900/75',
+      dividerColor: 'border-lime-300/70',
     },
   ];
 
-  // Right Column — Three Specialization Slider Cards
-  const specializationCards = [
+  // Right Column — Three Expertise Cards (Equal Height on Desktop)
+  const expertiseCards = [
     {
       index: '01',
-      title: 'Google Ads & eCommerce',
-      platforms: 'Search · Shopping · PMax',
+      eyebrow: 'EXPERTISE 01',
+      title: 'Google Ads & Search Growth',
       description:
-        'Capture high-intent search demand and turn qualified traffic into measurable revenue through strategic Google Ads campaigns.',
-      services: [
-        'Google Search Ads',
-        'Google Shopping',
-        'Performance Max',
-        'Keyword Strategy',
-        'Remarketing',
-        'eCommerce Campaign Optimization',
-      ],
+        'Helping businesses connect with high-intent customers through strategic search advertising, smarter budget allocation, and continuous performance optimization.',
+      keywords: ['Search Demand', 'Qualified Traffic', 'Revenue Growth'],
       icon: Target,
       tint: 'bg-[#E0F2FE]/60 border-sky-200/80',
+      badgeTint: 'bg-white/85 border-sky-300/60 text-sky-950',
+      chipTint: 'bg-white/90 border-sky-200/80 text-sky-950',
     },
     {
       index: '02',
-      title: 'Meta Ads & Lead Generation',
-      platforms: 'Facebook & Instagram Ads',
+      eyebrow: 'EXPERTISE 02',
+      title: 'Meta Ads & Customer Acquisition',
       description:
-        'Build targeted advertising campaigns that attract relevant audiences, generate qualified inquiries, and support sustainable customer acquisition.',
-      services: [
-        'Facebook & Instagram Ads',
+        'Connecting brands with relevant audiences through structured Facebook and Instagram campaigns focused on customer acquisition, lead generation, and eCommerce growth.',
+      keywords: [
+        'Audience Strategy',
         'Lead Generation',
-        'Audience Research',
-        'Creative Testing',
-        'Retargeting',
-        'Campaign Optimization',
+        'Customer Acquisition',
       ],
-      icon: Share2,
+      icon: Megaphone,
       tint: 'bg-[#ECFCCB]/65 border-lime-300/80',
+      badgeTint: 'bg-white/85 border-lime-400/60 text-emerald-950',
+      chipTint: 'bg-white/90 border-lime-300/80 text-emerald-950',
     },
     {
       index: '03',
+      eyebrow: 'EXPERTISE 03',
       title: 'Analytics & Conversion Tracking',
-      platforms: 'GA4 · GTM · Server-Side CAPI',
       description:
-        'Build reliable measurement systems that connect advertising performance with real business outcomes through accurate conversion tracking and attribution.',
-      services: [
-        'Google Analytics 4 (GA4)',
-        'Google Tag Manager (GTM)',
-        'Meta Pixel & Conversions API',
+        'Building reliable measurement systems that connect advertising activity with meaningful business outcomes, enabling clearer attribution and smarter decisions.',
+      keywords: [
+        'GA4',
+        'GTM',
+        'Conversion API',
         'Server-Side Tracking',
-        'Enhanced Conversions',
-        'eCommerce Tracking',
       ],
       icon: ChartNoAxesCombined,
       tint: 'bg-[#FEF3C7]/65 border-amber-200/80',
+      badgeTint: 'bg-white/85 border-amber-300/60 text-amber-950',
+      chipTint: 'bg-white/90 border-amber-200/80 text-amber-950',
     },
   ];
 
@@ -270,83 +271,74 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
         </motion.div>
 
         {/* ===================================================================
-            ORIGINAL TWO-COLUMN COMPOSITION (Exact Equal Height on Desktop)
-            LEFT: Profile Info + 3 Equal Statistics Cards
-            RIGHT: 3 Specialization / Capability Slider Cards
+            ORIGINAL TWO-COLUMN COMPOSITION
+            LEFT: Compact Profile Card + 6 Equal Statistics Cards
+            RIGHT: 3 Equal-Height Expertise Cards (Aligned Bottoms on Desktop)
         =================================================================== */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start lg:items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
           {/* -----------------------------------------------------------------
-              LEFT COLUMN (6 COLS): PERSONAL PROFILE & 3 STATISTICS CARDS
+              LEFT COLUMN (6 COLS): COMPACT PROFILE & 6 STATISTICS CARDS
           ----------------------------------------------------------------- */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.6 }}
-            className="lg:col-span-6 lg:h-full flex flex-col justify-between gap-6"
+            className="lg:col-span-6 space-y-5"
           >
-            {/* Personal Profile Card */}
-            <div className="flex-1 rounded-[28px] bg-white border border-zinc-200/90 p-6 sm:p-9 shadow-[0_12px_32px_-8px_rgba(9,9,11,0.05)] flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-3.5 pb-6 mb-6 border-b border-zinc-100">
-                  <img
-                    src="/assets/zahidul-Illustration.webp"
-                    alt="Zahidul Islam — Performance & Analytics Specialist"
-                    width={56}
-                    height={56}
-                    loading="lazy"
-                    className="w-14 h-14 rounded-2xl object-cover object-top border border-zinc-200 shadow-xs shrink-0"
-                  />
-                  <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="font-display font-bold text-lg sm:text-xl text-[#09090B]">
-                        Zahidul Islam
-                      </h3>
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-lime-100 border border-lime-300 text-[10px] font-mono font-semibold text-lime-900">
-                        <ShieldCheck className="w-3 h-3 text-emerald-600" />
-                        Top Rated · 5+ Yrs Exp
-                      </span>
-                    </div>
-                    <p className="text-xs sm:text-sm text-zinc-500 mt-0.5">
-                      Performance &amp; Analytics Specialist · Google Ads &amp; Meta Ads
-                    </p>
+            {/* Compact Personal Profile Card */}
+            <div className="rounded-[28px] bg-white border border-zinc-200/90 p-6 sm:p-7 shadow-[0_12px_32px_-8px_rgba(9,9,11,0.05)]">
+              <div className="flex items-center gap-3.5 pb-5 mb-5 border-b border-zinc-100">
+                <img
+                  src="/assets/zahidul-Illustration.webp"
+                  alt="Zahidul Islam — Performance & Analytics Specialist"
+                  width={56}
+                  height={56}
+                  loading="lazy"
+                  className="w-14 h-14 rounded-2xl object-cover object-top border border-zinc-200 shadow-xs shrink-0"
+                />
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h3 className="font-display font-bold text-lg sm:text-xl text-[#09090B]">
+                      Zahidul Islam
+                    </h3>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-lime-100 border border-lime-300 text-[10px] font-mono font-semibold text-lime-900">
+                      <ShieldCheck className="w-3 h-3 text-emerald-600" />
+                      Top Rated · 5+ Yrs Exp
+                    </span>
                   </div>
-                </div>
-
-                <div className="space-y-4 text-sm sm:text-base text-zinc-600 leading-relaxed">
-                  <p>
-                    With{' '}
-                    <strong className="text-[#09090B] font-semibold">
-                      5+ years of hands-on experience
-                    </strong>{' '}
-                    in Google Ads, Meta Ads, and PPC campaign management, I help
-                    local service businesses, professional practices, and eCommerce
-                    brands turn ad spend into qualified leads and measurable sales.
-                  </p>
-                  <p>
-                    Alongside campaign management, I implement{' '}
-                    <strong className="text-[#09090B] font-semibold">
-                      Google Analytics 4 (GA4), Google Tag Manager (GTM), Meta
-                      Pixel, and Server-Side Conversions API
-                    </strong>{' '}
-                    so your optimization decisions are grounded in reliable
-                    conversion data rather than guesswork.
-                  </p>
-                  <p className="text-xs sm:text-sm text-zinc-500 pt-1">
-                    As a Top Rated freelancer on Upwork (100% Job Success Score
-                    across 15+ completed projects) and a Top Rated / Level 1 Seller
-                    on Fiverr (4.9★ rating across 685 reviews), I focus on clear
-                    communication, honest expectations, and practical strategies
-                    built around your business goals.
+                  <p className="text-xs sm:text-sm text-zinc-500 mt-0.5">
+                    Performance &amp; Analytics Specialist · Google Ads &amp; Meta Ads
                   </p>
                 </div>
               </div>
 
-              <div className="mt-7 pt-6 border-t border-zinc-100 flex flex-wrap items-center gap-3">
+              <div className="space-y-3.5 text-sm sm:text-[15px] text-zinc-600 leading-relaxed">
+                <p>
+                  With{' '}
+                  <strong className="text-[#09090B] font-semibold">
+                    5+ years of hands-on experience
+                  </strong>{' '}
+                  in Google Ads, Meta Ads, and PPC campaign management, I help
+                  local service businesses, professional practices, and eCommerce
+                  brands turn ad spend into qualified leads and measurable sales.
+                </p>
+                <p>
+                  Alongside campaign management, I implement{' '}
+                  <strong className="text-[#09090B] font-semibold">
+                    Google Analytics 4 (GA4), Google Tag Manager (GTM), Meta
+                    Pixel, and Server-Side Conversions API
+                  </strong>{' '}
+                  so your optimization decisions are grounded in reliable
+                  conversion data rather than guesswork.
+                </p>
+              </div>
+
+              <div className="mt-5 pt-5 border-t border-zinc-100 flex flex-wrap items-center gap-3">
                 <button
                   type="button"
                   onClick={onOpenBooking}
-                  className="group inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#09090B] hover:bg-zinc-800 text-white font-display font-semibold text-xs sm:text-sm transition-all cursor-pointer shadow-md"
+                  className="group inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#09090B] hover:bg-zinc-800 text-white font-display font-semibold text-xs sm:text-sm transition-all cursor-pointer shadow-md"
                 >
                   <span>Work With Me</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -355,7 +347,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                 <button
                   type="button"
                   onClick={handleScrollToCaseStudies}
-                  className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-zinc-100 hover:bg-zinc-200/80 text-[#09090B] font-display font-semibold text-xs sm:text-sm transition-all cursor-pointer"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-zinc-100 hover:bg-zinc-200/80 text-[#09090B] font-display font-semibold text-xs sm:text-sm transition-all cursor-pointer"
                 >
                   <span>Explore Case Studies</span>
                   <ArrowUpRight className="w-4 h-4" />
@@ -363,158 +355,93 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               </div>
             </div>
 
-            {/* Three Compact Equal-Sized Statistics Cards Below Description */}
-            <div className="shrink-0">
-              {/* Desktop & Tablet: Equal 3-Column Grid */}
-              <div className="hidden sm:grid sm:grid-cols-3 gap-3.5 items-stretch">
-                {statisticsCards.map((stat) => {
-                  const Icon = stat.icon;
-                  return (
-                    <div
-                      key={stat.number}
-                      className={`h-full rounded-[22px] ${stat.tint} border p-5 flex flex-col justify-between shadow-[0_8px_24px_-10px_rgba(9,9,11,0.05)] transition-all duration-300 hover:-translate-y-0.5`}
-                    >
-                      <div>
-                        {/* Card Top Row: Category & Icon */}
-                        <div className="flex items-center justify-between gap-2 mb-3.5">
-                          <span
-                            className={`font-mono text-[10px] font-bold uppercase tracking-wider truncate ${stat.categoryColor}`}
-                          >
-                            {stat.category}
-                          </span>
-                          <div className="w-7 h-7 rounded-lg bg-white/90 border border-black/10 flex items-center justify-center text-[#09090B] shrink-0 shadow-2xs">
-                            <Icon className="w-3.5 h-3.5" />
-                          </div>
+            {/* Six Equal-Sized Statistics Cards (3x2 Desktop, 2x3 Tablet & Mobile) */}
+            <div className="grid grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-3 sm:gap-3.5">
+              {statisticsCards.map((stat) => {
+                const Icon = stat.icon;
+                return (
+                  <div
+                    key={stat.number}
+                    className={`h-full rounded-[22px] ${stat.tint} border p-4 sm:p-4.5 flex flex-col justify-between shadow-[0_8px_24px_-10px_rgba(9,9,11,0.05)] transition-all duration-300 hover:-translate-y-0.5`}
+                  >
+                    <div>
+                      {/* Card Top Row: Category & Icon */}
+                      <div className="flex items-center justify-between gap-1.5 mb-2.5">
+                        <span
+                          className={`font-mono text-[9.5px] sm:text-[10px] font-bold uppercase tracking-wider truncate ${stat.categoryColor}`}
+                        >
+                          {stat.category}
+                        </span>
+                        <div className="w-7 h-7 rounded-lg bg-white/90 border border-black/10 flex items-center justify-center text-[#09090B] shrink-0 shadow-2xs">
+                          <Icon className="w-3.5 h-3.5" />
                         </div>
+                      </div>
 
-                        {/* Prominent Numerical Figure in Lime/Green Accent */}
-                        <div className="font-display font-extrabold text-2xl xl:text-3xl text-emerald-700 tracking-tight leading-none">
+                      {/* Prominent Numerical / Recognition Figure */}
+                      <div className="font-display font-extrabold text-xl sm:text-2xl xl:text-[26px] text-emerald-700 tracking-tight leading-none">
+                        {stat.textValue ? (
+                          <span>{stat.textValue}</span>
+                        ) : (
                           <NumberTicker
                             value={stat.value}
                             prefix={stat.prefix}
                             suffix={stat.suffix}
                             className="font-display font-extrabold"
                           />
-                        </div>
-
-                        {/* Supporting Label */}
-                        <div className="mt-1.5 font-display font-bold text-xs text-[#09090B] leading-snug">
-                          {stat.label}
-                        </div>
+                        )}
                       </div>
 
-                      {/* Subtle Divider & Short Supporting Description */}
-                      <div className={`mt-3.5 pt-3 border-t ${stat.dividerColor}`}>
+                      {/* Concise Label */}
+                      <div className="mt-1.5 font-display font-bold text-xs text-[#09090B] leading-snug">
+                        {stat.label}
+                      </div>
+                    </div>
+
+                    {/* Supporting Text (present on Cards 04-06) */}
+                    {stat.description ? (
+                      <div className={`mt-3 pt-2.5 border-t ${stat.dividerColor}`}>
                         <p className="text-[11px] text-zinc-700 leading-relaxed">
                           {stat.description}
                         </p>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Mobile Only: Swipeable Horizontal Slider for the 3 Statistics Cards */}
-              <div className="sm:hidden flex flex-col gap-3">
-                <div
-                  ref={statSliderRef}
-                  onScroll={handleStatScroll}
-                  className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3 pb-1 -mx-4 px-4 slider-touch-track"
-                >
-                  {statisticsCards.map((stat) => {
-                    const Icon = stat.icon;
-                    return (
-                      <div
-                        key={stat.number}
-                        data-stat-card="true"
-                        className={`w-[82vw] max-w-[290px] shrink-0 snap-center rounded-[22px] ${stat.tint} border p-5 flex flex-col justify-between shadow-xs`}
-                      >
-                        <div>
-                          <div className="flex items-center justify-between gap-2 mb-3">
-                            <span
-                              className={`font-mono text-[10px] font-bold uppercase tracking-wider ${stat.categoryColor}`}
-                            >
-                              {stat.number} · {stat.category}
-                            </span>
-                            <div className="w-7 h-7 rounded-lg bg-white/90 border border-black/10 flex items-center justify-center text-[#09090B] shrink-0">
-                              <Icon className="w-3.5 h-3.5" />
-                            </div>
-                          </div>
-
-                          <div className="font-display font-extrabold text-3xl text-emerald-700 tracking-tight leading-none">
-                            <NumberTicker
-                              value={stat.value}
-                              prefix={stat.prefix}
-                              suffix={stat.suffix}
-                              className="font-display font-extrabold"
-                            />
-                          </div>
-
-                          <div className="mt-1.5 font-display font-bold text-xs text-[#09090B]">
-                            {stat.label}
-                          </div>
-                        </div>
-
-                        <div className={`mt-3.5 pt-3 border-t ${stat.dividerColor}`}>
-                          <p className="text-xs text-zinc-700 leading-relaxed">
-                            {stat.description}
-                          </p>
-                        </div>
+                    ) : (
+                      <div className={`mt-3 pt-2.5 border-t ${stat.dividerColor}`}>
+                        <p className="text-[10px] font-mono uppercase tracking-wider text-zinc-500">
+                          Verified Record
+                        </p>
                       </div>
-                    );
-                  })}
-                </div>
-
-                {/* Mobile Pagination Dots for Statistics Cards */}
-                <div className="flex items-center justify-between px-1 pt-1">
-                  <span className="font-mono text-[10px] text-zinc-500">
-                    0{activeStatSlide + 1} / 03 · Verified Track Record
-                  </span>
-                  <div className="flex items-center gap-1.5">
-                    {statisticsCards.map((_, i) => (
-                      <button
-                        key={i}
-                        type="button"
-                        onClick={() => scrollToStatSlide(i)}
-                        aria-label={`Go to statistic ${i + 1}`}
-                        className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                          activeStatSlide === i
-                            ? 'w-5 bg-[#09090B]'
-                            : 'w-1.5 bg-zinc-300'
-                        }`}
-                      />
-                    ))}
+                    )}
                   </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
           </motion.div>
 
           {/* -----------------------------------------------------------------
-              RIGHT COLUMN (6 COLS): THREE SPECIALIZATION SLIDER CARDS
+              RIGHT COLUMN (6 COLS): THREE EQUAL-HEIGHT EXPERTISE CARDS
           ----------------------------------------------------------------- */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="lg:col-span-6 lg:h-full flex flex-col justify-between gap-4"
+            className="lg:col-span-6 lg:h-full lg:flex lg:flex-col"
           >
-            <div className="flex items-center justify-between px-1 shrink-0">
+            <div className="flex items-center justify-between px-1 mb-4 shrink-0">
               <span className="font-mono text-xs uppercase tracking-wider font-semibold text-zinc-500">
-                Core Capabilities · Specializations
+                Core Capabilities · Expertise
               </span>
               <span className="font-serif italic text-sm text-zinc-700">
                 Full-Funnel Growth Systems
               </span>
             </div>
 
-            {/* Vertical Stack on Desktop/Tablet, Touch Slider on Mobile */}
+            {/* Equal-Row Grid on Desktop (aligned to left column height), Vertical Stack on Tablet, Touch Slider on Mobile */}
             <div
               ref={pillarsSliderRef}
               onScroll={handlePillarsScroll}
               className="
-                flex sm:flex-col lg:flex-1 lg:justify-between
+                flex sm:flex-col lg:grid lg:grid-rows-3 lg:flex-1
                 overflow-x-auto sm:overflow-x-visible
                 snap-x snap-mandatory sm:snap-none
                 gap-4
@@ -524,49 +451,42 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                 slider-touch-track
               "
             >
-              {specializationCards.map((pillar) => {
-                const Icon = pillar.icon;
+              {expertiseCards.map((card) => {
+                const Icon = card.icon;
                 return (
                   <div
-                    key={pillar.index}
+                    key={card.index}
                     data-pillar-card="true"
-                    className={`w-[86vw] max-w-[340px] shrink-0 snap-center sm:w-auto sm:max-w-none sm:shrink lg:flex-1 rounded-[26px] ${pillar.tint} border p-6 sm:p-7 transition-all duration-300 hover:-translate-y-0.5 shadow-[0_8px_24px_-8px_rgba(9,9,11,0.04)] flex flex-col justify-between`}
+                    className={`w-[86vw] max-w-[340px] shrink-0 snap-center sm:w-auto sm:max-w-none sm:shrink lg:h-full rounded-[26px] ${card.tint} border p-5 sm:p-6 transition-all duration-300 hover:-translate-y-0.5 shadow-[0_8px_24px_-8px_rgba(9,9,11,0.04)] flex flex-col justify-between`}
                   >
                     <div>
-                      <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                        <span className="font-serif italic text-sm sm:text-base text-zinc-800">
-                          {pillar.platforms}
+                      <div className="flex items-center justify-between gap-3 mb-3">
+                        <span className={`inline-flex items-center px-2.5 py-1 rounded-full border font-mono text-[10.5px] font-bold tracking-wider uppercase ${card.badgeTint}`}>
+                          {card.eyebrow}
                         </span>
-                        <span className="px-2.5 py-1 rounded-full bg-white/80 border border-black/5 font-mono text-[11px] font-semibold text-zinc-700">
-                          Specialization {pillar.index}
-                        </span>
-                      </div>
-
-                      <div className="flex items-start gap-3.5">
-                        <div className="w-10 h-10 rounded-xl bg-white border border-black/10 flex items-center justify-center text-[#09090B] shrink-0 shadow-2xs">
-                          <Icon className="w-5 h-5" />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <h3 className="font-display font-bold text-lg sm:text-xl text-[#09090B] tracking-tight">
-                            {pillar.title}
-                          </h3>
-                          <p className="mt-1.5 text-xs sm:text-sm text-zinc-700 leading-relaxed">
-                            {pillar.description}
-                          </p>
-
-                          <div className="mt-4 flex flex-wrap gap-2">
-                            {pillar.services.map((service) => (
-                              <span
-                                key={service}
-                                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 border border-black/8 text-xs font-medium text-zinc-800"
-                              >
-                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                                {service}
-                              </span>
-                            ))}
-                          </div>
+                        <div className="w-9 h-9 rounded-xl bg-white border border-black/10 flex items-center justify-center text-[#09090B] shrink-0 shadow-2xs">
+                          <Icon className="w-4.5 h-4.5" />
                         </div>
                       </div>
+
+                      <h3 className="font-display font-bold text-lg sm:text-xl text-[#09090B] tracking-tight leading-snug">
+                        {card.title}
+                      </h3>
+
+                      <p className="mt-2 text-xs sm:text-[13.5px] text-zinc-700 leading-relaxed">
+                        {card.description}
+                      </p>
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-black/6 flex flex-wrap gap-1.5 sm:gap-2">
+                      {card.keywords.map((keyword) => (
+                        <span
+                          key={keyword}
+                          className={`inline-flex items-center px-2.5 py-1 rounded-full border text-[11px] sm:text-xs font-medium ${card.chipTint}`}
+                        >
+                          {keyword}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 );
@@ -574,27 +494,27 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
             </div>
 
             {/* Mobile Swipe Navigation & Pagination Indicators */}
-            <div className="sm:hidden pt-1 flex items-center justify-between px-1">
+            <div className="sm:hidden pt-3 flex items-center justify-between px-1">
               <div className="flex items-center gap-1.5 font-mono text-[10.5px] text-zinc-600">
                 <span className="font-bold text-[#09090B]">
                   0{activePillarSlide + 1}
                 </span>
                 <span>/</span>
                 <span>03</span>
-                <span className="ml-1">· Swipe specializations</span>
+                <span className="ml-1">· Swipe expertise</span>
               </div>
 
               <div
                 className="flex items-center gap-1.5"
                 role="tablist"
-                aria-label="Specializations pagination"
+                aria-label="Expertise pagination"
               >
-                {specializationCards.map((_, i) => (
+                {expertiseCards.map((_, i) => (
                   <button
                     key={i}
                     type="button"
                     onClick={() => scrollToPillarSlide(i)}
-                    aria-label={`Go to specialization ${i + 1}`}
+                    aria-label={`Go to expertise ${i + 1}`}
                     aria-selected={activePillarSlide === i}
                     className={`h-1.5 transition-all duration-300 rounded-full cursor-pointer ${
                       activePillarSlide === i

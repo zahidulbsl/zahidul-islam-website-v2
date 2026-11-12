@@ -217,7 +217,10 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
              Restores smooth continuous horizontal scrolling with pause-on-hover
              while preserving the exact equal-dimension card design.
       =================================================================== */}
-      <div className="relative z-10 space-y-5 sm:space-y-6 py-2 overflow-hidden [mask-image:linear-gradient(to_right,transparent_0%,#000_6%,#000_94%,transparent_100%)]">
+      <div
+        className={`relative z-10 ${EDGE_FADE_CONTAINER_CLASS} space-y-5 sm:space-y-6 py-2 overflow-hidden`}
+        style={EDGE_FADE_MASK_STYLE}
+      >
         {/* Row 1: Right-to-Left Continuous Marquee */}
         <div className="flex overflow-hidden">
           <div className="flex gap-5 sm:gap-6 pr-5 sm:pr-6 w-max animate-reviews-rtl hover:[animation-play-state:paused]">
@@ -247,9 +250,9 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
             <ShieldCheck className="w-5 h-5 shrink-0 text-emerald-600 hidden sm:block" />
             <p className="text-xs sm:text-sm font-medium text-zinc-700">
               <strong className="text-[#09090B]">Upwork:</strong> Top Rated ·
-              100% Job Success · 15+ Projects &nbsp;|&nbsp;{' '}
-              <strong className="text-[#09090B]">Fiverr:</strong> Level 1
-              Seller · 4.9★ Rating · 685 Reviews
+              100% Job Success · 15+ Projects | {' '}
+              <strong className="text-[#09090B]">Fiverr:</strong> Top Rated ·
+              5★ Rating · 685 Reviews
             </p>
           </div>
 
@@ -259,8 +262,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
               onClick={onOpenBooking}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#09090B] hover:bg-zinc-800 text-xs sm:text-sm font-display font-bold text-white transition-colors cursor-pointer"
             >
-              <Calendar className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Book a Call</span>
+              <span>📞 Book Free Strategy Call</span>
             </button>
 
             <button
