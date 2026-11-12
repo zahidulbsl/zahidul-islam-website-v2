@@ -4,8 +4,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   Star,
-  TrendingUp,
-  Activity,
 } from 'lucide-react';
 
 interface HeroProps {
@@ -70,26 +68,70 @@ export const Hero: React.FC<HeroProps> = ({
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-5xl mx-auto text-center flex flex-col items-center"
         >
-          {/* Top Marketplace Rating Badge Lockup (Upwork + Fiverr 4.9★) */}
+          {/* Top Marketplace Rating Badge Lockup (Fiverr + Upwork + Google 4.9★) */}
           <div className="inline-flex flex-col items-center gap-1.5 mb-5">
             <div className="flex items-center -space-x-1.5 bg-white/95 px-2.5 py-1 rounded-full shadow-md">
-              <span
-                title="Upwork Top Rated — 100% Job Success"
-                className="w-6 h-6 rounded-full bg-[#14A800] text-white font-display font-black text-[10px] flex items-center justify-center ring-2 ring-white"
-              >
-                Up
-              </span>
+              {/* 1. Fiverr */}
               <span
                 title="Fiverr Level 1 Seller — 685+ Reviews"
-                className="w-6 h-6 rounded-full bg-[#1DBF73] text-white font-display font-black text-[10px] flex items-center justify-center ring-2 ring-white"
+                className="w-6 h-6 rounded-full bg-[#1DBF73] flex items-center justify-center ring-2 ring-white"
               >
-                fi
+                <svg
+                  viewBox="0 0 24 24"
+                  className="w-3.5 h-3.5 text-white fill-current"
+                  role="img"
+                  aria-label="Fiverr"
+                >
+                  <path d="M16.25 16.5v-5.75h-5.5v-.45c0-.72.52-1.15 1.35-1.15h1.5V6.6h-1.85c-2.45 0-3.85 1.4-3.85 3.65v.5H6.2v2.4h1.7v3.35H6.2V19h5.9v-2.5h-1.35v-3.35h2.75v3.35h-.7V19h5.15v-2.5h-1.7z" />
+                  <circle cx="14.9" cy="7.9" r="1.45" />
+                </svg>
               </span>
+
+              {/* 2. Upwork */}
+              <span
+                title="Upwork Top Rated — 100% Job Success"
+                className="w-6 h-6 rounded-full bg-[#14A800] flex items-center justify-center ring-2 ring-white"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  className="w-3.5 h-3.5 text-white fill-current"
+                  role="img"
+                  aria-label="Upwork"
+                >
+                  <g transform="translate(0, -5)">
+                    <path d="M16 11c-2.4 0-4.3 1.8-4.8 4.2-1-.7-2.3-1.2-3.7-1.2-3.3 0-6 2.7-6 6s2.7 6 6 6c3.1 0 5.6-2.3 6-5.3.8 1.4 2.2 2.3 3.9 2.3 2.5 0 4.5-2 4.5-4.5V11h-3v7.5c0 .8-.7 1.5-1.5 1.5s-1.5-.7-1.5-1.5V11h-3v7.5c0 1.9-1.2 3.5-2.9 4-1-.5-1.7-1.5-1.7-2.7 0-1.7 1.3-3 3-3 .4 0 .7.1 1.1.2V14c-.4-.1-.8-.1-1.1-.1-2.2 0-4.1 1.3-4.9 3.1-.1-.7-.1-1.4.2-2.1H4.6c-.3.7-.4 1.5-.4 2.3 0 3.3 2.7 6 6 6 1.7 0 3.3-.7 4.4-1.9.8 1.2 2.2 1.9 3.7 1.9 2.5 0 4.5-2 4.5-4.5V11h-6.8z" />
+                  </g>
+                </svg>
+              </span>
+
+              {/* 3. Google */}
               <span
                 title="Google Ads & Analytics Specialist"
-                className="w-6 h-6 rounded-full bg-[#4285F4] text-white font-display font-black text-[10px] flex items-center justify-center ring-2 ring-white"
+                className="w-6 h-6 rounded-full bg-white flex items-center justify-center ring-2 ring-white"
               >
-                G
+                <svg
+                  viewBox="0 0 24 24"
+                  className="w-3.5 h-3.5"
+                  role="img"
+                  aria-label="Google"
+                >
+                  <path
+                    fill="#4285F4"
+                    d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                  />
+                  <path
+                    fill="#34A853"
+                    d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                  />
+                  <path
+                    fill="#FBBC05"
+                    d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                  />
+                  <path
+                    fill="#EA4335"
+                    d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                  />
+                </svg>
               </span>
             </div>
 
@@ -130,18 +172,60 @@ export const Hero: React.FC<HeroProps> = ({
                 className="inline-flex items-center -space-x-2 sm:-space-x-2.5 py-1 align-middle"
               >
                 {/* Badge 1: Google Ads */}
-                <span className="w-10 h-10 sm:w-13 sm:h-13 lg:w-15 lg:h-15 rounded-full bg-[#10B981] border-2 border-[#06070B] flex items-center justify-center shadow-lg">
-                  <svg viewBox="0 0 24 24" className="w-5 h-5 sm:w-6 sm:h-6 text-white fill-current">
-                    <path d="M12 2L3 19h5.5l3.5-7 3.5 7H21L12 2z" />
+                <span
+                  title="Google Ads"
+                  className="w-10 h-10 sm:w-13 sm:h-13 lg:w-15 lg:h-15 rounded-full bg-white border-2 border-[#06070B] flex items-center justify-center shadow-lg"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="w-5 h-5 sm:w-6 sm:h-6"
+                    role="img"
+                    aria-label="Google Ads"
+                  >
+                    <path
+                      fill="#FBBC04"
+                      d="M3.2 17.5L9.9 5.9c.7-1.2 2.2-1.6 3.4-.9 1.2.7 1.6 2.2.9 3.4L7.5 20c-.7 1.2-2.2 1.6-3.4.9-1.2-.7-1.6-2.2-.9-3.4z"
+                    />
+                    <path
+                      fill="#4285F4"
+                      d="M20.8 17.5L14.1 5.9c-.7-1.2-2.2-1.6-3.4-.9-1.2.7-1.6 2.2-.9 3.4l6.7 11.6c.7 1.2 2.2 1.6 3.4.9 1.2-.7 1.6-2.2.9-3.4z"
+                    />
+                    <circle cx="5.4" cy="18.7" r="2.6" fill="#34A853" />
                   </svg>
                 </span>
+
                 {/* Badge 2: Meta Ads */}
-                <span className="w-10 h-10 sm:w-13 sm:h-13 lg:w-15 lg:h-15 rounded-full bg-[#EA580C] border-2 border-[#06070B] flex items-center justify-center shadow-lg">
-                  <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-white stroke-[2.2]" />
+                <span
+                  title="Meta Ads"
+                  className="w-10 h-10 sm:w-13 sm:h-13 lg:w-15 lg:h-15 rounded-full bg-white border-2 border-[#06070B] flex items-center justify-center shadow-lg"
+                >
+                  <svg
+                    viewBox="0 0 34 34"
+                    className="w-5.5 h-5.5 sm:w-7 sm:h-7"
+                    role="img"
+                    aria-label="Meta Ads"
+                  >
+                    <g transform="translate(0, -2.5)" fill="#0866FF">
+                      <path d="M22.8 11.2c-2.4 0-4.6 1.3-5.8 3.3-1.2-2-3.4-3.3-5.8-3.3-4.5 0-7.7 3.6-7.7 8.3 0 4.8 3.3 8.3 7.8 8.3 2.5 0 4.7-1.3 5.8-3.3 1.1 2 3.3 3.3 5.7 3.3 4.6 0 7.8-3.5 7.8-8.3 0-4.7-3.2-8.3-7.8-8.3zm-11.6 13.5c-2.7 0-4.7-2.3-4.7-5.2 0-3 2-5.2 4.7-5.2 2.6 0 4.6 2.2 4.6 5.2 0 3-2 5.2-4.6 5.2zm11.6 0c-2.7 0-4.7-2.3-4.7-5.2 0-3 2-5.2 4.7-5.2 2.6 0 4.7 2.2 4.7 5.2 0 3-2 5.2-4.7 5.2z" />
+                    </g>
+                  </svg>
                 </span>
+
                 {/* Badge 3: GA4 / GTM Tracking */}
-                <span className="w-10 h-10 sm:w-13 sm:h-13 lg:w-15 lg:h-15 rounded-full bg-white border-2 border-[#06070B] flex items-center justify-center shadow-lg">
-                  <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-[#09090B] stroke-[2.4]" />
+                <span
+                  title="GA4 & GTM Conversion Tracking"
+                  className="w-10 h-10 sm:w-13 sm:h-13 lg:w-15 lg:h-15 rounded-full bg-white border-2 border-[#06070B] flex items-center justify-center shadow-lg"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="w-5 h-5 sm:w-6 sm:h-6"
+                    role="img"
+                    aria-label="Google Analytics 4"
+                  >
+                    <rect x="15.5" y="4" width="3.8" height="16" rx="1.9" fill="#E37400" />
+                    <rect x="10.1" y="9.5" width="3.8" height="10.5" rx="1.9" fill="#F9AB00" />
+                    <circle cx="6.6" cy="18.1" r="1.9" fill="#F9AB00" />
+                  </svg>
                 </span>
               </span>
 
