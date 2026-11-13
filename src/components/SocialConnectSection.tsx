@@ -176,24 +176,48 @@ export const SocialConnectSection: React.FC = () => (
         Explore verified contract history, client reviews, and direct professional networks.
       </p>
 
-      <div className="mt-8 sm:mt-10 max-w-4xl mx-auto flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
-        {VERIFIED_PROFILES.map((profile) => (
-          <a
-            key={profile.id}
-            href={profile.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={profile.ariaLabel}
-            className="group inline-flex h-10 sm:h-11 items-center justify-center gap-2 rounded-full border border-zinc-200/90 bg-[#FAFAFA] hover:bg-[#09090B] px-4 sm:px-4.5 text-xs sm:text-[13px] font-display font-semibold text-[#09090B] hover:text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#09090B] shadow-[0_4px_14px_-6px_rgba(9,9,11,0.08)] hover:shadow-[0_12px_24px_-10px_rgba(9,9,11,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#09090B] focus-visible:ring-offset-2 focus-visible:ring-offset-white whitespace-nowrap"
-          >
-            <PlatformIcon platform={profile.platform} />
-            <span>{profile.name}</span>
-            <ArrowUpRight
-              aria-hidden="true"
-              className="w-3.5 h-3.5 text-zinc-400 transition-all duration-200 group-hover:text-lime-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0"
-            />
-          </a>
-        ))}
+      <div className="mt-8 sm:mt-10 max-w-4xl mx-auto flex flex-col items-center gap-2.5 sm:gap-3">
+        {/* First Row: Social & Professional Networks */}
+        <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+          {VERIFIED_PROFILES.slice(0, 5).map((profile) => (
+            <a
+              key={profile.id}
+              href={profile.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={profile.ariaLabel}
+              className="group inline-flex h-10 sm:h-11 items-center justify-center gap-2 rounded-full border border-zinc-200/90 bg-[#FAFAFA] hover:bg-[#09090B] px-4 sm:px-4.5 text-xs sm:text-[13px] font-display font-semibold text-[#09090B] hover:text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#09090B] shadow-[0_4px_14px_-6px_rgba(9,9,11,0.08)] hover:shadow-[0_12px_24px_-10px_rgba(9,9,11,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#09090B] focus-visible:ring-offset-2 focus-visible:ring-offset-white whitespace-nowrap"
+            >
+              <PlatformIcon platform={profile.platform} />
+              <span>{profile.name}</span>
+              <ArrowUpRight
+                aria-hidden="true"
+                className="w-3.5 h-3.5 text-zinc-400 transition-all duration-200 group-hover:text-lime-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0"
+              />
+            </a>
+          ))}
+        </div>
+
+        {/* Second Row: Freelance Marketplaces (Upwork & Fiverr side-by-side) */}
+        <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+          {VERIFIED_PROFILES.slice(5).map((profile) => (
+            <a
+              key={profile.id}
+              href={profile.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={profile.ariaLabel}
+              className="group inline-flex h-10 sm:h-11 items-center justify-center gap-2 rounded-full border border-zinc-200/90 bg-[#FAFAFA] hover:bg-[#09090B] px-4 sm:px-4.5 text-xs sm:text-[13px] font-display font-semibold text-[#09090B] hover:text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#09090B] shadow-[0_4px_14px_-6px_rgba(9,9,11,0.08)] hover:shadow-[0_12px_24px_-10px_rgba(9,9,11,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#09090B] focus-visible:ring-offset-2 focus-visible:ring-offset-white whitespace-nowrap"
+            >
+              <PlatformIcon platform={profile.platform} />
+              <span>{profile.name}</span>
+              <ArrowUpRight
+                aria-hidden="true"
+                className="w-3.5 h-3.5 text-zinc-400 transition-all duration-200 group-hover:text-lime-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0"
+              />
+            </a>
+          ))}
+        </div>
       </div>
     </motion.div>
   </section>

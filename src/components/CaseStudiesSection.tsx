@@ -9,7 +9,6 @@ import {
   ChevronDown,
   ChevronUp,
   ShieldCheck,
-  Sparkles,
 } from 'lucide-react';
 
 interface CaseStudiesSectionProps {
@@ -337,12 +336,12 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
               }
             }}
             aria-label={`Featured case study: ${featuredProject.title}`}
-            className="group relative rounded-[28px] sm:rounded-[34px] bg-[#0B0D14] text-white border border-zinc-900 p-5 sm:p-8 lg:p-11 mb-8 sm:mb-10 shadow-[0_26px_65px_-18px_rgba(9,9,11,0.25)] cursor-pointer transition-all duration-300 hover:-translate-y-1"
+            className="group relative rounded-[28px] sm:rounded-[34px] bg-[#0B0D14] text-white border border-zinc-900 p-5 sm:p-6 lg:p-8 mb-8 sm:mb-10 shadow-[0_26px_65px_-18px_rgba(9,9,11,0.25)] cursor-pointer transition-all duration-300 hover:-translate-y-1"
           >
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-11 items-center">
-              {/* LEFT COLUMN: LARGE CAMPAIGN IMAGE (7 COLS) */}
-              <div className="lg:col-span-7">
-                <div className="relative aspect-[16/10] w-full rounded-[20px] sm:rounded-[24px] overflow-hidden bg-[#07090F] border border-white/15 shadow-2xl">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 lg:items-stretch">
+              {/* LEFT COLUMN: UNOBSTRUCTED CAMPAIGN PROOF IMAGE (6 COLS) */}
+              <div className="lg:col-span-6 flex">
+                <div className="relative w-full aspect-[4/3] lg:h-full rounded-[18px] sm:rounded-[22px] overflow-hidden bg-[#07090F] border border-white/12 shadow-[0_18px_45px_-15px_rgba(0,0,0,0.65)]">
                   <img
                     src={featuredProject.coverImage.src}
                     alt={featuredProject.coverImage.alt}
@@ -357,96 +356,80 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
                         featuredProject.primaryMetric
                       );
                     }}
-                    className="w-full h-full object-cover object-[50%_60%] transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                    className="w-full h-full object-cover object-[50%_54%] transition-transform duration-500 ease-out group-hover:scale-[1.02]"
                   />
-
-                  {/* Top-Right Featured Badge */}
-                  <div className="absolute top-2.5 right-2.5 sm:top-3.5 sm:right-3.5">
-                    <span className="px-2.5 py-1 sm:px-3 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-400/35 font-mono text-[9.5px] sm:text-[10px] font-semibold text-emerald-300 uppercase tracking-wider">
-                      Featured · #01
-                    </span>
-                  </div>
                 </div>
               </div>
 
-                {/* RIGHT COLUMN: EDITORIAL STORY, STRATEGY & METRICS (5 COLS) */}
-                <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
-                  <div>
-                    <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-emerald-400">
-                        <Sparkles className="w-3.5 h-3.5" />
-                        <span>{featuredProject.clientIndustry}</span>
+              {/* RIGHT COLUMN: EDITORIAL STORY & EXECUTION (6 COLS) */}
+              <div className="lg:col-span-6 flex flex-col justify-between gap-5">
+                {/* 1. Category Kicker & Verification + 2. Title + 3. Description */}
+                <div>
+                  <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-white/[0.08]">
+                    <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-[0.12em]">
+                      <span className="font-semibold text-emerald-400">
+                        Featured Case · 01
                       </span>
-                      <span className="font-serif italic text-sm text-zinc-400">
-                        Verified Portfolio Result
+                      <span aria-hidden="true" className="text-zinc-600">
+                        ·
+                      </span>
+                      <span className="text-zinc-300">
+                        {featuredProject.clientIndustry}
                       </span>
                     </div>
-
-                    {/* Headline */}
-                    <h3 className="font-display font-bold text-2xl sm:text-3xl lg:text-[2.15rem] text-white tracking-[-0.025em] leading-[1.13]">
-                      {featuredProject.title}
-                    </h3>
-
-                    {/* Short Description */}
-                    <p className="mt-3.5 text-sm sm:text-base text-zinc-300 leading-relaxed">
-                      {featuredProject.summary}
-                    </p>
-                  </div>
-
-                  {/* Performance Metrics Grid */}
-                  <div className="grid grid-cols-3 gap-2.5">
-                    {featuredProject.results.metrics.slice(0, 3).map((m) => (
-                      <div
-                        key={m.label}
-                        className="p-3 sm:p-3.5 rounded-2xl bg-white/[0.04] border border-white/10"
-                      >
-                        <div className="font-display font-bold text-base sm:text-lg text-white truncate">
-                          {m.value}
-                        </div>
-                        <div className="text-[11px] text-zinc-400 mt-0.5 truncate">
-                          {m.label}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Relevant Strategy Details */}
-                  <div className="space-y-2 pt-2 border-t border-white/10">
-                    <span className="block font-mono text-[10px] uppercase tracking-wider text-zinc-400 mb-1.5">
-                      Key Strategic Execution
+                    <span className="font-serif italic text-xs sm:text-[13px] text-zinc-400">
+                      Verified Portfolio Result
                     </span>
+                  </div>
+
+                  <h3 className="font-display font-bold text-xl sm:text-2xl lg:text-[1.75rem] xl:text-[1.9rem] text-white tracking-[-0.025em] leading-[1.15] [text-wrap:balance]">
+                    {featuredProject.title}
+                  </h3>
+
+                  <p className="mt-3 text-xs sm:text-sm text-zinc-300 leading-relaxed">
+                    {featuredProject.summary}
+                  </p>
+                </div>
+
+                {/* 4. Key Strategic Execution Points */}
+                <div className="pt-4 border-t border-white/[0.08] space-y-2.5">
+                  <span className="block font-mono text-[10px] uppercase tracking-[0.12em] text-zinc-400">
+                    Key Strategic Execution
+                  </span>
+                  <div className="space-y-2">
                     {featuredProject.strategy.slice(0, 3).map((point, i) => (
                       <div
                         key={i}
-                        className="flex items-start gap-2.5 text-xs text-zinc-300"
+                        className="flex items-start gap-2.5 text-xs sm:text-[13px] text-zinc-300 leading-snug"
                       >
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
                         <span className="line-clamp-2">{point}</span>
                       </div>
                     ))}
                   </div>
+                </div>
 
-                  {/* Platform Tags & View Case Study Action */}
-                  <div className="pt-2 flex flex-wrap items-center justify-between gap-4">
-                    <div className="flex flex-wrap items-center gap-1.5">
-                      {featuredProject.platforms.map((plat) => (
-                        <span
-                          key={plat}
-                          className="px-2.5 py-1 rounded-lg bg-white/[0.05] border border-white/10 font-mono text-[10px] text-zinc-300"
-                        >
-                          {plat}
-                        </span>
-                      ))}
-                    </div>
-
-                    <span className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white text-[#09090B] font-display font-bold text-xs sm:text-sm group-hover:bg-emerald-400 transition-colors shrink-0 shadow-lg">
-                      <span>View Case Study</span>
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-                    </span>
+                {/* 5. Platform Tags & 6. Prominent Green CTA */}
+                <div className="pt-4 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="flex flex-wrap items-center gap-1.5 min-w-0">
+                    {featuredProject.platforms.map((plat) => (
+                      <span
+                        key={plat}
+                        className="px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.09] font-mono text-[10.5px] text-zinc-300 whitespace-nowrap"
+                      >
+                        {plat}
+                      </span>
+                    ))}
                   </div>
+
+                  <span className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-400 group-hover:bg-emerald-300 text-[#06080D] font-display font-bold text-xs sm:text-[13px] transition-colors shrink-0 whitespace-nowrap shadow-[0_10px_28px_-8px_rgba(52,211,153,0.45)]">
+                    <span>View Case Study</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                  </span>
                 </div>
               </div>
-            </motion.article>
+            </div>
+          </motion.article>
         )}
 
         {/* ===================================================================

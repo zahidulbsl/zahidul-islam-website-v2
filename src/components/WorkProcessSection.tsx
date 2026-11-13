@@ -147,8 +147,8 @@ export const WorkProcessSection: React.FC<WorkProcessSectionProps> = ({
           </span>
 
           <h2 className="font-display font-bold text-3xl sm:text-5xl lg:text-[3.5rem] leading-[1.08] tracking-[-0.03em] text-[#09090B]">
-            A Clear Working Process.{' '}
-            <span className="font-serif italic font-normal text-[#09090B] block sm:inline">
+            <span className="block">A Clear Working Process.</span>
+            <span className="font-serif italic font-normal text-[#09090B] block mt-1">
               Zero Guesswork.
             </span>
           </h2>
