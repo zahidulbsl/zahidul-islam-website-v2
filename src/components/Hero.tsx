@@ -70,15 +70,15 @@ export const Hero: React.FC<HeroProps> = ({
         >
           {/* Top Marketplace Rating Badge Lockup (Fiverr + Upwork + Google 4.9★) */}
           <div className="inline-flex flex-col items-center gap-1.5 mb-5">
-            <div className="flex items-center -space-x-1.5 bg-white/95 px-2.5 py-1 rounded-full shadow-md">
+            <div className="flex items-center -space-x-2">
               {/* 1. Fiverr */}
               <span
                 title="Fiverr Level 1 Seller — 685+ Reviews"
-                className="w-6 h-6 rounded-full bg-[#1DBF73] flex items-center justify-center ring-2 ring-white"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-black/20 flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.28)]"
               >
                 <svg
                   viewBox="0 0 24 24"
-                  className="w-3.5 h-3.5 text-white fill-current"
+                  className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#1DBF73] fill-current"
                   role="img"
                   aria-label="Fiverr"
                 >
@@ -90,11 +90,11 @@ export const Hero: React.FC<HeroProps> = ({
               {/* 2. Upwork */}
               <span
                 title="Upwork Top Rated — 100% Job Success"
-                className="w-6 h-6 rounded-full bg-[#14A800] flex items-center justify-center ring-2 ring-white"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-black/20 flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.28)]"
               >
                 <svg
                   viewBox="0 0 24 24"
-                  className="w-3.5 h-3.5 text-white fill-current"
+                  className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#14A800] fill-current"
                   role="img"
                   aria-label="Upwork"
                 >
@@ -107,11 +107,11 @@ export const Hero: React.FC<HeroProps> = ({
               {/* 3. Google */}
               <span
                 title="Google Ads & Analytics Specialist"
-                className="w-6 h-6 rounded-full bg-white flex items-center justify-center ring-2 ring-white"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-black/20 flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.28)]"
               >
                 <svg
                   viewBox="0 0 24 24"
-                  className="w-3.5 h-3.5"
+                  className="w-4 h-4 sm:w-4.5 sm:h-4.5"
                   role="img"
                   aria-label="Google"
                 >
@@ -169,43 +169,44 @@ export const Hero: React.FC<HeroProps> = ({
               {/* Inline Overlapping Platform Badges */}
               <span
                 aria-label="Google Ads, Meta Ads, and Google Analytics 4"
-                className="inline-flex items-center -space-x-2 sm:-space-x-2.5 py-1 align-middle"
+                className="inline-flex items-center -space-x-2.5 sm:-space-x-3 py-1 align-middle"
               >
                 {/* Badge 1: Google Ads */}
                 <span
                   title="Google Ads"
-                  className="w-10 h-10 sm:w-13 sm:h-13 lg:w-15 lg:h-15 rounded-full bg-white border-2 border-[#06070B] flex items-center justify-center shadow-lg"
+                  className="w-10 h-10 sm:w-13 sm:h-13 lg:w-15 lg:h-15 rounded-full bg-[#10A37F] border-2 border-[#06070B] flex items-center justify-center shadow-lg"
                 >
                   <svg
                     viewBox="0 0 24 24"
-                    className="w-5 h-5 sm:w-6 sm:h-6"
+                    className="w-5 h-5 sm:w-6.5 sm:h-6.5 lg:w-7.5 lg:h-7.5"
                     role="img"
                     aria-label="Google Ads"
                   >
                     <path
-                      fill="#FBBC04"
+                      fill="#FFFFFF"
+                      fillOpacity="0.82"
                       d="M3.2 17.5L9.9 5.9c.7-1.2 2.2-1.6 3.4-.9 1.2.7 1.6 2.2.9 3.4L7.5 20c-.7 1.2-2.2 1.6-3.4.9-1.2-.7-1.6-2.2-.9-3.4z"
                     />
                     <path
-                      fill="#4285F4"
+                      fill="#FFFFFF"
                       d="M20.8 17.5L14.1 5.9c-.7-1.2-2.2-1.6-3.4-.9-1.2.7-1.6 2.2-.9 3.4l6.7 11.6c.7 1.2 2.2 1.6 3.4.9 1.2-.7 1.6-2.2.9-3.4z"
                     />
-                    <circle cx="5.4" cy="18.7" r="2.6" fill="#34A853" />
+                    <circle cx="5.4" cy="18.7" r="2.6" fill="#FFFFFF" />
                   </svg>
                 </span>
 
                 {/* Badge 2: Meta Ads */}
                 <span
                   title="Meta Ads"
-                  className="w-10 h-10 sm:w-13 sm:h-13 lg:w-15 lg:h-15 rounded-full bg-white border-2 border-[#06070B] flex items-center justify-center shadow-lg"
+                  className="w-10 h-10 sm:w-13 sm:h-13 lg:w-15 lg:h-15 rounded-full bg-[#D97757] border-2 border-[#06070B] flex items-center justify-center shadow-lg"
                 >
                   <svg
                     viewBox="0 0 34 34"
-                    className="w-5.5 h-5.5 sm:w-7 sm:h-7"
+                    className="w-5.5 h-5.5 sm:w-7.5 sm:h-7.5 lg:w-8.5 lg:h-8.5"
                     role="img"
                     aria-label="Meta Ads"
                   >
-                    <g transform="translate(0, -2.5)" fill="#0866FF">
+                    <g transform="translate(0, -2.5)" fill="#FFFFFF">
                       <path d="M22.8 11.2c-2.4 0-4.6 1.3-5.8 3.3-1.2-2-3.4-3.3-5.8-3.3-4.5 0-7.7 3.6-7.7 8.3 0 4.8 3.3 8.3 7.8 8.3 2.5 0 4.7-1.3 5.8-3.3 1.1 2 3.3 3.3 5.7 3.3 4.6 0 7.8-3.5 7.8-8.3 0-4.7-3.2-8.3-7.8-8.3zm-11.6 13.5c-2.7 0-4.7-2.3-4.7-5.2 0-3 2-5.2 4.7-5.2 2.6 0 4.6 2.2 4.6 5.2 0 3-2 5.2-4.6 5.2zm11.6 0c-2.7 0-4.7-2.3-4.7-5.2 0-3 2-5.2 4.7-5.2 2.6 0 4.7 2.2 4.7 5.2 0 3-2 5.2-4.7 5.2z" />
                     </g>
                   </svg>
@@ -218,7 +219,7 @@ export const Hero: React.FC<HeroProps> = ({
                 >
                   <svg
                     viewBox="0 0 24 24"
-                    className="w-5 h-5 sm:w-6 sm:h-6"
+                    className="w-5 h-5 sm:w-6.5 sm:h-6.5 lg:w-7.5 lg:h-7.5"
                     role="img"
                     aria-label="Google Analytics 4"
                   >
