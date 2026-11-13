@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { scrollToSection } from '../utils/scroll';
 import { OFFICIAL_CREDENTIALS } from '../data/credentials';
+import { BRAND_LOGO_CONFIG, BrandLogo } from './BrandLogo';
 
 interface FooterProps {
   onOpenBooking: () => void;
@@ -61,13 +62,10 @@ export const Footer: React.FC<FooterProps> = ({
             <button
               type="button"
               onClick={scrollToTop}
-              aria-label="Zahidul Islam — Back to top"
-              className="flex items-center gap-2.5 text-left group cursor-pointer"
+              aria-label={`${BRAND_LOGO_CONFIG.brandText} — Back to top`}
+              className="flex items-center text-left group cursor-pointer transition-opacity hover:opacity-90"
             >
-              <span className="font-display font-extrabold text-2xl sm:text-3xl text-white tracking-tight flex items-center">
-                Zahidul Islam
-                <span className="text-lime-400 ml-0.5">.</span>
-              </span>
+              <BrandLogo className="h-9 sm:h-10 w-auto" />
             </button>
 
             <p className="text-xs font-mono uppercase tracking-wider text-lime-400">

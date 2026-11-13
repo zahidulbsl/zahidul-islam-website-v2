@@ -58,14 +58,6 @@ const matchesCategory = (project: CaseStudy, category: Category): boolean => {
   return project.category === category;
 };
 
-const getPlatformLogo = (project: CaseStudy): { src: string; name: string } => {
-  const joined = project.platforms.join(' ').toLowerCase();
-  if (joined.includes('meta') || joined.includes('facebook')) {
-    return { src: '/logos/meta-ads.svg', name: 'Meta Ads' };
-  }
-  return { src: '/logos/google-ads.svg', name: 'Google Ads' };
-};
-
 const getTrackingLogo = (project: CaseStudy): { src: string; name: string } => {
   const joined = project.platforms.join(' ').toLowerCase();
   if (joined.includes('merchant')) {
@@ -160,7 +152,6 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
 
   // Render a regular 3-column portfolio card with consistent dimensions & aspect ratio
   const renderRegularCard = (project: CaseStudy, indexNumber: number) => {
-    const primaryLogo = getPlatformLogo(project);
     const trackingLogo = getTrackingLogo(project);
     const formattedIndex = String(indexNumber).padStart(2, '0');
 
@@ -194,40 +185,13 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
                 target.onerror = null;
                 target.src = buildFallbackSvg(project.title, project.primaryMetric);
               }}
-              className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.035]"
+              className="w-full h-full object-cover object-[50%_60%] transition-transform duration-500 ease-out group-hover:scale-[1.035]"
             />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#06080E]/85 via-[#06080E]/15 to-transparent" />
 
-            {/* 2. CAMPAIGN CATEGORY & INDEX PILLS */}
-            <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#090B10]/90 backdrop-blur-md border border-white/15 font-mono text-[10px] font-semibold text-white">
-                <img
-                  src={primaryLogo.src}
-                  alt={primaryLogo.name}
-                  width={13}
-                  height={13}
-                  className="w-3.5 h-3.5 object-contain"
-                />
-                <span>{project.category}</span>
-              </span>
-
+            {/* 2. CASE INDEX BADGE */}
+            <div className="absolute top-3 right-3">
               <span className="px-2.5 py-0.5 rounded-full bg-[#090B10]/85 backdrop-blur-md border border-white/15 font-mono text-[10px] text-zinc-300">
                 #{formattedIndex}
-              </span>
-            </div>
-
-            {/* 3. MAIN RESULT OVERLAY BAR */}
-            <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2 px-3.5 py-2.5 rounded-xl bg-[#090B10]/90 backdrop-blur-md border border-white/15">
-              <div className="min-w-0">
-                <div className="font-display font-extrabold text-xl sm:text-2xl text-white leading-none tracking-tight">
-                  {project.primaryMetric}
-                </div>
-                <div className="text-[10px] font-mono text-emerald-300 mt-1 truncate">
-                  {project.metricLabel}
-                </div>
-              </div>
-              <span className="w-8 h-8 rounded-full bg-white/10 group-hover:bg-white text-white group-hover:text-[#09090B] flex items-center justify-center transition-colors shrink-0">
-                <ArrowUpRight className="w-4 h-4" />
               </span>
             </div>
           </div>
@@ -357,94 +321,53 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
             3. ONE LARGE FEATURED CASE STUDY (Section 5.1)
                Initial Featured Project: 22.8X ROAS — eCommerce Shopping Campaign
         =================================================================== */}
-        {featuredProject && (() => {
-          const primaryLogo = getPlatformLogo(featuredProject);
-          const trackingLogo = getTrackingLogo(featuredProject);
+        {featuredProject && (
+          <motion.article
+            key={`featured-${featuredProject.id}`}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            onClick={() => onSelectCaseStudy(featuredProject)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onSelectCaseStudy(featuredProject);
+              }
+            }}
+            aria-label={`Featured case study: ${featuredProject.title}`}
+            className="group relative rounded-[28px] sm:rounded-[34px] bg-[#0B0D14] text-white border border-zinc-900 p-5 sm:p-8 lg:p-11 mb-8 sm:mb-10 shadow-[0_26px_65px_-18px_rgba(9,9,11,0.25)] cursor-pointer transition-all duration-300 hover:-translate-y-1"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-11 items-center">
+              {/* LEFT COLUMN: LARGE CAMPAIGN IMAGE (7 COLS) */}
+              <div className="lg:col-span-7">
+                <div className="relative aspect-[16/10] w-full rounded-[20px] sm:rounded-[24px] overflow-hidden bg-[#07090F] border border-white/15 shadow-2xl">
+                  <img
+                    src={featuredProject.coverImage.src}
+                    alt={featuredProject.coverImage.alt}
+                    width={960}
+                    height={600}
+                    loading="eager"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      target.onerror = null;
+                      target.src = buildFallbackSvg(
+                        featuredProject.title,
+                        featuredProject.primaryMetric
+                      );
+                    }}
+                    className="w-full h-full object-cover object-[50%_60%] transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                  />
 
-          return (
-            <motion.article
-              key={`featured-${featuredProject.id}`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              onClick={() => onSelectCaseStudy(featuredProject)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  onSelectCaseStudy(featuredProject);
-                }
-              }}
-              aria-label={`Featured case study: ${featuredProject.title}`}
-              className="group relative rounded-[28px] sm:rounded-[34px] bg-[#0B0D14] text-white border border-zinc-900 p-5 sm:p-8 lg:p-11 mb-8 sm:mb-10 shadow-[0_26px_65px_-18px_rgba(9,9,11,0.25)] cursor-pointer transition-all duration-300 hover:-translate-y-1"
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-11 items-center">
-                {/* LEFT COLUMN: LARGE CAMPAIGN IMAGE (7 COLS) */}
-                <div className="lg:col-span-7">
-                  <div className="relative aspect-[16/10] w-full rounded-[20px] sm:rounded-[24px] overflow-hidden bg-[#07090F] border border-white/15 shadow-2xl">
-                    <img
-                      src={featuredProject.coverImage.src}
-                      alt={featuredProject.coverImage.alt}
-                      width={960}
-                      height={600}
-                      loading="eager"
-                      onError={(e) => {
-                        const target = e.currentTarget;
-                        target.onerror = null;
-                        target.src = buildFallbackSvg(
-                          featuredProject.title,
-                          featuredProject.primaryMetric
-                        );
-                      }}
-                      className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#07090F]/85 via-transparent to-transparent" />
-
-                    {/* Top Floating Category & Platform Identification */}
-                    <div className="absolute top-2.5 left-2.5 right-2.5 sm:top-3.5 sm:left-3.5 sm:right-3.5 flex flex-wrap items-center justify-between gap-1.5 sm:gap-2">
-                      <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#090B10]/90 backdrop-blur-md border border-white/15">
-                        <img
-                          src={primaryLogo.src}
-                          alt={primaryLogo.name}
-                          width={16}
-                          height={16}
-                          className="w-3.5 h-3.5 sm:w-4 sm:h-4 object-contain"
-                        />
-                        <span className="font-mono text-[10px] sm:text-xs font-semibold text-white">
-                          {primaryLogo.name} · {featuredProject.category}
-                        </span>
-                      </div>
-
-                      <span className="px-2.5 py-1 sm:px-3 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-400/35 font-mono text-[9.5px] sm:text-[10px] font-semibold text-emerald-300 uppercase tracking-wider">
-                        Featured · #01
-                      </span>
-                    </div>
-
-                    {/* Bottom Main Campaign Result Bar */}
-                    <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-3.5 sm:left-3.5 sm:right-3.5 flex flex-wrap items-center justify-between gap-3 px-3 py-2 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl bg-[#090B10]/92 backdrop-blur-md border border-white/15">
-                      <div className="flex items-baseline gap-2.5">
-                        <span className="font-display font-extrabold text-2xl sm:text-4xl text-white tracking-tight">
-                          {featuredProject.primaryMetric}
-                        </span>
-                        <span className="text-xs sm:text-sm font-mono text-emerald-300 font-semibold">
-                          {featuredProject.metricLabel}
-                        </span>
-                      </div>
-
-                      <div className="hidden sm:inline-flex items-center gap-1.5 text-xs text-zinc-300 font-mono">
-                        <img
-                          src={trackingLogo.src}
-                          alt={trackingLogo.name}
-                          width={14}
-                          height={14}
-                          className="w-3.5 h-3.5 object-contain"
-                        />
-                        <span>{trackingLogo.name}</span>
-                      </div>
-                    </div>
+                  {/* Top-Right Featured Badge */}
+                  <div className="absolute top-2.5 right-2.5 sm:top-3.5 sm:right-3.5">
+                    <span className="px-2.5 py-1 sm:px-3 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-400/35 font-mono text-[9.5px] sm:text-[10px] font-semibold text-emerald-300 uppercase tracking-wider">
+                      Featured · #01
+                    </span>
                   </div>
                 </div>
+              </div>
 
                 {/* RIGHT COLUMN: EDITORIAL STORY, STRATEGY & METRICS (5 COLS) */}
                 <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
@@ -524,8 +447,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
                 </div>
               </div>
             </motion.article>
-          );
-        })()}
+        )}
 
         {/* ===================================================================
             4. REMAINING CASE STUDIES

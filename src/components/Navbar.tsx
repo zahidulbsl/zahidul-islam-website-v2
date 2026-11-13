@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { getNavbarOffset, scrollToSection } from '../utils/scroll';
 import { OFFICIAL_CREDENTIALS } from '../data/credentials';
+import { BRAND_LOGO_CONFIG, BrandLogo } from './BrandLogo';
 
 interface NavbarProps {
   onOpenBooking: () => void;
@@ -177,8 +178,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         id="site-navbar"
         className={`fixed inset-x-0 top-0 z-40 transition-all duration-300 ${
           isScrolled
-            ? 'py-2.5 bg-[#06070B]/85 backdrop-blur-xl border-b border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.2)]'
-            : 'py-4 sm:py-5 bg-transparent'
+            ? 'py-2 bg-[#06070B]/85 backdrop-blur-xl border-b border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.2)]'
+            : 'py-2.5 sm:py-3 bg-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -193,19 +194,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="text-zinc-400 font-mono text-[11px]">Performance &amp; Analytics Specialist</span>
           </div>
 
-          {/* Center: Signature Brand Wordmark (Design Monks Centered Wordmark Style) */}
+          {/* Center: Signature Brand Wordmark */}
           <a
             href="#home"
             onClick={(e) => handleNavigate(e, '#home')}
-            aria-label="Zahidul Islam — Zahidul Pro Home"
-            className="group flex items-center gap-2.5 focus:outline-none md:mx-auto"
+            aria-label={`${BRAND_LOGO_CONFIG.brandText} — Home`}
+            className="group flex items-center focus:outline-none md:mx-auto transition-opacity hover:opacity-90"
           >
-            <span className="font-display font-extrabold text-xl sm:text-2xl tracking-tight text-white flex items-center">
-              zahidul
-              <span className="inline-flex items-center justify-center px-1.5 py-0.5 ml-0.5 rounded-md bg-white/10 text-lime-400 font-mono text-xs sm:text-sm font-bold tracking-normal group-hover:bg-lime-400 group-hover:text-[#06070B] transition-colors">
-                pro
-              </span>
-            </span>
+            <BrandLogo className="h-[21px] sm:h-[24px] w-auto" />
           </a>
 
           {/* Right: Non-Clickable Trust Badge & Direct Call Trigger */}

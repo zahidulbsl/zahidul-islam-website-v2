@@ -333,7 +333,7 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
                               caseStudy.primaryMetric
                             );
                           }}
-                          className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
+                          className="w-full h-full object-cover object-[50%_60%] transition-transform duration-500 group-hover:scale-[1.03]"
                         />
                       </div>
                       <div className="px-4 py-3 bg-[#FAFAFA] border-t border-zinc-200/80 flex items-center justify-between gap-2">
