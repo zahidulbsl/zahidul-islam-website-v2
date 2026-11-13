@@ -33,85 +33,10 @@ const StrategyCallModal = React.lazy(() =>
   }))
 );
 
-const AdminDashboard = React.lazy(() =>
-  import('./components/admin/AdminDashboard').then((module) => ({
-    default: module.AdminDashboard,
-  }))
-);
-
-const AdminLogin = React.lazy(() =>
-  import('./components/admin/AdminLogin').then((module) => ({
-    default: module.AdminLogin,
-  }))
-);
-
 export default function App() {
-  const [currentPath, setCurrentPath] = useState<string>(() =>
-    typeof window !== 'undefined' ? window.location.pathname : '/'
-  );
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState<boolean | null>(null);
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<CaseStudy | null>(null);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [serviceInquiry, setServiceInquiry] = useState<string | undefined>(undefined);
-
-  // Handle client-side routing and popstate
-  React.useEffect(() => {
-    const handlePopState = () => {
-      setCurrentPath(window.location.pathname);
-    };
-
-    const handleClick = (e: MouseEvent) => {
-      const target = (e.target as HTMLElement)?.closest('a');
-      if (target && target.getAttribute('href') === '/admin') {
-        e.preventDefault();
-        window.history.pushState({}, '', '/admin');
-        setCurrentPath('/admin');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    document.addEventListener('click', handleClick);
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-      document.removeEventListener('click', handleClick);
-    };
-  }, []);
-
-  // Check admin authentication when visiting /admin
-  React.useEffect(() => {
-    if (currentPath.startsWith('/admin')) {
-      fetch('/api/admin/me')
-        .then(async (res) => {
-          if (!res.ok) return { authenticated: false };
-          try {
-            return await res.json();
-          } catch {
-            return { authenticated: false };
-          }
-        })
-        .then((data) => {
-          setIsAdminAuthenticated(Boolean(data?.authenticated));
-        })
-        .catch(() => {
-          setIsAdminAuthenticated(false);
-        });
-    }
-  }, [currentPath]);
-
-  const navigateTo = (path: string) => {
-    window.history.pushState({}, '', path);
-    setCurrentPath(path);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleAdminLogout = async () => {
-    try {
-      await fetch('/api/admin/logout', { method: 'POST' });
-    } finally {
-      setIsAdminAuthenticated(false);
-    }
-  };
 
   const handleOpenBooking = () => {
     setIsBookingModalOpen(true);
@@ -135,30 +60,6 @@ export default function App() {
       setSelectedCaseStudy(found);
     }
   };
-
-  if (currentPath.startsWith('/admin')) {
-    return (
-      <React.Suspense
-        fallback={
-          <div className="min-h-screen bg-[#070A10] flex items-center justify-center text-lime-400 font-mono text-sm">
-            Loading Zahidul Pro CRM...
-          </div>
-        }
-      >
-        {isAdminAuthenticated ? (
-          <AdminDashboard
-            onLogout={handleAdminLogout}
-            onBackToSite={() => navigateTo('/')}
-          />
-        ) : (
-          <AdminLogin
-            onSuccess={() => setIsAdminAuthenticated(true)}
-            onBackToSite={() => navigateTo('/')}
-          />
-        )}
-      </React.Suspense>
-    );
-  }
 
   return (
     <div className="min-h-screen text-[#09090B] flex flex-col font-sans relative bg-[#FAFAFA] overflow-x-hidden">
