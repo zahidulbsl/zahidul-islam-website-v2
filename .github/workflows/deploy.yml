@@ -36,6 +36,22 @@ jobs:
       - name: Build production bundle
         run: npm run build
 
+      - name: Verify compiled dist artifact
+        run: |
+          test -f dist/index.html
+          test -f dist/CNAME
+          test -f dist/.nojekyll
+          test -f dist/assets/zahidul-Illustration.webp
+          test -f dist/assets/fav-icon.webp
+          test -f dist/assets/p-ads.webp
+          if grep -q "/src/main.tsx" dist/index.html; then
+            echo "ERROR: dist/index.html still references /src/main.tsx"
+            exit 1
+          fi
+          grep -qE "/assets/index-[A-Za-z0-9_-]+\.js" dist/index.html
+          grep -qE "/assets/index-[A-Za-z0-9_-]+\.css" dist/index.html
+          echo "Verified dist/index.html and static assets."
+
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
