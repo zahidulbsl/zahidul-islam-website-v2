@@ -17,6 +17,7 @@ import {
 } from 'react-international-phone';
 import 'react-international-phone/style.css';
 import { OFFICIAL_CREDENTIALS } from '../data/credentials';
+import { submitLead } from '../services/leadSubmission';
 
 interface ContactSectionProps {
   onOpenBooking: () => void;
@@ -40,6 +41,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState('');
+  const formLoadedAtRef = useRef<number>(Date.now());
 
   const countries = useMemo(() => defaultCountries.map(parseCountry), []);
   const [selectedCountry, setSelectedCountry] = useState('us');
@@ -137,6 +140,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return;
 
     if (
       !formData.name.trim() ||
@@ -151,35 +155,18 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     setError(null);
 
     try {
-      const res = await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          source: 'contact_section',
-          fullName: formData.name,
-          email: formData.email,
-          whatsappNumber: formData.whatsappNumber,
-          websiteUrl: formData.websiteUrl,
-          service: formData.serviceInterest,
-          monthlyBudget: formData.monthlyBudget,
-          projectDetails: formData.message,
-        }),
+      await submitLead({
+        source: 'contact_section',
+        fullName: formData.name,
+        email: formData.email,
+        whatsapp: formData.whatsappNumber,
+        websiteUrl: formData.websiteUrl,
+        service: formData.serviceInterest,
+        monthlyBudget: formData.monthlyBudget,
+        projectDetails: formData.message,
+        honeypot,
+        formLoadedAt: formLoadedAtRef.current,
       });
-
-      const rawText = await res.text();
-      let data: { error?: string } | null = null;
-      try {
-        data = JSON.parse(rawText);
-      } catch {
-        data = null;
-      }
-
-      if (!res.ok) {
-        throw new Error(
-          data?.error ||
-            `Submission failed with status ${res.status}. Please try again or reach out via WhatsApp.`
-        );
-      }
 
       setSubmitted(true);
     } catch (err: unknown) {
@@ -576,6 +563,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                       onClick={() => {
                         setSubmitted(false);
                         setError(null);
+                        setHoneypot('');
+                        formLoadedAtRef.current = Date.now();
                         setFormData({
                           name: '',
                           email: '',
@@ -596,8 +585,25 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
               ) : (
                 <form
                   onSubmit={handleSubmit}
-                  className="h-full flex flex-col justify-between gap-5"
+                  className="relative h-full flex flex-col justify-between gap-5"
                 >
+                  <div
+                    aria-hidden="true"
+                    className="absolute -left-[9999px] top-auto w-px h-px overflow-hidden opacity-0 pointer-events-none"
+                  >
+                    <label htmlFor="contact-company-fax">
+                      Leave this field blank
+                    </label>
+                    <input
+                      id="contact-company-fax"
+                      name="company_fax"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                    />
+                  </div>
                   <div className="space-y-5">
                     <div className="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-zinc-200/80">
                     <div>

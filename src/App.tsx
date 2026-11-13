@@ -19,6 +19,7 @@ import { ContactAnnouncementBanner } from './components/ContactAnnouncementBanne
 import { Footer } from './components/Footer';
 import { CASE_STUDIES, CaseStudy } from './data/caseStudies';
 import { scrollToSection } from './utils/scroll';
+import { submitLead } from './services/leadSubmission';
 
 const CaseStudyDetailModal = React.lazy(() =>
   import('./components/CaseStudyDetailModal').then((module) => ({
@@ -255,35 +256,18 @@ export default function App() {
             isOpen={isBookingModalOpen}
             onClose={() => setIsBookingModalOpen(false)}
             onSubmit={async (request) => {
-              const res = await fetch('/api/leads', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  source: 'consultation_popup',
-                  fullName: request.name,
-                  email: request.email,
-                  whatsappNumber: request.whatsappNumber,
-                  websiteUrl: request.website,
-                  service: request.service,
-                  monthlyBudget: request.monthlyBudget,
-                  projectDetails: request.notes,
-                  preferredDate: request.preferredDate,
-                  preferredTime: request.preferredTime,
-                  timezone: request.timezone,
-                }),
+              await submitLead({
+                source: 'consultation_popup',
+                fullName: request.name,
+                email: request.email,
+                whatsapp: request.whatsappNumber,
+                websiteUrl: request.website,
+                service: request.service,
+                monthlyBudget: request.monthlyBudget,
+                projectDetails: request.notes,
+                honeypot: request.honeypot,
+                formLoadedAt: request.formLoadedAt,
               });
-
-              const rawText = await res.text();
-              let data: any = null;
-              try {
-                data = JSON.parse(rawText);
-              } catch {
-                data = null;
-              }
-
-              if (!res.ok) {
-                throw new Error(data?.error || `Submission failed with status ${res.status}. Please try again.`);
-              }
             }}
           />
         </React.Suspense>

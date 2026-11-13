@@ -29,6 +29,7 @@ import {
 } from "react-international-phone";
 import "react-international-phone/style.css";
 import { OFFICIAL_CREDENTIALS } from "../data/credentials";
+import { submitLead } from "../services/leadSubmission";
 
 export interface ConsultationRequest {
   name: string;
@@ -41,6 +42,8 @@ export interface ConsultationRequest {
   preferredTime: string;
   timezone: string;
   notes: string;
+  honeypot?: string;
+  formLoadedAt?: number;
 }
 
 interface StrategyCallModalProps {
@@ -103,6 +106,7 @@ export function StrategyCallModal({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("us");
   const [isCountryOpen, setIsCountryOpen] = useState(false);
   const [countrySearch, setCountrySearch] = useState("");
@@ -116,6 +120,7 @@ export function StrategyCallModal({
   });
 
   const modalRef = useRef<HTMLDivElement>(null);
+  const formLoadedAtRef = useRef<number>(Date.now());
   const phoneRef = useRef<PhoneInputRefType>(null);
   const countryDropdownRef = useRef<HTMLDivElement>(null);
   const countryButtonRef = useRef<HTMLButtonElement>(null);
@@ -154,6 +159,7 @@ export function StrategyCallModal({
   useEffect(() => {
     if (!isOpen) return;
 
+    formLoadedAtRef.current = Date.now();
     previousActiveElementRef.current = document.activeElement as HTMLElement;
 
     const scrollY =
@@ -330,6 +336,7 @@ export function StrategyCallModal({
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (isSubmitting) return;
     if (!validateForm()) return;
 
     try {
@@ -347,38 +354,24 @@ export function StrategyCallModal({
         preferredTime: "",
         timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC",
         notes: form.projectDetails.trim(),
+        honeypot,
+        formLoadedAt: formLoadedAtRef.current,
       };
 
       if (onSubmit) {
         await onSubmit(requestPayload);
       } else {
-        const res = await fetch("/api/leads", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            source: "consultation_popup",
-            fullName: requestPayload.name,
-            email: requestPayload.email,
-            whatsappNumber: requestPayload.whatsappNumber,
-            websiteUrl: requestPayload.website,
-            service: requestPayload.service,
-            projectDetails: requestPayload.notes,
-          }),
+        await submitLead({
+          source: "consultation_popup",
+          fullName: requestPayload.name,
+          email: requestPayload.email,
+          whatsapp: requestPayload.whatsappNumber,
+          websiteUrl: requestPayload.website,
+          service: requestPayload.service,
+          projectDetails: requestPayload.notes,
+          honeypot: requestPayload.honeypot,
+          formLoadedAt: requestPayload.formLoadedAt,
         });
-
-        const rawText = await res.text();
-        let data: { error?: string } | null = null;
-        try {
-          data = JSON.parse(rawText);
-        } catch {
-          data = null;
-        }
-
-        if (!res.ok) {
-          throw new Error(
-            data?.error || "Submission failed. Please try again."
-          );
-        }
       }
 
       setSuccess(true);
@@ -761,8 +754,25 @@ export function StrategyCallModal({
               ) : (
                 <form
                   onSubmit={handleSubmit}
-                  className="h-full flex flex-col justify-between gap-5"
+                  className="relative h-full flex flex-col justify-between gap-5"
                 >
+                  <div
+                    aria-hidden="true"
+                    className="absolute -left-[9999px] top-auto w-px h-px overflow-hidden opacity-0 pointer-events-none"
+                  >
+                    <label htmlFor="strategy-company-fax">
+                      Leave this field blank
+                    </label>
+                    <input
+                      id="strategy-company-fax"
+                      name="company_fax"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                    />
+                  </div>
                   <div className="space-y-4">
                     {/* Form Header */}
                     <div className="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-zinc-200/80">
