@@ -166,59 +166,45 @@ export const Hero: React.FC<HeroProps> = ({
                 {/* Badge 1: Google Ads */}
                 <span
                   title="Google Ads"
-                  className="w-10 h-10 sm:w-13 sm:h-13 lg:w-15 lg:h-15 rounded-full bg-[#10A37F] border-2 border-[#06070B] flex items-center justify-center shadow-lg"
+                  className="relative z-30 w-10 h-10 sm:w-13 sm:h-13 lg:w-15 lg:h-15 rounded-full bg-white border-2 border-[#06070B] flex items-center justify-center shadow-lg overflow-hidden"
                 >
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="w-5 h-5 sm:w-6.5 sm:h-6.5 lg:w-7.5 lg:h-7.5"
-                    role="img"
-                    aria-label="Google Ads"
-                  >
-                    <path
-                      fill="#FFFFFF"
-                      fillOpacity="0.82"
-                      d="M3.2 17.5L9.9 5.9c.7-1.2 2.2-1.6 3.4-.9 1.2.7 1.6 2.2.9 3.4L7.5 20c-.7 1.2-2.2 1.6-3.4.9-1.2-.7-1.6-2.2-.9-3.4z"
-                    />
-                    <path
-                      fill="#FFFFFF"
-                      d="M20.8 17.5L14.1 5.9c-.7-1.2-2.2-1.6-3.4-.9-1.2.7-1.6 2.2-.9 3.4l6.7 11.6c.7 1.2 2.2 1.6 3.4.9 1.2-.7 1.6-2.2.9-3.4z"
-                    />
-                    <circle cx="5.4" cy="18.7" r="2.6" fill="#FFFFFF" />
-                  </svg>
+                  <img
+                    src="/assets/aistudio/google-ads-icon_3b21cb24.png"
+                    alt="Google Ads"
+                    className="w-[56%] h-[56%] object-contain select-none"
+                  />
                 </span>
 
                 {/* Badge 2: Meta Ads */}
                 <span
                   title="Meta Ads"
-                  className="w-10 h-10 sm:w-13 sm:h-13 lg:w-15 lg:h-15 rounded-full bg-[#D97757] border-2 border-[#06070B] flex items-center justify-center shadow-lg"
+                  className="relative z-20 w-10 h-10 sm:w-13 sm:h-13 lg:w-15 lg:h-15 rounded-full bg-white border-2 border-[#06070B] flex items-center justify-center shadow-lg overflow-hidden"
                 >
-                  <svg
-                    viewBox="0 0 34 34"
-                    className="w-5.5 h-5.5 sm:w-7.5 sm:h-7.5 lg:w-8.5 lg:h-8.5"
-                    role="img"
-                    aria-label="Meta Ads"
-                  >
-                    <g transform="translate(0, -2.5)" fill="#FFFFFF">
-                      <path d="M22.8 11.2c-2.4 0-4.6 1.3-5.8 3.3-1.2-2-3.4-3.3-5.8-3.3-4.5 0-7.7 3.6-7.7 8.3 0 4.8 3.3 8.3 7.8 8.3 2.5 0 4.7-1.3 5.8-3.3 1.1 2 3.3 3.3 5.7 3.3 4.6 0 7.8-3.5 7.8-8.3 0-4.7-3.2-8.3-7.8-8.3zm-11.6 13.5c-2.7 0-4.7-2.3-4.7-5.2 0-3 2-5.2 4.7-5.2 2.6 0 4.6 2.2 4.6 5.2 0 3-2 5.2-4.6 5.2zm11.6 0c-2.7 0-4.7-2.3-4.7-5.2 0-3 2-5.2 4.7-5.2 2.6 0 4.7 2.2 4.7 5.2 0 3-2 5.2-4.7 5.2z" />
-                    </g>
-                  </svg>
+                  <img
+                    src="/assets/aistudio/_CITYPNG.COM_Facebook_Meta_Logo_Icon_HD_PNG_-_1000x1000_7226e452.png"
+                    alt="Meta Ads"
+                    className="w-[68%] h-[68%] object-contain select-none"
+                  />
                 </span>
 
-                {/* Badge 3: GA4 / GTM Tracking */}
+                {/* Badge 3: Google Analytics 4 */}
                 <span
                   title="GA4 & GTM Conversion Tracking"
-                  className="w-10 h-10 sm:w-13 sm:h-13 lg:w-15 lg:h-15 rounded-full bg-white border-2 border-[#06070B] flex items-center justify-center shadow-lg"
+                  className="relative z-10 w-10 h-10 sm:w-13 sm:h-13 lg:w-15 lg:h-15 rounded-full bg-white border-2 border-[#06070B] flex items-center justify-center shadow-lg overflow-hidden"
                 >
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="w-5 h-5 sm:w-6.5 sm:h-6.5 lg:w-7.5 lg:h-7.5"
-                    role="img"
-                    aria-label="Google Analytics 4"
-                  >
-                    <rect x="15.5" y="4" width="3.8" height="16" rx="1.9" fill="#E37400" />
-                    <rect x="10.1" y="9.5" width="3.8" height="10.5" rx="1.9" fill="#F9AB00" />
-                    <circle cx="6.6" cy="18.1" r="1.9" fill="#F9AB00" />
-                  </svg>
+                  <span className="relative w-[56%] h-[56%] overflow-hidden shrink-0 block">
+                    <img
+                      src="/assets/aistudio/6400cf54a94ff11ca124bd1e_ga4_49d40d78.png"
+                      alt="Google Analytics 4"
+                      className="absolute max-w-none select-none"
+                      style={{
+                        width: '230.794%',
+                        height: '235.238%',
+                        left: '-54.762%',
+                        top: '-12.222%',
+                      }}
+                    />
+                  </span>
                 </span>
               </span>
 

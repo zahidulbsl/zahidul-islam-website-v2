@@ -1,16 +1,15 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Globe, Instagram, ArrowUpRight } from 'lucide-react';
+import { Instagram, ArrowUpRight } from 'lucide-react';
 
 type PlatformId =
-  | 'website'
-  | 'upwork'
-  | 'fiverr'
   | 'linkedin'
   | 'facebook'
   | 'instagram'
   | 'x'
-  | 'pinterest';
+  | 'pinterest'
+  | 'upwork'
+  | 'fiverr';
 
 interface VerifiedProfile {
   id: string;
@@ -22,27 +21,6 @@ interface VerifiedProfile {
 
 const VERIFIED_PROFILES: VerifiedProfile[] = [
   {
-    id: 'website',
-    name: 'Website',
-    url: 'https://zahidul.pro.bd/',
-    platform: 'website',
-    ariaLabel: 'Visit Zahidul Islam official website (opens in a new tab)',
-  },
-  {
-    id: 'upwork',
-    name: 'Upwork',
-    url: 'https://www.upwork.com/freelancers/zahidulpro',
-    platform: 'upwork',
-    ariaLabel: 'Visit Zahidul Islam on Upwork (opens in a new tab)',
-  },
-  {
-    id: 'fiverr',
-    name: 'Fiverr',
-    url: 'https://www.fiverr.com/studio_2d2u',
-    platform: 'fiverr',
-    ariaLabel: 'Visit Zahidul Islam on Fiverr (opens in a new tab)',
-  },
-  {
     id: 'linkedin',
     name: 'LinkedIn',
     url: 'https://www.linkedin.com/in/zahidulpro/',
@@ -50,18 +28,11 @@ const VERIFIED_PROFILES: VerifiedProfile[] = [
     ariaLabel: 'Visit Zahidul Islam on LinkedIn (opens in a new tab)',
   },
   {
-    id: 'facebook-page',
-    name: 'Facebook Page',
+    id: 'facebook',
+    name: 'Facebook',
     url: 'https://www.facebook.com/zahidulpro',
     platform: 'facebook',
-    ariaLabel: 'Visit Zahidul Islam Facebook Page (opens in a new tab)',
-  },
-  {
-    id: 'facebook-profile',
-    name: 'Facebook Profile',
-    url: 'https://www.facebook.com/zahidulprobd',
-    platform: 'facebook',
-    ariaLabel: 'Visit Zahidul Islam Facebook Profile (opens in a new tab)',
+    ariaLabel: 'Visit Zahidul Islam on Facebook (opens in a new tab)',
   },
   {
     id: 'instagram',
@@ -84,18 +55,24 @@ const VERIFIED_PROFILES: VerifiedProfile[] = [
     platform: 'pinterest',
     ariaLabel: 'Visit Zahidul Islam on Pinterest (opens in a new tab)',
   },
+  {
+    id: 'upwork',
+    name: 'Upwork',
+    url: 'https://www.upwork.com/freelancers/zahidulpro',
+    platform: 'upwork',
+    ariaLabel: 'Visit Zahidul Islam on Upwork (opens in a new tab)',
+  },
+  {
+    id: 'fiverr',
+    name: 'Fiverr',
+    url: 'https://www.fiverr.com/studio_2d2u',
+    platform: 'fiverr',
+    ariaLabel: 'Visit Zahidul Islam on Fiverr (opens in a new tab)',
+  },
 ];
 
 const PlatformIcon: React.FC<{ platform: PlatformId }> = ({ platform }) => {
   switch (platform) {
-    case 'website':
-      return (
-        <Globe
-          aria-hidden="true"
-          className="w-4 h-4 shrink-0 text-emerald-700 group-hover:text-lime-400 transition-colors"
-          strokeWidth={2}
-        />
-      );
     case 'upwork':
       return (
         <svg
