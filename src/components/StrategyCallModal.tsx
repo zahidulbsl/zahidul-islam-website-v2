@@ -28,6 +28,7 @@ import {
   type PhoneInputRefType,
 } from "react-international-phone";
 import "react-international-phone/style.css";
+import { OFFICIAL_CREDENTIALS } from "../data/credentials";
 
 export interface ConsultationRequest {
   name: string;
@@ -58,27 +59,27 @@ const getCountryFlag = (iso2: string) =>
 const SESSION_PILLARS = [
   {
     number: "01",
-    title: "Paid Media & Funnel Review",
+    title: "Wasted Spend & Campaign Review",
     description:
-      "Uncover wasted ad spend, search term leaks, and audience targeting gaps across Google & Meta Ads.",
+      "Spot search term leaks, broad location waste, and targeting gaps across your Google & Meta Ads.",
     icon: Target,
     tint: "bg-[#E0F2FE]/65 border-sky-200/80",
     iconColor: "text-sky-700",
   },
   {
     number: "02",
-    title: "Conversion Tracking Diagnostic",
+    title: "Conversion Tracking Check",
     description:
-      "Evaluate GA4, Google Tag Manager, Meta Pixel, and Server-Side CAPI signal accuracy.",
+      "Verify whether GA4, Google Tag Manager, Meta Pixel, and CAPI are accurately tracking real calls, leads, and sales.",
     icon: Activity,
     tint: "bg-[#ECFCCB]/70 border-lime-300/80",
     iconColor: "text-emerald-700",
   },
   {
     number: "03",
-    title: "Clear Growth Roadmap",
+    title: "Practical Next-Step Plan",
     description:
-      "Receive practical, prioritized recommendations tailored to your business model and acquisition goals.",
+      "Leave with honest, prioritized recommendations tailored to your budget, industry, and growth goals.",
     icon: TrendingUp,
     tint: "bg-[#FEF3C7]/70 border-amber-200/85",
     iconColor: "text-amber-700",
@@ -596,7 +597,7 @@ export function StrategyCallModal({
                       </span>
                     </div>
                     <p className="text-xs font-mono text-zinc-500 mt-0.5 truncate">
-                      5+ Yrs Experience · Upwork &amp; Fiverr
+                      5+ Yrs Experience · {OFFICIAL_CREDENTIALS.topRatedPlatforms}
                     </p>
                   </div>
                 </div>

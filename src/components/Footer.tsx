@@ -4,6 +4,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { scrollToSection } from '../utils/scroll';
+import { OFFICIAL_CREDENTIALS } from '../data/credentials';
 
 interface FooterProps {
   onOpenBooking: () => void;
@@ -70,20 +71,20 @@ export const Footer: React.FC<FooterProps> = ({
             </button>
 
             <p className="text-xs font-mono uppercase tracking-wider text-lime-400">
-              Performance &amp; Analytics Specialist
+              Google Ads, Meta Ads &amp; Conversion Tracking Specialist
             </p>
 
             <p className="text-sm sm:text-base text-zinc-400 leading-relaxed max-w-md">
-              Helping local service businesses, professional practices, and
-              eCommerce brands scale profitably with strategic Google Ads, Meta
-              Ads, and server-side conversion tracking.
+              Direct, transparent Google Ads, Meta Ads, and GA4/GTM conversion
+              tracking management helping service businesses and eCommerce
+              brands turn ad spend into qualified inquiries and sales.
             </p>
 
             {/* 5. PROFILE CREDENTIALS — Highlighted Non-Clickable Badge */}
             <div className="pt-1">
               <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/[0.03] border border-lime-400/35 text-xs font-mono font-semibold text-zinc-200 select-none">
                 <span className="w-1.5 h-1.5 rounded-full bg-lime-400 shrink-0" />
-                <span>Top Rated: Upwork &amp; Fiverr</span>
+                <span>{OFFICIAL_CREDENTIALS.freelancerStatus}</span>
               </div>
             </div>
           </div>

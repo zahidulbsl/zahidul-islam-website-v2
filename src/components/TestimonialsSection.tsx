@@ -19,6 +19,7 @@ import {
   EDGE_FADE_MASK_STYLE,
   EDGE_FADE_CONTAINER_CLASS,
 } from '../utils/edgeFade';
+import { OFFICIAL_CREDENTIALS } from '../data/credentials';
 
 interface TestimonialsSectionProps {
   onOpenBooking?: () => void;
@@ -208,9 +209,10 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
           </h2>
 
           <p className="mx-auto mt-4 max-w-xl text-sm sm:text-base leading-relaxed text-zinc-600">
-            Direct feedback from clients across eCommerce, SaaS, healthcare, and
-            local service industries—alongside verified marketplace ratings on
-            Upwork and Fiverr.
+            Unedited feedback from business owners, founders, and marketing
+            leads across eCommerce, SaaS, healthcare, financial, and local
+            service industries—backed by {OFFICIAL_CREDENTIALS.fiverrReviewsLabel} and a{' '}
+            {OFFICIAL_CREDENTIALS.upworkJssLabel}.
           </p>
         </motion.div>
       </div>
@@ -262,7 +264,8 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
                 Ready to Scale Your Business with a Proven Ads Expert?
               </h3>
               <p className="text-xs sm:text-sm text-zinc-600 mt-1 max-w-2xl leading-relaxed">
-                Work with a Top Rated freelancer trusted by clients for
+                Work with a freelancer who is {OFFICIAL_CREDENTIALS.freelancerStatus} with{' '}
+                {OFFICIAL_CREDENTIALS.completedOrdersLabel}—trusted for
                 performance-driven advertising, measurable growth, and reliable
                 campaign management.
               </p>

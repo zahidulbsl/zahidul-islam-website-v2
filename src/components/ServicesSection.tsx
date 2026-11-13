@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { scrollToSection } from '../utils/scroll';
 import { useBodyScrollLock } from '../utils/bodyScrollLock';
+import { OFFICIAL_CREDENTIALS } from '../data/credentials';
 
 interface ServicesSectionProps {
   onOpenBooking: () => void;
@@ -201,24 +202,24 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
           className="max-w-3xl mx-auto text-center mb-12 sm:mb-16"
         >
           <span className="dm-pill-dark mb-4">
-            Specialized Capabilities
+            How We Can Work Together
           </span>
 
           <h2 className="font-display font-bold text-3xl sm:text-5xl lg:text-[3.5rem] text-white tracking-[-0.03em] leading-[1.08]">
-            Practical Advertising &amp; Tracking{' '}
+            Advertising &amp; Conversion Tracking{' '}
             <span className="block mt-1">
-              Services{' '}
+              Built for{' '}
               <span className="font-serif italic font-normal text-white">
-                Built for Real Growth.
+                Real Business Growth.
               </span>
             </span>
           </h2>
 
           <p className="mt-4 text-sm sm:text-base text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-            Whether you need a new campaign built from scratch, a diagnostic
-            audit of an underperforming account, server-side conversion
-            tracking, or ongoing monthly management, every service is structured
-            around your business goals.
+            Whether you are launching campaigns from scratch, auditing an
+            account that is wasting budget, fixing broken GA4 and Meta CAPI
+            tracking, or looking for hands-on monthly management—every
+            engagement is built around your goals.
           </p>
         </motion.div>
 
@@ -370,11 +371,12 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
             </div>
             <div>
               <h3 className="font-display font-bold text-base sm:text-lg text-white">
-                Need a Combined Advertising + Conversion Tracking Package?
+                Need Both Campaign Management &amp; Reliable Conversion Tracking?
               </h3>
               <p className="text-xs sm:text-sm text-zinc-400 mt-1 max-w-2xl">
-                Every engagement is available as a one-time setup, diagnostic
-                account audit, or ongoing monthly campaign management.
+                Every service is available as a one-time campaign setup,
+                account audit, tracking installation, or ongoing monthly
+                management—with zero agency handoffs.
               </p>
             </div>
           </div>
@@ -475,7 +477,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
                   <div className="relative z-10">
                     <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-emerald-400 mb-2">
                       <Sparkles className="w-3.5 h-3.5" />
-                      <span>Zahidul Pro · Specialized Service Dossier</span>
+                      <span>Zahidul Islam · Direct Specialist Service</span>
                     </div>
 
                     <h3 className="font-display font-bold text-2xl sm:text-4xl text-white tracking-[-0.025em] leading-tight">
@@ -646,7 +648,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
               {/* 3. STICKY MODAL FOOTER BAR */}
               <div className="shrink-0 px-5 sm:px-8 py-4 bg-[#FAFAFA] border-t border-zinc-200 flex flex-col sm:flex-row items-center justify-between gap-3">
                 <span className="font-mono text-xs text-zinc-500">
-                  Direct execution by Zahidul Islam · Upwork Top Rated (100% JSS)
+                  Direct execution by {OFFICIAL_CREDENTIALS.brandName} · {OFFICIAL_CREDENTIALS.freelancerStatus} ({OFFICIAL_CREDENTIALS.upworkJssShort} Upwork JSS)
                 </span>
 
                 <div className="flex items-center gap-2.5 w-full sm:w-auto justify-end">

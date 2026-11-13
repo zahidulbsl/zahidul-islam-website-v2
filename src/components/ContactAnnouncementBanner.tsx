@@ -1,12 +1,13 @@
 import React from 'react';
+import { OFFICIAL_CREDENTIALS } from '../data/credentials';
 
 const ANNOUNCEMENT_MESSAGES = [
-  'Stop guessing which ads work. Make decisions backed by verified conversion tracking.',
-  'Google Ads & Meta Ads — Disciplined bidding focused on real customer acquisition.',
-  'Recover lost tracking signals with Meta Conversions API and Server-Side GTM.',
-  "eCommerce brand looking for profitable ROAS? Let's audit your Merchant Center feed.",
-  'Need qualified inbound leads? I build high-intent search and qualifying lead funnels.',
-  'Direct collaboration with Zahidul Islam — no agency fluff or communication delays.',
+  'Stop guessing which ads work. Make budget decisions backed by accurate conversion tracking.',
+  'Google Ads & Meta Ads — Disciplined management focused on qualified calls, leads, and sales.',
+  'Fix missing conversion signals with Google Tag Manager, GA4, and Meta Conversions API.',
+  "Running Google Shopping or Performance Max? Let's tighten your product feed and cut query waste.",
+  'Need consistent local inquiries? Territory-locked Search and qualifying lead funnels.',
+  'Direct 1-on-1 collaboration with Zahidul Islam — full account ownership and zero agency handoffs.',
 ];
 
 export const ContactAnnouncementBanner: React.FC = () => {
@@ -50,20 +51,20 @@ export const ContactAnnouncementBanner: React.FC = () => {
               />
             </div>
 
-            {/* 4.9 Star Rating on Fiverr */}
+            {/* 5.0 Star Rating on Fiverr */}
             <div
               className="relative z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-zinc-900 text-lime-400 flex items-center justify-center font-mono text-[9px] sm:text-[10px] font-black border-2 border-white/20 -ml-2.5 shrink-0 shadow-xs whitespace-nowrap"
-              title="Fiverr 4.9★ Rating (685 Reviews)"
+              title={`${OFFICIAL_CREDENTIALS.freelancerStatus} · ${OFFICIAL_CREDENTIALS.fiverrReviewsLabel}`}
             >
-              ★4.9
+              ★{OFFICIAL_CREDENTIALS.fiverrRating}
             </div>
 
             {/* 100% Upwork Job Success */}
             <div
               className="relative z-10 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-[#09090D] flex items-center justify-center font-mono text-[9px] sm:text-[10px] font-bold border-2 border-[#09090D] -ml-2.5 shrink-0 shadow-xs whitespace-nowrap"
-              title="Upwork Top Rated · 100% Job Success"
+              title={`${OFFICIAL_CREDENTIALS.freelancerStatus} · ${OFFICIAL_CREDENTIALS.upworkJssLabel}`}
             >
-              100%
+              {OFFICIAL_CREDENTIALS.upworkJssShort}
             </div>
           </div>
 

@@ -16,6 +16,7 @@ import {
   X,
 } from 'lucide-react';
 import { getNavbarOffset, scrollToSection } from '../utils/scroll';
+import { OFFICIAL_CREDENTIALS } from '../data/credentials';
 
 interface NavbarProps {
   onOpenBooking: () => void;
@@ -34,7 +35,7 @@ const dockLinksRight = [
 const moreMenuLinks = [
   {
     label: 'About Zahidul Islam',
-    subtitle: '4+ yrs experience & credentials',
+    subtitle: '5+ years experience & verified record',
     href: '#about',
     icon: UserRound,
   },
@@ -52,7 +53,7 @@ const moreMenuLinks = [
   },
   {
     label: 'Client Testimonials',
-    subtitle: '685+ Fiverr reviews & 100% Upwork JSS',
+    subtitle: `${OFFICIAL_CREDENTIALS.fiverrReviewsLabel} & ${OFFICIAL_CREDENTIALS.upworkJssShort} Upwork JSS`,
     href: '#reviews',
     icon: MessageSquareQuote,
   },
@@ -64,13 +65,13 @@ const moreMenuLinks = [
   },
   {
     label: 'Frequently Asked Questions',
-    subtitle: 'Clear answers before we start',
+    subtitle: 'Honest answers before we start',
     href: '#faq',
     icon: HelpCircle,
   },
   {
     label: 'Contact & Inquiry',
-    subtitle: 'Send project details or WhatsApp',
+    subtitle: 'Share project details or WhatsApp',
     href: '#contact',
     icon: Mail,
   },
@@ -211,7 +212,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-center gap-2.5">
             <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[11px] font-medium text-zinc-200 select-none">
               <ShieldCheck className="w-3.5 h-3.5 text-lime-400 shrink-0" />
-              <span>Top Rated: Upwork &amp; Fiverr</span>
+              <span>{OFFICIAL_CREDENTIALS.freelancerStatus}</span>
             </div>
 
             <button

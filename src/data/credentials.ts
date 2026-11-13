@@ -1,0 +1,16 @@
+export const OFFICIAL_CREDENTIALS = {
+  brandName: 'Zahidul Islam',
+  freelancerStatus: 'Top Rated on Fiverr & Upwork',
+  completedOrdersValue: 1000,
+  completedOrdersShort: '1,000+',
+  completedOrdersLabel: '1,000+ Orders Completed',
+  fiverrReviewsValue: 700,
+  fiverrReviewsShort: '700+',
+  fiverrReviewsLabel: '700+ 5-Star Reviews',
+  fiverrRating: '5.0',
+  upworkJssValue: 100,
+  upworkJssShort: '100%',
+  upworkJssCompact: '100% Job Success Score',
+  upworkJssLabel: '100% Upwork Job Success Score',
+  topRatedPlatforms: 'Fiverr & Upwork',
+} as const;

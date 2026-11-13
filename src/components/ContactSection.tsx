@@ -16,6 +16,7 @@ import {
   type PhoneInputRefType,
 } from 'react-international-phone';
 import 'react-international-phone/style.css';
+import { OFFICIAL_CREDENTIALS } from '../data/credentials';
 
 interface ContactSectionProps {
   onOpenBooking: () => void;
@@ -198,9 +199,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   );
 
   const trustPoints = [
-    'Direct 1-on-1 collaboration with Zahidul Islam — never handed off to junior staff.',
-    'Strategic Google Ads & Meta Ads setups backed by GA4, GTM, and Conversions API tracking.',
-    'Complete account ownership, transparent reporting, and honest performance expectations.',
+    'Direct 1-on-1 collaboration with Zahidul Islam—never passed to junior staff.',
+    'Strategic Google Ads & Meta Ads paired with reliable GA4, GTM, and Conversions API tracking.',
+    '100% account ownership, plain-English reporting, and zero agency lock-in.',
   ];
 
   return (
@@ -356,8 +357,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             </h2>
 
             <p className="mt-4 text-sm sm:text-base text-zinc-600 max-w-2xl mx-auto leading-relaxed">
-              Share your business goals below or connect directly on WhatsApp. I
-              review every inquiry personally and respond within 24 hours.
+              Share your website and goals below or message me directly on
+              WhatsApp. I personally review every inquiry and reply within 24
+              hours—with zero sales pressure.
             </p>
           </motion.div>
 
@@ -397,11 +399,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                     </span>
                   </h3>
                   <p className="mt-3 text-xs sm:text-sm text-zinc-300 leading-relaxed">
-                    Tell me what you are trying to achieve with your advertising
-                    or conversion tracking. Whether you need a brand-new Google
-                    Ads or Meta Ads campaign, a reliable GA4/GTM setup, or an
-                    honest audit of an existing account, we will map out the
-                    clearest path forward for your business.
+                    Tell me what you want to improve with your ads or conversion
+                    tracking. Whether you need a new Google Ads or Meta Ads
+                    campaign, a clean GA4/GTM setup, or an honest audit of an
+                    underperforming account, I will outline clear, practical
+                    next steps for your business.
                   </p>
                 </div>
 
@@ -426,17 +428,17 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                       <span>Upwork Top Rated</span>
                     </div>
                     <div className="text-[11px] text-zinc-400 mt-1">
-                      100% Job Success · 15+ Projects
+                      {OFFICIAL_CREDENTIALS.upworkJssCompact}
                     </div>
                   </div>
 
                   <div className="p-3 rounded-2xl bg-white/[0.04] border border-white/10">
                     <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-emerald-300">
                       <ShieldCheck className="w-3.5 h-3.5" />
-                      <span>Fiverr Level 1</span>
+                      <span>Fiverr Top Rated</span>
                     </div>
                     <div className="text-[11px] text-zinc-400 mt-1">
-                      4.9★ Rating · 685 Reviews
+                      {OFFICIAL_CREDENTIALS.fiverrReviewsLabel}
                     </div>
                   </div>
                 </div>

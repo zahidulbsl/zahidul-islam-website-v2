@@ -5,6 +5,7 @@ import {
   ArrowUpRight,
   Star,
 } from 'lucide-react';
+import { OFFICIAL_CREDENTIALS } from '../data/credentials';
 
 interface HeroProps {
   onOpenBooking: () => void;
@@ -24,20 +25,20 @@ export interface HeroProfileConfig {
 }
 
 export const HERO_PROFILE_CONFIG: HeroProfileConfig = {
-  name: 'Zahidul Islam',
+  name: OFFICIAL_CREDENTIALS.brandName,
   title: 'Performance & Analytics Specialist',
   metrics: [
     {
-      label: 'Upwork Job Success',
-      value: '100%',
+      label: 'Upwork Job Success Score',
+      value: OFFICIAL_CREDENTIALS.upworkJssShort,
     },
     {
-      label: 'Fiverr Reviews',
-      value: '685',
+      label: 'Fiverr 5-Star Reviews',
+      value: OFFICIAL_CREDENTIALS.fiverrReviewsShort,
     },
     {
-      label: 'Upwork Projects',
-      value: '15+',
+      label: 'Orders Completed',
+      value: OFFICIAL_CREDENTIALS.completedOrdersShort,
     },
   ],
 };
@@ -68,46 +69,37 @@ export const Hero: React.FC<HeroProps> = ({
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-5xl mx-auto text-center flex flex-col items-center"
         >
-          {/* Top Marketplace Rating Badge Lockup (Fiverr + Upwork + Google 4.9★) */}
+          {/* Top Marketplace Rating Badge Lockup (Fiverr + Upwork + Google 5.0★) */}
           <div className="inline-flex flex-col items-center gap-1.5 mb-5">
             <div className="flex items-center -space-x-2">
-              {/* 1. Fiverr */}
+              {/* 1. Fiverr — top/front */}
               <span
-                title="Fiverr Level 1 Seller — 685+ Reviews"
-                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-black/20 flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.28)]"
+                title={`Top Rated on Fiverr — ${OFFICIAL_CREDENTIALS.fiverrReviewsLabel}`}
+                className="relative z-30 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-black/20 flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.28)] overflow-hidden"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#1DBF73] fill-current"
-                  role="img"
-                  aria-label="Fiverr"
-                >
-                  <path d="M16.25 16.5v-5.75h-5.5v-.45c0-.72.52-1.15 1.35-1.15h1.5V6.6h-1.85c-2.45 0-3.85 1.4-3.85 3.65v.5H6.2v2.4h1.7v3.35H6.2V19h5.9v-2.5h-1.35v-3.35h2.75v3.35h-.7V19h5.15v-2.5h-1.7z" />
-                  <circle cx="14.9" cy="7.9" r="1.45" />
-                </svg>
+                <img
+                  src="/assets/aistudio/_CITYPNG.COM_Fiverr_Round_Logo_Icon_Download_PNG_-_3000x3000_9ec46572.png"
+                  alt="Fiverr"
+                  className="w-full h-full object-contain rounded-full"
+                />
               </span>
 
-              {/* 2. Upwork */}
+              {/* 2. Upwork — middle */}
               <span
-                title="Upwork Top Rated — 100% Job Success"
-                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-black/20 flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.28)]"
+                title={`Top Rated on Upwork — ${OFFICIAL_CREDENTIALS.upworkJssCompact}`}
+                className="relative z-20 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-black/20 flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.28)] overflow-hidden"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#14A800] fill-current"
-                  role="img"
-                  aria-label="Upwork"
-                >
-                  <g transform="translate(0, -5)">
-                    <path d="M16 11c-2.4 0-4.3 1.8-4.8 4.2-1-.7-2.3-1.2-3.7-1.2-3.3 0-6 2.7-6 6s2.7 6 6 6c3.1 0 5.6-2.3 6-5.3.8 1.4 2.2 2.3 3.9 2.3 2.5 0 4.5-2 4.5-4.5V11h-3v7.5c0 .8-.7 1.5-1.5 1.5s-1.5-.7-1.5-1.5V11h-3v7.5c0 1.9-1.2 3.5-2.9 4-1-.5-1.7-1.5-1.7-2.7 0-1.7 1.3-3 3-3 .4 0 .7.1 1.1.2V14c-.4-.1-.8-.1-1.1-.1-2.2 0-4.1 1.3-4.9 3.1-.1-.7-.1-1.4.2-2.1H4.6c-.3.7-.4 1.5-.4 2.3 0 3.3 2.7 6 6 6 1.7 0 3.3-.7 4.4-1.9.8 1.2 2.2 1.9 3.7 1.9 2.5 0 4.5-2 4.5-4.5V11h-6.8z" />
-                  </g>
-                </svg>
+                <img
+                  src="/assets/aistudio/_CITYPNG.COM_Upwork_Round_Logo_Icon_PNG_-_3000x3000_e458fde1.png"
+                  alt="Upwork"
+                  className="w-[88%] h-[88%] object-contain rounded-full"
+                />
               </span>
 
-              {/* 3. Google */}
+              {/* 3. Google — bottom/back */}
               <span
                 title="Google Ads & Analytics Specialist"
-                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-black/20 flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.28)]"
+                className="relative z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-black/20 flex items-center justify-center shadow-[0_2px_8px_rgba(0,0,0,0.28)]"
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -136,14 +128,14 @@ export const Hero: React.FC<HeroProps> = ({
             </div>
 
             <div className="flex items-center gap-1.5 text-xs sm:text-sm font-medium text-zinc-200">
-              <span className="font-bold text-white">4.9</span>
+              <span className="font-bold text-white">{OFFICIAL_CREDENTIALS.fiverrRating}</span>
               <div className="flex items-center gap-0.5 text-amber-400">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                 ))}
               </div>
               <span className="text-zinc-400 text-xs font-mono">
-                (685+ Reviews · 100% Upwork JSS)
+                ({OFFICIAL_CREDENTIALS.fiverrReviewsLabel} · {OFFICIAL_CREDENTIALS.upworkJssShort} Upwork JSS)
               </span>
             </div>
           </div>
@@ -240,7 +232,7 @@ export const Hero: React.FC<HeroProps> = ({
           <div className="mt-6 sm:mt-7 inline-flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full bg-[#0C0E16]/95 border border-white/15 text-xs sm:text-sm text-zinc-200 shadow-lg">
             <span className="w-2 h-2 rounded-full bg-lime-400 shrink-0" />
             <span>
-              Strategic Paid Advertising + Server-Side GA4 &amp; GTM Attribution
+              Turning Ad Spend Into Qualified Leads, Sales &amp; Accurate Tracking
             </span>
           </div>
 

@@ -307,14 +307,14 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
             <span className="font-serif italic font-normal text-[#09090B]">
               Results
             </span>{' '}
-            <span className="block">Across Industries.</span>
+            <span className="block">Across Real Businesses.</span>
           </h2>
 
           <p className="mt-4 text-sm sm:text-base text-zinc-600 leading-relaxed max-w-2xl mx-auto">
             Explore 12 documented Google Ads and Meta Ads campaigns across local
-            service businesses, professional practices, and eCommerce brands.
+            home services, healthcare and financial firms, and online stores.
             Revenue figures reflect gross attributed sales, not net profit, and
-            past results are not a guarantee of future outcomes.
+            past results do not guarantee future outcomes.
           </p>
         </motion.div>
 

@@ -13,6 +13,7 @@ import { ServicesSection } from './components/ServicesSection';
 import { WorkProcessSection } from './components/WorkProcessSection';
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { FaqSection } from './components/FaqSection';
+import { SocialConnectSection } from './components/SocialConnectSection';
 import { ContactSection } from './components/ContactSection';
 import { ContactAnnouncementBanner } from './components/ContactAnnouncementBanner';
 import { Footer } from './components/Footer';
@@ -216,7 +217,10 @@ export default function App() {
         {/* 8. Frequently Asked Questions Accordion — Light (#FAFAFA) */}
         <FaqSection />
 
-        {/* 9. Executive Contact Card — Floating Dark Obsidian Card on Light (#FAFAFA) */}
+        {/* 9. Verified Profiles & Networks — Light (#FFFFFF) */}
+        <SocialConnectSection />
+
+        {/* 10. Executive Contact Card — Floating Dark Obsidian Card on Light (#FAFAFA) */}
         <ContactSection
           onOpenBooking={handleOpenBooking}
           initialService={serviceInquiry}

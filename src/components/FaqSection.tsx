@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { OFFICIAL_CREDENTIALS } from '../data/credentials';
 
 interface FaqItem {
   question: string;
@@ -10,57 +11,62 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: 'How can I start a project with Zahidul Islam?',
     answer:
-      'Starting a project is simple. Reach out through the contact form below, book a free strategy call, or message me directly on WhatsApp or Upwork. Share your website URL and advertising goals, and I will review your setup and recommend a clear, practical action plan tailored to your business.',
-  },
-  {
-    question: 'Do you guarantee a specific number of leads, sales, or ROAS?',
-    answer:
-      'No ethical advertising specialist can guarantee a fixed number of leads, sales, or return on ad spend. Advertising performance depends on multiple business variables—including market competition, your product or service offer, pricing, website conversion experience, budget, and how quickly your team follows up with leads. What I do guarantee is a strategic campaign setup, accurate server-side conversion tracking, disciplined optimization, and transparent management designed to give your business the strongest opportunity to succeed.',
-  },
-  {
-    question: 'What types of businesses do you work with?',
-    answer:
-      'I primarily work with local and home service businesses (HVAC, roofing, plumbing, electrical, cleaning, and contractors), professional service practices (healthcare, dental, legal, financial, and real estate), and eCommerce brands looking to scale sales with Google Shopping, Performance Max, and Meta Ads.',
-  },
-  {
-    question: 'Why is conversion tracking so important before scaling ad spend?',
-    answer:
-      'Without accurate conversion tracking, neither you nor the Google and Meta bidding algorithms know which keywords, audiences, or creatives actually produce phone calls, form leads, or purchases. Proper GA4, Google Tag Manager (GTM), Meta Pixel, and Conversions API (CAPI) setup ensures your budget is optimized around real revenue actions.',
-  },
-  {
-    question: 'Do you offer both one-time setups and ongoing monthly management?',
-    answer:
-      'Yes. I provide one-time campaign builds, conversion tracking installations (GA4, GTM, Meta CAPI), and diagnostic account audits, as well as ongoing monthly management for businesses that want continuous search term pruning, creative testing, bid tuning, and performance reporting.',
-  },
-  {
-    question: 'Can you audit and improve my existing Google Ads or Meta Ads account?',
-    answer:
-      'Absolutely. If you already have campaigns running that are underperforming or wasting budget on irrelevant clicks, I can audit your account structure, keyword targeting, search terms, audience signals, and conversion tracking, then implement clear improvements.',
-  },
-  {
-    question: 'How long does it take to launch a new campaign or tracking setup?',
-    answer:
-      'Most GA4, Google Tag Manager, and Meta Conversions API tracking setups or account audits are completed within 3 to 5 business days. Complete Google Ads or Meta Ads campaign builds typically launch within 5 to 7 business days once account access and business details are confirmed.',
-  },
-  {
-    question: 'Who owns the ad accounts and analytics data?',
-    answer:
-      'You retain 100% ownership and administrative access to all of your Google Ads, Meta Business Manager, Google Analytics 4, and Google Tag Manager accounts at all times. You also pay the ad platforms directly using your own billing method.',
+      'Getting started is straightforward. Book a free strategy call, fill out the project inquiry form below, or send a message on WhatsApp. Share your website URL and goals, and I will review your setup and come back within 24 hours with a practical action plan—with zero obligation.',
   },
   {
     question: 'Will I work directly with you or be handed off to a junior manager?',
     answer:
-      'You work directly with me—Zahidul Islam—from our initial strategy discussion through campaign setup, tracking configuration, and ongoing optimization. Your account is never passed off to junior staff.',
+      'You work directly with me—Zahidul Islam—from our first call through campaign setup, tracking configuration, and ongoing optimization. Your ad account is never passed off to junior staff or outsourced.',
+  },
+  {
+    question: 'Do you guarantee a specific number of leads, sales, or ROAS?',
+    answer:
+      'No ethical specialist can guarantee a fixed number of leads, sales, or return on ad spend, because real results depend on market competition, your pricing and offer, website conversion rate, budget, and follow-up speed. What I do guarantee is disciplined campaign setup, accurate conversion tracking, ongoing waste removal, and complete transparency.',
+  },
+  {
+    question: 'What types of businesses do you work with?',
+    answer:
+      'I primarily partner with local and home service businesses (HVAC, roofing, plumbing, electrical, cleaning, and contractors), professional practices (healthcare, dental, legal, financial, and real estate), and eCommerce stores using Google Shopping, Performance Max, and Meta Ads.',
+  },
+  {
+    question: 'Can you audit and fix an underperforming Google Ads or Meta Ads account?',
+    answer:
+      'Yes. If your current campaigns are burning budget without clear return, I audit your campaign structure, search terms, negative keywords, location settings, bidding rules, and conversion tracking—then implement practical fixes directly inside your account.',
+  },
+  {
+    question: 'Why is conversion tracking so important before scaling ad spend?',
+    answer:
+      'Without accurate conversion tracking, neither you nor Google or Meta algorithms know which keywords, audiences, or ads actually produce phone calls, form leads, or purchases. Clean GA4, Google Tag Manager (GTM), Meta Pixel, and Conversions API setup ensures your budget optimizes around real business revenue.',
+  },
+  {
+    question: 'Do you offer both one-time setups and ongoing monthly management?',
+    answer:
+      'Yes. You can hire me for a one-time campaign build, conversion tracking setup (GA4, GTM, Meta CAPI), or account audit—or choose ongoing monthly management for continuous search term filtering, creative testing, bid adjustments, and performance reporting.',
+  },
+  {
+    question: 'Who owns the ad accounts, billing, and analytics data?',
+    answer:
+      'You keep 100% ownership and full administrative access to your Google Ads, Meta Business Manager, Google Analytics 4, and Google Tag Manager accounts at all times. You pay the ad platforms directly using your own billing method.',
   },
   {
     question: 'What advertising budget do I need to get started?',
     answer:
-      'Your ideal ad spend depends on your industry, target location, and average cost per click. During our initial review, I will recommend a realistic starting budget tailored to your market so you can gather meaningful conversion data without overspending.',
+      'Your ideal ad spend depends on your industry, service area, and average cost per click. During our initial review, I will recommend a realistic starting budget based on your market so you can gather reliable conversion data without overspending.',
+  },
+  {
+    question: 'How long does it take to launch a campaign or tracking setup?',
+    answer:
+      'Most GA4, Google Tag Manager, and Meta Conversions API tracking setups or account audits are completed within 3 to 5 business days. Full Google Ads or Meta Ads campaign builds typically launch within 5 to 7 business days once account access and business details are confirmed.',
+  },
+  {
+    question: 'How do you report campaign performance and communicate updates?',
+    answer:
+      'You receive clear, jargon-free updates focused on the numbers that matter to your business—qualified leads, cost per lead, completed purchases, return on ad spend (ROAS), and the exact optimizations made during each cycle.',
   },
   {
     question: 'Can we work together through Upwork or Fiverr?',
     answer:
-      'Yes. You can work with me directly through this website, or hire me through my verified Upwork profile (Top Rated, 100% Job Success Score across 15+ projects) or Fiverr profile (Level 1 Seller, 4.9★ rating across 685 reviews).',
+      `Yes. You can work with me directly through this website, or hire me through my verified Fiverr and Upwork profiles—where I am ${OFFICIAL_CREDENTIALS.freelancerStatus} with ${OFFICIAL_CREDENTIALS.completedOrdersLabel}, ${OFFICIAL_CREDENTIALS.fiverrReviewsLabel}, and a ${OFFICIAL_CREDENTIALS.upworkJssLabel}.`,
   },
 ];
 

@@ -364,7 +364,7 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
                     </div>
                     <div>
                       <span className="block font-mono text-[10px] uppercase tracking-wider text-zinc-500">
-                        02 · Client Requirements
+                        02 · Business Goal
                       </span>
                       <h3 className="font-display font-bold text-base sm:text-lg text-[#09090B]">
                         Campaign Objective &amp; Scope
@@ -405,10 +405,10 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
                   </div>
                   <div>
                     <span className="block font-mono text-[10px] uppercase tracking-wider text-zinc-500">
-                      03 · Initial Audit
+                      03 · Account Diagnosis
                     </span>
                     <h3 className="font-display font-bold text-base sm:text-lg text-[#09090B]">
-                      Key Challenges Identified
+                      Bottlenecks &amp; Challenges Solved
                     </h3>
                   </div>
                 </div>
@@ -441,10 +441,10 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
                   </div>
                   <div>
                     <span className="block font-mono text-[10px] uppercase tracking-wider text-zinc-500">
-                      04 · Campaign Strategy &amp; Optimization
+                      04 · Execution &amp; Optimization
                     </span>
                     <h3 className="font-display font-bold text-base sm:text-lg text-[#09090B]">
-                      Strategic Actions Taken
+                      How We Solved It
                     </h3>
                   </div>
                 </div>

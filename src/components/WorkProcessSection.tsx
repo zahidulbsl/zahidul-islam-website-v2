@@ -20,60 +20,60 @@ const steps = [
   {
     stepNumber: '01',
     stage: 'AUDIT & TRACKING',
-    title: 'Audit & Tracking Foundation',
+    title: 'Audit & Tracking Check',
     icon: Search,
     subtitle:
-      'Reviewing your business model, target audience, website journey, and existing ad accounts or tracking setup to uncover wasted spend and growth opportunities.',
+      'Reviewing your business offer, target customers, website journey, and existing ad accounts to uncover wasted spend and broken conversion tracking before spending more.',
     activities: [
-      'Understand your services, products, and target locations',
-      'Audit existing Google Ads or Meta Ads account performance',
-      'Review website landing pages, forms, and checkout flow',
-      'Check GA4, Google Tag Manager, and pixel tracking accuracy',
+      'Understand your margins, services, and ideal customer profile',
+      'Spot wasted clicks and budget leaks in existing ad accounts',
+      'Review landing pages, forms, and checkout user flow',
+      'Verify GA4, Google Tag Manager, and Meta Pixel accuracy',
     ],
     featured: false,
   },
   {
     stepNumber: '02',
     stage: 'STRATEGY & SETUP',
-    title: 'Strategy & Restructuring',
+    title: 'Strategy & Account Build',
     icon: Target,
     subtitle:
-      'Building a clear campaign structure, keyword or audience targeting plan, persuasive ad copy, and reliable conversion tracking before launching or scaling.',
+      'Building a clean campaign structure, high-intent targeting plan, customer-focused ad copy, and dependable conversion tracking so every dollar has a clear job.',
     activities: [
       'Structure Google Search, Shopping, PMax, or Meta campaigns',
-      'Research high-intent keywords, negative lists, and audiences',
-      'Write clear, customer-focused ad headlines and descriptions',
+      'Build high-intent keyword lists and negative filters from day one',
+      'Write clear, persuasive ad messaging matched to buyer intent',
       'Configure GA4, GTM, Meta Pixel, and Conversions API tracking',
     ],
     featured: false,
   },
   {
     stepNumber: '03',
-    stage: 'OPTIMIZE',
-    title: 'Optimize & Test',
+    stage: 'OPTIMIZE & TEST',
+    title: 'Active Optimization & Testing',
     icon: Rocket,
     subtitle:
-      'Monitoring campaign performance closely to filter out irrelevant searches, test ad variations, refine bidding, and focus budget on what converts.',
+      'Monitoring live data closely to remove irrelevant search queries, test fresh ad variations, refine bidding, and shift budget toward what brings real inquiries.',
     activities: [
-      'Prune wasteful search queries and expand negative keywords',
-      'Test ad copy variations, creative hooks, and audience segments',
-      'Adjust bids, device settings, and location targeting',
-      'Monitor cost per lead, conversion quality, and ROAS',
+      'Prune wasteful search queries and tighten negative keyword lists',
+      'Test ad copy angles, creative hooks, and audience segments',
+      'Adjust bids, schedules, devices, and local territory targeting',
+      'Monitor cost per lead, inquiry quality, and store ROAS',
     ],
     featured: true,
   },
   {
     stepNumber: '04',
-    stage: 'MEASURE',
-    title: 'Measure & Improve',
+    stage: 'REPORT & GROW',
+    title: 'Clear Reporting & Growth',
     icon: TrendingUp,
     subtitle:
-      'Tracking verified leads and sales, sharing straightforward performance updates, and making continuous improvements aligned with your business goals.',
+      'Sharing plain-English updates on leads, calls, purchases, and cost per acquisition—with honest recommendations for steady, sustainable scaling.',
     activities: [
-      'Verify phone call, lead form, and purchase attribution',
-      'Share clear, jargon-free performance summaries',
-      'Reallocate budget toward highest-performing campaigns',
-      'Plan next-step tests for steady, sustainable improvement',
+      'Verify phone call, quote form, and order attribution',
+      'Deliver clear, jargon-free performance summaries',
+      'Scale budget toward proven campaigns and top-selling offers',
+      'Outline practical next-step improvements each month',
     ],
     featured: false,
   },
@@ -149,14 +149,14 @@ export const WorkProcessSection: React.FC<WorkProcessSectionProps> = ({
           <h2 className="font-display font-bold text-3xl sm:text-5xl lg:text-[3.5rem] leading-[1.08] tracking-[-0.03em] text-[#09090B]">
             A Clear Working Process.{' '}
             <span className="font-serif italic font-normal text-[#09090B] block sm:inline">
-              Complete Transparency.
+              Zero Guesswork.
             </span>
           </h2>
 
           <p className="mt-4 text-sm sm:text-base leading-relaxed text-zinc-600 max-w-2xl mx-auto">
-            From the initial account audit to weekly campaign optimization and
-            reporting, every step is structured, collaborative, and focused on
-            measurable business outcomes.
+            From our initial account audit to weekly optimization and
+            plain-English reporting, you always know what is being tested, what
+            is converting, and where your budget is going.
           </p>
         </div>
 

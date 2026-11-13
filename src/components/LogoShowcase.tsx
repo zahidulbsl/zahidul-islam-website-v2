@@ -65,12 +65,12 @@ export const LogoShowcase: React.FC = () => {
           className="flex flex-col items-center"
         >
           <span className="dm-pill-light mb-3">
-            Platforms &amp; Measurement Stack
+            Platforms &amp; Tracking Tools I Manage
           </span>
           <p className="text-sm sm:text-base font-medium text-zinc-600 max-w-2xl">
-            Trusted daily across{' '}
+            Hands-on daily execution across{' '}
             <strong className="text-zinc-950 font-semibold">
-              Google Ads, Meta Ads, GA4, Server-Side GTM, Looker Studio
+              Google Ads, Meta Ads, GA4, Google Tag Manager, Looker Studio
             </strong>{' '}
             &amp; leading eCommerce platforms
           </p>

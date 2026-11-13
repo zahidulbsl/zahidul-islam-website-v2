@@ -31,44 +31,44 @@ export const SERVICES: ServiceItem[] = [
     slug: 'google-ads-management',
     number: '01',
     title: 'Google Ads Management',
-    categoryHeadline: 'Capture high-intent search demand and turn clicks into qualified calls, leads, and sales.',
+    categoryHeadline: 'Reach customers actively searching to buy or book—without wasting budget on irrelevant clicks.',
 
     shortDescription:
-      'Strategic Google Search Ads setup and ongoing campaign management with targeted keyword research, negative keyword filtering, ad copy optimization, and conversion-focused bidding.',
+      'High-intent Google Search campaign builds and monthly management with tight keyword filtering, negative lists, persuasive ad copy, and verified call and form tracking.',
 
     fullDescription:
-      'Complete Google Ads setup and monthly management designed to reach customers actively searching for your services or products while cutting wasted spend.',
+      'Complete Google Ads setup and ongoing monthly management built to capture ready-to-buy search demand while blocking low-intent and wasteful clicks.',
 
     detailedOverview:
-      'Google Search Ads put your business in front of people at the exact moment they are looking for what you offer. I build and manage structured search campaigns with carefully researched keywords, strong negative keyword lists, clear ad copy, and accurate conversion tracking—available as both a one-time campaign setup or ongoing monthly management.',
+      'When someone searches Google for your service or product, they already have intent. Too many accounts lose budget on overly broad keywords, missing negative lists, and misleading conversion counts. I build and manage tightly structured Search campaigns with clear ad messaging and accurate tracking—available as a one-time build or ongoing monthly management.',
 
     strategicApproach: [
-      'Audit existing search terms, match types, and account settings to stop wasted budget.',
-      'Build organized campaigns and tightly themed ad groups around high-intent search queries.',
-      'Write clear, persuasive responsive search ads with complete sitelink, call, and callout assets.',
-      'Continuously refine bids, search terms, and budget allocation based on verified conversion data.',
+      'Audit historical search terms, match types, and account defaults to stop immediate budget leaks.',
+      'Organize campaigns and tightly themed ad groups around high-intent customer searches.',
+      'Write clear, response-focused responsive search ads with call, location, sitelink, and callout assets.',
+      'Continuously refine search queries, bids, and budgets around verified phone calls, forms, and orders.',
     ],
 
     businessChallenges: [
-      'Paying for irrelevant clicks and broad searches that never turn into customer inquiries.',
-      'High cost per click without enough phone calls, form submissions, or sales to justify the spend.',
-      'Automated bidding optimizing for low-quality traffic due to broken or missing conversion tracking.',
-      'Disorganized campaign structures that make it difficult to see which keywords actually perform.',
+      'Paying for irrelevant clicks, DIY questions, or out-of-area searches that never become customers.',
+      'High cost per click without enough qualified phone calls, quote requests, or sales to show for it.',
+      'Bidding strategies optimizing for low-value page clicks due to broken or missing conversion tracking.',
+      'Messy campaign structures that hide which services or keywords are actually profitable.',
     ],
 
     coreCapabilities: [
-      'Google Search Ads Setup & Optimization',
-      'High-Intent Keyword & Negative Keyword Strategy',
-      'Responsive Search Ad Copy & Asset Creation',
-      'One-Time Setup or Ongoing Monthly Management',
+      'Google Search Ads Setup & Ongoing Management',
+      'High-Intent Keyword & Negative List Filtering',
+      'Compelling Ad Copy & Extension Setup',
+      'Available as One-Time Setup or Monthly Retainer',
     ],
 
     deliverables: [
-      'Complete Google Ads campaign structure and keyword targeting plan.',
-      'Active negative keyword lists to block irrelevant and wasteful search terms.',
-      'Tailored responsive search ads with call, location, sitelink, and snippet extensions.',
-      'Bidding and budget configuration aligned with your business goals.',
-      'Clear performance reporting and ongoing search term optimization.',
+      'Clean Google Ads campaign architecture and intent-based keyword targeting plan.',
+      'Dedicated negative keyword lists blocking job seekers, DIY queries, and wasted terms.',
+      'Conversion-focused responsive search ads with complete sitelink, call, and location extensions.',
+      'Bidding and daily budget rules aligned with your target cost per inquiry or sale.',
+      'Clear monthly or bi-weekly updates with ongoing search term optimization.',
     ],
 
     technologies: [
@@ -80,19 +80,19 @@ export const SERVICES: ServiceItem[] = [
     ],
 
     clientExpectations: [
-      'Direct collaboration with Zahidul Islam from strategy to ongoing optimization.',
-      'Full ownership of your Google Ads account and transparent reporting.',
-      'Available for one-time campaign builds or ongoing monthly management.',
+      'Direct 1-on-1 collaboration with Zahidul Islam—never handed off to a junior account manager.',
+      '100% ownership of your Google Ads account and transparent performance reporting.',
+      'Flexible engagement: one-time campaign build or ongoing monthly management.',
     ],
 
     keyOutcomes: [
       'Higher Search Intent Traffic',
-      'Reduced Wasted Ad Spend',
-      'More Qualified Inquiries',
+      'Lower Wasted Ad Spend',
+      'Consistent Customer Inquiries',
     ],
 
     targetAudience:
-      'Local service businesses, professional practices, and eCommerce brands looking to capture active search demand on Google.',
+      'Local service businesses, professional firms, and eCommerce brands looking to turn active Google searches into real inquiries and revenue.',
 
     relatedCaseStudySlugs: [
       '1805-conversions-google-ads-search-campaign',
@@ -105,8 +105,8 @@ export const SERVICES: ServiceItem[] = [
       metric: '1,805 Conversions',
       title: 'Local Business Search Campaign',
       description:
-        'Structured Google Search campaign focused on high-intent service keywords, negative keyword filtering, and accurate conversion tracking.',
-      note: 'Historical campaign result. Performance varies based on market competition, offer, budget, and website experience.',
+        'Structured Google Search campaign built around high-intent service keywords, strict negative keyword filtering, and verified conversion tracking.',
+      note: 'Historical campaign result. Outcomes depend on market competition, offer, budget, and website experience.',
     },
   },
 
@@ -115,44 +115,44 @@ export const SERVICES: ServiceItem[] = [
     slug: 'meta-ads-management',
     number: '02',
     title: 'Meta Ads Management',
-    categoryHeadline: 'Reach your ideal audience on Facebook and Instagram with strategic prospecting and retargeting.',
+    categoryHeadline: 'Turn Facebook and Instagram attention into qualified inquiries and online store orders.',
 
     shortDescription:
-      'Plan, launch, and optimize Facebook and Instagram advertising campaigns with structured audience targeting, creative testing, lead forms, and reliable Meta Pixel & Conversions API tracking.',
+      'Full-funnel Facebook and Instagram advertising with audience testing, scroll-stopping copy, qualifying lead forms, retargeting, and reliable Pixel & Conversions API tracking.',
 
     fullDescription:
-      'Full-funnel Meta Ads management (Facebook & Instagram Ads) for lead generation businesses and eCommerce brands seeking consistent inquiries and online sales.',
+      'Structured Meta Ads management for service businesses and online brands seeking consistent leads, lower ad fatigue, and clear purchase attribution.',
 
     detailedOverview:
-      'Effective Facebook and Instagram advertising requires the right combination of audience targeting, compelling ad messaging, and dependable tracking. I structure prospecting and retargeting campaigns, test ad variations methodically, and connect Meta Pixel and Conversions API so your budget focuses on people most likely to inquire or buy.',
+      'Boosting posts rarely builds predictable revenue. Profitable Facebook and Instagram advertising requires structured prospecting and retargeting, ad copy that speaks to real customer objections, qualifying lead form questions so your team stops chasing cold contacts, and reliable Meta Pixel + Conversions API tracking.',
 
     strategicApproach: [
-      'Define target audiences, geographic territories, and customer segments.',
-      'Structure clean prospecting and retargeting campaigns across Facebook and Instagram.',
-      'Test ad copy angles, headlines, and creative formats to reduce ad fatigue.',
-      'Monitor lead quality and purchase attribution using Meta Pixel and Conversions API.',
+      'Map customer pain points, local territories, and buyer segments before launching ads.',
+      'Separate cold prospecting from warm website and social retargeting across Facebook and Instagram.',
+      'Test fresh ad copy angles, headlines, and creative formats systematically to prevent ad fatigue.',
+      'Connect Meta Pixel and Conversions API (CAPI) so optimization relies on verified conversions.',
     ],
 
     businessChallenges: [
-      'Boosting posts or running broad campaigns that generate likes and clicks but few real inquiries.',
-      'Low-quality form submissions from people who never answer the phone or qualify for your service.',
-      'Missing conversion data after iOS privacy updates causing ad performance to decline.',
-      'Ad fatigue causing cost per lead or cost per purchase to rise over time.',
+      'Boosting posts or broad campaigns that bring likes and clicks but very few real buyers.',
+      'Unqualified instant form leads from people who do not remember filling out the form.',
+      'Missing conversion signals from browser privacy restrictions lowering Meta campaign efficiency.',
+      'Rising cost per lead or cost per order caused by creative fatigue and audience overlap.',
     ],
 
     coreCapabilities: [
-      'Facebook & Instagram Campaign Setup & Management',
-      'Audience Research, Custom & Lookalike Targeting',
-      'Ad Copywriting, Creative Testing & Retargeting',
-      'Qualifying Instant Forms & Website Conversion Funnels',
+      'Facebook & Instagram Prospecting & Retargeting',
+      'Qualifying Lead Forms & Website Conversion Funnels',
+      'Ad Copy Angles & Structured Creative Testing',
+      'Meta Pixel & Conversions API Integration',
     ],
 
     deliverables: [
-      'Complete Meta Ads campaign structure for prospecting and remarketing.',
-      'Audience targeting setup including custom website visitors and customer lists.',
-      'Ad copy variations, headline testing, and creative setup.',
-      'Qualifying lead form configuration or website conversion event optimization.',
-      'Ongoing performance monitoring, budget optimization, and clear progress reports.',
+      'Complete Meta Ads Manager setup separating cold prospecting and warm retargeting.',
+      'Audience research covering local radius, interest groups, lookalikes, and website visitors.',
+      'Customer-focused ad copy variations and structured creative testing setup.',
+      'Qualifying lead form questions or verified website conversion funnel optimization.',
+      'Regular monitoring, budget pacing, and clear progress updates.',
     ],
 
     technologies: [
@@ -166,18 +166,18 @@ export const SERVICES: ServiceItem[] = [
 
     clientExpectations: [
       'Available as a one-time campaign setup or ongoing monthly management.',
-      'Honest feedback on creative performance, audience response, and lead quality.',
-      'Data-driven adjustments grounded in real conversion events.',
+      'Honest feedback on creative hooks, offer positioning, and lead quality.',
+      'Optimization guided by verified lead and order events rather than vanity clicks.',
     ],
 
     keyOutcomes: [
-      'Consistent Lead & Sales Flow',
-      'Effective Retargeting',
-      'Clear Conversion Attribution',
+      'Better Lead Qualification',
+      'Effective Warm Retargeting',
+      'Dependable Attribution',
     ],
 
     targetAudience:
-      'Local businesses, healthcare and professional service providers, financial services, construction companies, and eCommerce brands.',
+      'Local businesses, healthcare clinics, financial advisors, contractors, and eCommerce brands advertising on Facebook and Instagram.',
 
     relatedCaseStudySlugs: [
       '7150-qualified-leads-meta-ads-financial-services',
@@ -190,7 +190,7 @@ export const SERVICES: ServiceItem[] = [
       metric: '7,150 Leads',
       title: 'Financial Services Campaign',
       description:
-        'Meta Ads lead generation campaign combining structured audience targeting, qualifying lead forms, and Conversions API tracking.',
+        'Meta Ads lead generation funnel pairing structured audience segmentation, qualifying lead form questions, and Pixel + CAPI tracking.',
       note: 'Historical campaign result. Results vary by industry, offer, budget, and market conditions.',
     },
   },
@@ -200,44 +200,44 @@ export const SERVICES: ServiceItem[] = [
     slug: 'google-shopping-performance-max',
     number: '03',
     title: 'Google Shopping & eCommerce Ads',
-    categoryHeadline: 'Grow online store sales and ROAS with structured Shopping, Performance Max, and catalog ads.',
+    categoryHeadline: 'Scale online store orders and ROAS with cleaner product feeds and smarter catalog bidding.',
 
     shortDescription:
-      'Scale eCommerce revenue through Google Merchant Center feed optimization, Standard Shopping, Performance Max (PMax), and Meta catalog retargeting backed by accurate purchase value tracking.',
+      'Drive eCommerce sales through Google Merchant Center feed optimization, segmented Shopping and Performance Max campaigns, Meta catalog retargeting, and accurate revenue tracking.',
 
     fullDescription:
-      'Specialized eCommerce paid advertising across Google Shopping, Performance Max, Search, and Meta Ads to showcase your products to ready-to-buy shoppers.',
+      'Focused eCommerce paid advertising across Google Shopping, Performance Max, Search, and Meta Ads built to prioritize high-margin and bestselling products.',
 
     detailedOverview:
-      'Selling products online requires clean product feeds, smart campaign segmentation, and accurate dynamic revenue tracking. I help eCommerce brands set up and optimize Google Merchant Center, Standard Shopping, Performance Max, and Meta catalog campaigns so your advertising budget prioritizes your best-performing products.',
+      'Online stores waste significant budget when one unsegmented Shopping or Performance Max campaign spends everything on low-margin items or non-buying searches. I clean up Google Merchant Center product feeds, segment campaigns around top sellers and categories, and verify dynamic order values so your ad spend grows real store revenue.',
 
     strategicApproach: [
-      'Review and optimize Google Merchant Center product titles, categories, identifiers, and feed health.',
-      'Segment products by category, price point, or bestsellers using structured Shopping and Performance Max campaigns.',
-      'Protect acquisition budgets with negative keywords and brand exclusions where appropriate.',
-      'Verify dynamic purchase values in GA4, Google Ads, and Meta Pixel / Conversions API.',
+      'Optimize Google Merchant Center product titles, descriptions, categories, and resolve feed disapprovals.',
+      'Segment Shopping and Performance Max campaigns by product category, margin, or bestseller status.',
+      'Add negative keywords and brand exclusions to keep prospecting budgets focused on new shoppers.',
+      'Verify dynamic purchase values across GA4, Google Ads, and Meta Pixel / Conversions API.',
     ],
 
     businessChallenges: [
-      'Google Merchant Center feed errors, disapproved products, or poorly optimized product titles.',
-      'Ad spend absorbed by a few low-value items while bestselling products receive little visibility.',
-      'Performance Max campaigns spending budget on low-intent placements without clear visibility.',
-      'Inaccurate transaction value tracking making it hard to measure true Return on Ad Spend (ROAS).',
+      'Merchant Center feed warnings, missing attributes, or disapproved products blocking ad visibility.',
+      'A handful of low-margin SKUs absorbing daily budget while bestsellers get starved of traffic.',
+      'Performance Max spending money on branded searches or low-intent placements without clarity.',
+      'Inaccurate or duplicated checkout values making reported Return on Ad Spend (ROAS) unreliable.',
     ],
 
     coreCapabilities: [
-      'Google Shopping & Performance Max (PMax) Setup',
-      'Google Merchant Center Feed Setup & Optimization',
-      'Meta Dynamic Product Catalog & Retargeting Ads',
-      'eCommerce Revenue & ROAS Optimization',
+      'Google Merchant Center Feed Audit & Optimization',
+      'Segmented Google Shopping & Performance Max Builds',
+      'Meta Dynamic Catalog & Cart Abandonment Ads',
+      'Verified Dynamic Order Value & ROAS Tracking',
     ],
 
     deliverables: [
-      'Merchant Center feed audit and product attribute optimization.',
-      'Structured Standard Shopping and/or Performance Max campaign build.',
-      'Product group segmentation and search query filtering.',
-      'Dynamic eCommerce tracking verification (view_item, add_to_cart, purchase).',
-      'Ongoing bid, budget, and product performance optimization.',
+      'Full Google Merchant Center feed review, title optimization, and disapproval cleanup.',
+      'Segmented Standard Shopping and/or Performance Max campaign build.',
+      'Search term filtering and negative keyword lists to protect shopping spend.',
+      'End-to-end eCommerce tracking verification (view_item, add_to_cart, purchase).',
+      'Ongoing product performance, bid, and ROAS optimization.',
     ],
 
     technologies: [
@@ -250,19 +250,19 @@ export const SERVICES: ServiceItem[] = [
     ],
 
     clientExpectations: [
-      'Clear reporting on ad spend, purchases, conversion value, and ROAS.',
-      'Proactive resolution of Merchant Center feed warnings and disapprovals.',
-      'Available for initial store ad setup or ongoing monthly eCommerce management.',
+      'Transparent reporting distinguishing gross attributed store revenue from net profit.',
+      'Proactive handling of Merchant Center warnings and product feed errors.',
+      'Available for initial eCommerce campaign launch or ongoing monthly scaling.',
     ],
 
     keyOutcomes: [
-      'Healthy Product Feeds',
-      'Structured Shopping Campaigns',
-      'Measurable Store Sales & ROAS',
+      'Approved, Search-Ready Feeds',
+      'Budget Focused on Top Sellers',
+      'Accurate ROAS Measurement',
     ],
 
     targetAudience:
-      'Shopify, WooCommerce, and custom eCommerce stores looking to grow online product sales through Google and Meta advertising.',
+      'Shopify, WooCommerce, and direct-to-consumer online stores looking to scale product orders sustainably.',
 
     relatedCaseStudySlugs: [
       '22-8x-roas-google-ads-ecommerce-shopping',
@@ -275,8 +275,8 @@ export const SERVICES: ServiceItem[] = [
       metric: '22.8X ROAS',
       title: 'eCommerce Shopping Campaign',
       description:
-        'Google Shopping campaign structured around product feed optimization, search term filtering, and verified purchase tracking.',
-      note: 'Historical campaign result. Revenue and ROAS figures represent gross attributed sales, not net profit, and are not guaranteed for future campaigns.',
+        'Google Shopping campaign rebuilt with Merchant Center title optimization, segmented product groups, and verified GA4 purchase tracking.',
+      note: 'Historical campaign result. Revenue and ROAS represent gross attributed sales, not net profit, and are not guaranteed.',
     },
   },
 
@@ -285,44 +285,44 @@ export const SERVICES: ServiceItem[] = [
     slug: 'lead-generation-advertising',
     number: '04',
     title: 'Lead Generation Advertising',
-    categoryHeadline: 'Attract consistent phone calls, quote requests, and appointment bookings for your service business.',
+    categoryHeadline: 'Generate steady phone calls, estimate requests, and booked consultations in your service area.',
 
     shortDescription:
-      'Targeted Google and Meta lead generation campaigns built for local service businesses and professional practices—focused on real customer inquiries within your service area.',
+      'Local Google Search, Call-focused, and Meta Lead campaigns built for service businesses—restricting ads to your territory and tracking every qualified call and quote request.',
 
     fullDescription:
-      'Dedicated lead generation advertising for home services, contractors, healthcare clinics, legal practices, and financial or real estate businesses.',
+      'Targeted lead generation campaigns for home service contractors, clinics, legal offices, and local service businesses needing consistent inbound inquiries.',
 
     detailedOverview:
-      'Service businesses do not need vanity traffic—they need phone calls, quote requests, and booked appointments from customers in their target locations. I build location-targeted Google Search, Call-focused, and Meta Lead Generation campaigns designed to connect your business with local customers who need your services.',
+      'Service businesses cannot afford clicks from three states away or people searching for DIY repair tutorials. I build location-locked Google Search, Call Asset, and Meta Lead campaigns designed to put your business in front of nearby homeowners and decision-makers ready to request a quote or book an appointment.',
 
     strategicApproach: [
-      'Map your exact service radius, zip codes, and highest-priority services.',
-      'Target high-intent local search terms (such as "near me", repair, installation, and consultation queries).',
-      'Set up call extensions, lead forms, and conversion tracking for phone calls and form submissions.',
-      'Filter out DIY searches, job seekers, competitor names, and out-of-area traffic.',
+      'Lock location targeting strictly to the cities, zip codes, or radius your team actually serves.',
+      'Build service-specific ad groups around high-intent repair, installation, and booking queries.',
+      'Exclude DIY tutorials, supply parts, job seekers, and competitor brand waste aggressively.',
+      'Track phone call clicks, call extensions, and estimate form submissions cleanly via GTM and GA4.',
     ],
 
     businessChallenges: [
-      'Receiving calls or form submissions from outside your actual service territory.',
-      'Paying for clicks from people looking for DIY guides, jobs, or unrelated services.',
-      'Inconsistent lead flow between busy and slow seasons.',
-      'Not knowing which specific campaign or keyword generated a phone call or quote request.',
+      'Receiving leads from outside your service territory due to loose default location settings.',
+      'Paying high local CPCs for DIY searchers, job applicants, or unrelated services.',
+      'Unpredictable lead volume making crew scheduling and revenue forecasting difficult.',
+      'Not knowing which ads or keywords actually generated booked phone calls and forms.',
     ],
 
     coreCapabilities: [
-      'Local Service Google Search & Call Campaigns',
-      'Meta Lead Form & Website Inquiry Campaigns',
-      'Service Area & Zip-Code Location Targeting',
-      'Phone Call & Lead Form Conversion Tracking',
+      'Local Service Google Search & Call-Focused Campaigns',
+      'Meta Lead Generation & Appointment Funnels',
+      'Strict Service-Area & Zip-Code Targeting',
+      'Verified Phone Call & Estimate Form Tracking',
     ],
 
     deliverables: [
-      'Location-targeted Google Ads or Meta Ads lead generation campaign setup.',
-      'Service-specific ad groups and persuasive local ad copy.',
-      'Negative keyword lists blocking DIY, employment, and irrelevant queries.',
-      'Phone call click, call extension, and lead form conversion tracking.',
-      'Ongoing lead cost monitoring and search term refinement.',
+      'Territory-locked Google Ads or Meta Ads lead generation campaign build.',
+      'Focused ad groups by core service line with clear, trust-building ad copy.',
+      'Industry-specific negative keyword lists preventing DIY and job-seeker waste.',
+      'Call click, call asset, and quote form conversion tracking configured via GTM.',
+      'Ongoing cost-per-lead monitoring and search query refinement.',
     ],
 
     technologies: [
@@ -334,19 +334,19 @@ export const SERVICES: ServiceItem[] = [
     ],
 
     clientExpectations: [
-      'Campaigns tailored to your specific service categories and local business hours.',
-      'Clear tracking of phone calls and form inquiries.',
-      'Flexible support for either one-time campaign setup or ongoing monthly management.',
+      'Campaigns matched to your priority services, capacity, and local business hours.',
+      'Every phone call and form submission tracked back to its source campaign.',
+      'Available as a one-time setup or ongoing monthly management.',
     ],
 
     keyOutcomes: [
-      'Targeted Local Reach',
-      'More Phone & Form Inquiries',
-      'Tracked Cost Per Lead',
+      'Zero Out-of-Area Waste',
+      'Tracked Calls & Quote Requests',
+      'Predictable Lead Pipeline',
     ],
 
     targetAudience:
-      'HVAC, roofing, plumbing, electrical, garage door, locksmith, cleaning, landscaping, construction, dental, healthcare, legal, and financial businesses.',
+      'HVAC, roofing, plumbing, electrical, construction, remodeling, cleaning, dental, medical, legal, and financial firms.',
 
     relatedCaseStudySlugs: [
       '179k-qualified-leads-google-ads-local-business',
@@ -359,8 +359,8 @@ export const SERVICES: ServiceItem[] = [
       metric: '1.79K Leads',
       title: 'Local Service Business Campaign',
       description:
-        'Google Ads local service campaign focused on high-intent service searches, location targeting, and call and form tracking.',
-      note: 'Historical campaign result. Lead volume and cost per lead vary by service industry, location, competition, and budget.',
+        'Local Google Search campaign built around urgent service intent, tight location boundaries, and verified call and form tracking.',
+      note: 'Historical campaign result. Lead volume and cost per lead vary by service industry, market competition, and budget.',
     },
   },
 
@@ -369,44 +369,44 @@ export const SERVICES: ServiceItem[] = [
     slug: 'conversion-tracking-ga4-gtm',
     number: '05',
     title: 'GA4, GTM & Conversion Tracking',
-    categoryHeadline: 'Measure every phone call, lead form, and purchase accurately across your website and ad platforms.',
+    categoryHeadline: 'Know exactly which ads generate real calls, quote forms, and purchases—with zero duplicate counting.',
 
     shortDescription:
-      'Set up and fix Google Analytics 4 (GA4), Google Tag Manager (GTM), Google Ads Conversion Tracking, Meta Pixel, and Conversions API (CAPI) so your campaign data is accurate and reliable.',
+      'Accurate setup and troubleshooting for GA4, Google Tag Manager (GTM), Google Ads Enhanced Conversions, Meta Pixel, and Conversions API (CAPI) so ad decisions rely on real data.',
 
     fullDescription:
-      'Complete conversion tracking and analytics configuration for websites, landing pages, and eCommerce stores.',
+      'End-to-end conversion tracking and analytics configuration for business websites, booking funnels, and eCommerce checkouts.',
 
     detailedOverview:
-      'Good advertising decisions depend on accurate data. If your conversion tracking is broken, missing events, or double-counting sales, both you and the ad platform algorithms are working in the dark. I configure clean, reliable tracking through Google Tag Manager, GA4, Google Ads, Meta Pixel, and Conversions API so you know which campaigns are driving real business actions.',
+      'Running ads without accurate conversion tracking is like driving with your eyes closed—and broken tags or double-counted orders cause Google and Meta algorithms to waste budget. I set up, clean up, and test your Google Tag Manager, GA4, Google Ads, Meta Pixel, and Conversions API tracking so every report matches real business activity.',
 
     strategicApproach: [
-      'Audit existing tags, pixels, and analytics properties to find missing, broken, or duplicate events.',
-      'Configure Google Tag Manager (GTM) triggers and variables for forms, phone clicks, bookings, and checkouts.',
-      'Set up Google Analytics 4 (GA4) custom events, key events, and eCommerce dataLayer tracking.',
-      'Implement Meta Pixel, Conversions API (CAPI), and Google Ads Enhanced Conversions with thorough testing.',
+      'Audit existing tags, pixels, and analytics to uncover missing events, errors, or duplicate fires.',
+      'Configure clean Google Tag Manager (GTM) triggers for forms, phone clicks, bookings, and purchases.',
+      'Set up Google Analytics 4 (GA4) key events and dynamic eCommerce dataLayer tracking.',
+      'Deploy Meta Pixel, Server-Side Conversions API (CAPI), and Google Enhanced Conversions with full testing.',
     ],
 
     businessChallenges: [
-      'Ad platforms showing conversions that do not match actual form submissions or store orders.',
-      'Broken tags or duplicate purchase events skewing ROAS and CPA reporting.',
-      'Signal loss from browser privacy restrictions reducing Meta and Google attribution accuracy.',
-      'Launching paid campaigns without knowing which keywords or ads generate leads and sales.',
+      'Ad dashboards claiming conversions that do not match real inquiries or store orders.',
+      'Double-counted purchases or page-view goals inflating ROAS and misleading automated bidding.',
+      'Safari, iOS, and ad-blocker privacy restrictions causing lost conversion visibility on Meta.',
+      'Unable to prove which keywords, audiences, or ads actually produce paying customers.',
     ],
 
     coreCapabilities: [
-      'Google Analytics 4 (GA4) Setup & Configuration',
-      'Google Tag Manager (GTM) Event & Container Setup',
-      'Meta Pixel & Conversions API (CAPI) Implementation',
-      'Google Ads Conversion Tracking & Enhanced Conversions',
+      'Google Analytics 4 (GA4) Event & Revenue Setup',
+      'Google Tag Manager (GTM) Web & Server Containers',
+      'Meta Pixel & Conversions API (CAPI) Deduplication',
+      'Google Ads Conversion & Enhanced Conversions Setup',
     ],
 
     deliverables: [
-      'Full audit of your current website tags, pixels, and conversion events.',
-      'Clean Google Tag Manager container setup with organized tags and triggers.',
-      'GA4 event configuration for lead generation or dynamic eCommerce tracking.',
-      'Meta Pixel and Conversions API setup with event deduplication.',
-      'End-to-end testing and verification in Tag Assistant, GA4 DebugView, and Meta Events Manager.',
+      'Complete diagnostic audit of existing tags, pixels, and analytics properties.',
+      'Organized Google Tag Manager container with clean triggers and variables.',
+      'Verified GA4 tracking for lead forms, phone clicks, bookings, or dynamic purchases.',
+      'Meta Pixel and Conversions API integration with proper event deduplication.',
+      'Plain-English summary after testing in Tag Assistant, GA4 DebugView, and Events Manager.',
     ],
 
     technologies: [
@@ -419,19 +419,19 @@ export const SERVICES: ServiceItem[] = [
     ],
 
     clientExpectations: [
-      'Clear, non-technical summary of what is being tracked and how it works.',
-      'Thorough verification across desktop and mobile before completion.',
-      'Clean setup that gives your ad campaigns reliable conversion signals.',
+      'Clear, plain-English walkthrough of every conversion event configured.',
+      'Verified testing across desktop and mobile journeys before handoff.',
+      'Clean, reliable conversion signals feeding Google and Meta bidding algorithms.',
     ],
 
     keyOutcomes: [
-      'Accurate Lead & Sale Tracking',
-      'Eliminated Duplicate Events',
-      'Reliable Algorithm Signals',
+      'Trustworthy Conversion Numbers',
+      'Zero Duplicate Purchase Counting',
+      'Stronger Ad Platform Optimization',
     ],
 
     targetAudience:
-      'Local businesses, service websites, and eCommerce stores on Shopify, WordPress, WooCommerce, Webflow, or custom platforms.',
+      'Service websites and online stores on Shopify, WooCommerce, WordPress, Webflow, or custom builds needing dependable tracking.',
 
     relatedCaseStudySlugs: [
       '22-8x-roas-google-ads-ecommerce-shopping',
@@ -444,8 +444,8 @@ export const SERVICES: ServiceItem[] = [
       metric: 'GA4 · GTM · CAPI',
       title: 'Reliable Conversion Measurement',
       description:
-        'Hands-on configuration of Google Tag Manager, GA4, Google Ads Enhanced Conversions, and Meta Pixel & Conversions API.',
-      note: 'Tracking scope depends on your website platform, checkout or form structure, and hosting setup.',
+        'Hands-on setup of Google Tag Manager, GA4, Google Ads Enhanced Conversions, and Meta Pixel & Conversions API with full verification.',
+      note: 'Exact implementation depends on your website platform, booking or checkout flow, and hosting setup.',
     },
   },
 
@@ -454,44 +454,44 @@ export const SERVICES: ServiceItem[] = [
     slug: 'google-ads-audit-optimization',
     number: '06',
     title: 'Google Ads Audit & Optimization',
-    categoryHeadline: 'Identify wasted ad spend, fix structural issues, and improve underperforming campaigns.',
+    categoryHeadline: 'Stop hidden budget leaks, fix misconfigured settings, and turn around underperforming ad accounts.',
 
     shortDescription:
-      'A comprehensive diagnostic review and hands-on optimization of your existing Google Ads or Meta Ads account to uncover wasted budget, fix tracking gaps, and improve campaign efficiency.',
+      'Thorough line-by-line audit and hands-on optimization of existing Google Ads or Meta Ads accounts to cut wasted spend, fix conversion tracking, and lift campaign efficiency.',
 
     fullDescription:
-      'In-depth account audit and optimization for businesses already running ads that want better lead quality, lower wasted spend, and clearer performance.',
+      'Honest diagnostic audit and hands-on account turnaround for businesses already spending money on ads that are not delivering the expected return.',
 
     detailedOverview:
-      'If you are already spending money on Google Ads or Meta Ads but feel results should be stronger, a structured account audit reveals what is holding performance back. I inspect your campaign structure, search terms, match types, bidding settings, ad assets, location rules, and conversion tracking—then implement practical optimizations to improve how your budget is spent.',
+      'Most underperforming ad accounts do not fail because the business offer is bad—they struggle due to hidden platform defaults like broad location leakage, unmonitored search terms, auto-applied recommendations, and broken conversion goals. I audit every layer of your account, explain what is happening in plain English, and implement high-impact fixes.',
 
     strategicApproach: [
-      'Review historical search terms, keyword match types, and placement reports to spot wasted budget.',
-      'Check location targeting, ad schedule settings, and network selections for hidden leaks.',
-      'Verify that conversion actions are firing accurately and counting real business outcomes.',
-      'Restructure ad groups, refresh ad copy, and adjust bidding strategies for better efficiency.',
+      'Inspect search term reports, keyword match types, and placement data to identify immediate spend waste.',
+      'Check location settings ("Presence" vs. "Interest"), ad schedules, and partner networks for hidden leaks.',
+      'Verify whether primary conversion goals are counting real leads/sales or inflated micro-actions.',
+      'Restructure messy ad groups, refresh ad copy, and align bidding targets with business profitability.',
     ],
 
     businessChallenges: [
-      'Spending budget every month without knowing why cost per lead or cost per sale keeps rising.',
-      'Default platform settings (such as broad location targeting or auto-applied recommendations) wasting money.',
-      'Outdated ad copy, weak Quality Scores, or missing ad extensions reducing click-through rates.',
-      'Counting page views or button clicks as primary conversions instead of real leads or purchases.',
+      'Spending budget every month while cost per lead or cost per sale quietly climbs.',
+      'Default Google or Meta settings automatically expanding targeting outside ideal buyers.',
+      'Weak Quality Scores, outdated ads, or missing extensions driving up click costs.',
+      'Automated bidding chasing low-intent button clicks instead of genuine inquiries or orders.',
     ],
 
     coreCapabilities: [
-      'Complete Google Ads & PPC Account Diagnostic Audit',
-      'Wasted Spend & Negative Search Term Cleanup',
-      'Bidding, Location & Network Settings Optimization',
-      'Ongoing Monthly Optimization or One-Time Turnaround',
+      'Full Google Ads & Meta Ads Diagnostic Audit',
+      'Wasted Search Term & Settings Leak Removal',
+      'Conversion Goal & Bidding Strategy Cleanup',
+      'One-Time Account Turnaround or Monthly Care',
     ],
 
     deliverables: [
-      'Detailed audit of campaign structure, settings, keywords, and search terms.',
-      'Conversion tracking health check across Google Ads, GA4, and GTM.',
-      'Actionable optimization plan prioritizing high-impact fixes first.',
-      'Hands-on implementation of negative keywords, bid adjustments, and structural improvements.',
-      'Before-and-after summary of changes made to your account.',
+      'Clear audit breakdown of account structure, wasted spend, settings, and search queries.',
+      'Conversion tracking verification across Google Ads, GA4, and Google Tag Manager.',
+      'Prioritized optimization checklist focused on the biggest budget savings first.',
+      'Hands-on implementation of negative keywords, bid updates, and structural fixes.',
+      'Before-and-after summary documenting every change made in your account.',
     ],
 
     technologies: [
@@ -503,19 +503,19 @@ export const SERVICES: ServiceItem[] = [
     ],
 
     clientExpectations: [
-      'Honest, objective evaluation of what is working and what needs to be fixed.',
-      'Practical improvements implemented directly inside your account.',
-      'Option to continue with ongoing monthly management after the initial optimization.',
+      'Straightforward, honest evaluation of what is working and what needs fixing.',
+      'Practical improvements implemented directly inside your ad account—not just a PDF.',
+      'Option to continue with ongoing monthly management or manage in-house afterward.',
     ],
 
     keyOutcomes: [
-      'Uncovered Budget Leaks',
-      'Cleaner Account Structure',
-      'Stronger Campaign Efficiency',
+      'Hidden Budget Leaks Stopped',
+      'Clean, Controllable Structure',
+      'Higher Spend Efficiency',
     ],
 
     targetAudience:
-      'Business owners and marketing teams with active Google Ads or Meta Ads accounts seeking an expert review and performance turnaround.',
+      'Business owners and marketing teams already running Google Ads or Meta Ads who want an objective second opinion and hands-on turnaround.',
 
     relatedCaseStudySlugs: [
       '1600-percent-roas-google-ads-ecommerce',

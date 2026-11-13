@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { NumberTicker } from './ui/NumberTicker';
 import { scrollToSection } from '../utils/scroll';
+import { OFFICIAL_CREDENTIALS } from '../data/credentials';
 
 interface AboutSectionProps {
   onOpenBooking: () => void;
@@ -99,11 +100,12 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
       number: '01',
       category: 'COMPLETED ORDERS',
       prefix: '',
-      value: 800,
+      value: OFFICIAL_CREDENTIALS.completedOrdersValue,
       suffix: '+',
       textValue: undefined as string | undefined,
-      label: 'Completed Orders',
+      label: 'Orders Completed',
       description: undefined as string | undefined,
+      footerLabel: 'Fiverr & Upwork',
       icon: PackageCheck,
       tint: 'bg-[#E0F2FE]/60 border-sky-200/80 hover:border-sky-300',
       categoryColor: 'text-sky-900/75',
@@ -113,11 +115,12 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
       number: '02',
       category: 'CLIENT REVIEWS',
       prefix: '',
-      value: 650,
+      value: OFFICIAL_CREDENTIALS.fiverrReviewsValue,
       suffix: '+',
       textValue: undefined as string | undefined,
       label: '5-Star Reviews',
       description: undefined as string | undefined,
+      footerLabel: 'Fiverr Verified',
       icon: Star,
       tint: 'bg-[#ECFCCB]/65 border-lime-300/80 hover:border-lime-400',
       categoryColor: 'text-emerald-900/75',
@@ -130,8 +133,9 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
       value: 0,
       suffix: '',
       textValue: 'Top Rated',
-      label: 'FIVERR · UPWORK',
+      label: 'On Fiverr & Upwork',
       description: undefined as string | undefined,
+      footerLabel: OFFICIAL_CREDENTIALS.upworkJssLabel,
       icon: Award,
       tint: 'bg-[#FEF3C7]/65 border-amber-200/85 hover:border-amber-300',
       categoryColor: 'text-amber-900/75',
@@ -188,8 +192,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
       eyebrow: 'EXPERTISE 01',
       title: 'Google Ads & Search Growth',
       description:
-        'Helping businesses connect with high-intent customers through strategic search advertising, smarter budget allocation, and continuous performance optimization.',
-      keywords: ['Search Demand', 'Qualified Traffic', 'Revenue Growth'],
+        'Putting your business in front of customers actively searching to buy or book—filtering out irrelevant clicks and directing budget toward phone calls, forms, and sales.',
+      keywords: ['High-Intent Search', 'Wasted Spend Control', 'Qualified Leads'],
       icon: Target,
       tint: 'bg-[#E0F2FE]/60 border-sky-200/80',
       badgeTint: 'bg-white/85 border-sky-300/60 text-sky-950',
@@ -200,11 +204,11 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
       eyebrow: 'EXPERTISE 02',
       title: 'Meta Ads & Customer Acquisition',
       description:
-        'Connecting brands with relevant audiences through structured Facebook and Instagram campaigns focused on customer acquisition, lead generation, and eCommerce growth.',
+        'Turning Facebook and Instagram reach into qualified inquiries and online store orders through structured audience targeting, ad testing, and retargeting.',
       keywords: [
         'Audience Strategy',
-        'Lead Generation',
-        'Customer Acquisition',
+        'Lead Qualification',
+        'eCommerce Scaling',
       ],
       icon: Megaphone,
       tint: 'bg-[#ECFCCB]/65 border-lime-300/80',
@@ -216,12 +220,11 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
       eyebrow: 'EXPERTISE 03',
       title: 'Analytics & Conversion Tracking',
       description:
-        'Building reliable measurement systems that connect advertising activity with meaningful business outcomes, enabling clearer attribution and smarter decisions.',
+        'Giving you and your ad accounts dependable data—tracking phone calls, lead forms, and purchases cleanly across GA4, Google Tag Manager, and Meta CAPI.',
       keywords: [
-        'GA4',
-        'GTM',
+        'GA4 & GTM',
         'Conversion API',
-        'Server-Side Tracking',
+        'Call & Order Tracking',
       ],
       icon: ChartNoAxesCombined,
       tint: 'bg-[#FEF3C7]/65 border-amber-200/80',
@@ -257,16 +260,17 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
           </span>
 
           <h2 className="font-display font-bold text-3xl sm:text-5xl lg:text-[3.5rem] text-[#09090B] tracking-[-0.03em] leading-[1.08]">
-            Advertising Expertise Backed by{' '}
+            Practical Ad Strategy Backed by{' '}
             <span className="font-serif italic font-normal text-[#09090B] block sm:inline">
-              Real Campaign Data.
+              Reliable Data.
             </span>
           </h2>
 
           <p className="mt-5 text-base sm:text-lg text-zinc-600 leading-relaxed">
-            Many businesses invest in paid ads without seeing consistent return—often
-            because campaigns target broad, low-intent traffic or broken tracking fails
-            to record which ads actually generate phone calls, leads, and purchases.
+            Too many businesses spend money on ads without knowing what is
+            actually working—usually because campaigns attract broad,
+            low-intent clicks or broken tracking hides which ads drive real
+            phone calls, leads, and orders.
           </p>
         </motion.div>
 
@@ -291,7 +295,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               <div className="flex items-center gap-3.5 pb-5 mb-5 border-b border-zinc-100">
                 <img
                   src="/assets/zahidul-Illustration.webp"
-                  alt="Zahidul Islam — Performance & Analytics Specialist"
+                  alt="Zahidul Islam — Google Ads, Meta Ads & Conversion Tracking Specialist"
                   width={56}
                   height={56}
                   loading="lazy"
@@ -308,7 +312,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                     </span>
                   </div>
                   <p className="text-xs sm:text-sm text-zinc-500 mt-0.5">
-                    Performance &amp; Analytics Specialist · Google Ads &amp; Meta Ads
+                    Digital Advertising &amp; Tracking Specialist · Google Ads &amp; Meta Ads
                   </p>
                 </div>
               </div>
@@ -319,18 +323,19 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                   <strong className="text-[#09090B] font-semibold">
                     5+ years of hands-on experience
                   </strong>{' '}
-                  in Google Ads, Meta Ads, and PPC campaign management, I help
-                  local service businesses, professional practices, and eCommerce
-                  brands turn ad spend into qualified leads and measurable sales.
+                  managing over $22M+ across Google Ads and Meta Ads, I work
+                  directly with local service companies, professional
+                  practices, and eCommerce brands to turn ad budgets into
+                  qualified inquiries and measurable sales.
                 </p>
                 <p>
-                  Alongside campaign management, I implement{' '}
+                  Every campaign is paired with clean{' '}
                   <strong className="text-[#09090B] font-semibold">
                     Google Analytics 4 (GA4), Google Tag Manager (GTM), Meta
-                    Pixel, and Server-Side Conversions API
+                    Pixel, and Conversions API
                   </strong>{' '}
-                  so your optimization decisions are grounded in reliable
-                  conversion data rather than guesswork.
+                  tracking—so you retain full account ownership and every decision
+                  is grounded in real customer actions, not guesswork.
                 </p>
               </div>
 
@@ -406,7 +411,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                         </p>
                       ) : (
                         <p className="text-[8.5px] min-[375px]:text-[9px] sm:text-[10px] font-mono uppercase tracking-wide sm:tracking-wider text-zinc-500">
-                          Fiverr &amp; Upwork
+                          {stat.footerLabel || 'Fiverr & Upwork'}
                         </p>
                       )}
                     </div>
@@ -428,10 +433,10 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
           >
             <div className="flex items-center justify-between px-1 mb-4 shrink-0">
               <span className="font-mono text-xs uppercase tracking-wider font-semibold text-zinc-500">
-                Core Capabilities · Expertise
+                Core Pillars · How I Help
               </span>
               <span className="font-serif italic text-sm text-zinc-700">
-                Full-Funnel Growth Systems
+                Built Around Business Outcomes
               </span>
             </div>
 
