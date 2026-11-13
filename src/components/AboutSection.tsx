@@ -236,7 +236,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
   return (
     <section
       id="about"
-      className="relative py-20 sm:py-24 lg:py-32 bg-[#FAFAFA] text-[#09090B] border-b border-zinc-200/80 scroll-mt-20 overflow-hidden"
+      className="relative py-16 sm:py-20 lg:py-24 bg-[#FAFAFA] text-[#09090B] border-b border-zinc-200/80 scroll-mt-20 overflow-hidden"
     >
       {/* Subtle Top Editorial Dot Matrix Texture */}
       <div
@@ -253,7 +253,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-3xl mx-auto text-center mb-12 sm:mb-16"
+          className="max-w-3xl mx-auto text-center mb-10 sm:mb-12"
         >
           <span className="dm-pill-light mb-4">
             About Zahidul Islam

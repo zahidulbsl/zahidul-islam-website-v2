@@ -285,7 +285,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
   return (
     <section
       id="case-studies"
-      className="relative py-20 sm:py-24 lg:py-32 bg-[#FAFAFA] text-[#09090B] border-b border-zinc-200/80 scroll-mt-20"
+      className="relative py-16 sm:py-20 lg:py-24 bg-[#FAFAFA] text-[#09090B] border-b border-zinc-200/80 scroll-mt-20"
     >
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* ===================================================================
@@ -296,7 +296,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-3xl mx-auto text-center mb-10 sm:mb-14"
+          className="max-w-3xl mx-auto text-center mb-8 sm:mb-11"
         >
           <span className="dm-pill-light mb-4">
             Verified Campaign Portfolio
@@ -639,7 +639,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
         {/* ===================================================================
             7. BOTTOM CONSULTATION CTA BAR
         =================================================================== */}
-        <div className="mt-14 sm:mt-16 rounded-[24px] bg-white border border-zinc-200/90 p-6 sm:p-8 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-xs">
+        <div className="mt-10 sm:mt-12 rounded-[24px] bg-white border border-zinc-200/90 p-6 sm:p-8 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-xs">
           <div className="flex items-start sm:items-center gap-4 text-center sm:text-left">
             <div className="w-12 h-12 rounded-2xl bg-[#FAFAFA] border border-zinc-200/90 flex items-center justify-center text-emerald-600 shrink-0 hidden sm:flex">
               <ShieldCheck className="w-6 h-6" />

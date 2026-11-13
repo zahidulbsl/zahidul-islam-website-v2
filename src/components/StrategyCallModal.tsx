@@ -118,9 +118,17 @@ export function StrategyCallModal({
   const modalRef = useRef<HTMLDivElement>(null);
   const phoneRef = useRef<PhoneInputRefType>(null);
   const countryDropdownRef = useRef<HTMLDivElement>(null);
+  const countryButtonRef = useRef<HTMLButtonElement>(null);
   const countrySearchInputRef = useRef<HTMLInputElement>(null);
   const firstInputRef = useRef<HTMLInputElement>(null);
   const previousActiveElementRef = useRef<HTMLElement | null>(null);
+  const isCountryOpenRef = useRef(isCountryOpen);
+  const isSubmittingRef = useRef(isSubmitting);
+  const onCloseRef = useRef(onClose);
+
+  isCountryOpenRef.current = isCountryOpen;
+  isSubmittingRef.current = isSubmitting;
+  onCloseRef.current = onClose;
 
   const filteredCountries = useMemo(() => {
     const query = countrySearch.trim().toLowerCase();
@@ -141,6 +149,8 @@ export function StrategyCallModal({
     countries.find((country) => country.iso2 === "us")!;
 
   // 1. BODY & BACKGROUND SCROLL LOCK + ESCAPE / FOCUS TRAP
+  // Depend only on `isOpen` so toggling `isCountryOpen` or `isSubmitting`
+  // never re-runs initial focus onto the Full Name field.
   useEffect(() => {
     if (!isOpen) return;
 
@@ -178,13 +188,16 @@ export function StrategyCallModal({
         event.preventDefault();
         event.stopPropagation();
 
-        if (isCountryOpen) {
+        if (isCountryOpenRef.current) {
           setIsCountryOpen(false);
+          requestAnimationFrame(() => {
+            countryButtonRef.current?.focus();
+          });
           return;
         }
 
-        if (!isSubmitting) {
-          onClose();
+        if (!isSubmittingRef.current) {
+          onCloseRef.current();
         }
         return;
       }
@@ -234,7 +247,7 @@ export function StrategyCallModal({
         previousActiveElementRef.current.focus();
       }
     };
-  }, [isOpen, isSubmitting, isCountryOpen, onClose]);
+  }, [isOpen]);
 
   // Close country dropdown when clicking outside
   useEffect(() => {
@@ -257,11 +270,15 @@ export function StrategyCallModal({
 
   // Focus search input when country dropdown opens
   useEffect(() => {
-    if (isCountryOpen) {
-      setTimeout(() => {
-        countrySearchInputRef.current?.focus();
-      }, 40);
-    }
+    if (!isCountryOpen) return;
+
+    const searchFocusTimer = setTimeout(() => {
+      countrySearchInputRef.current?.focus();
+    }, 40);
+
+    return () => {
+      clearTimeout(searchFocusTimer);
+    };
   }, [isCountryOpen]);
 
   const updateField = (field: keyof typeof form, value: string) => {
@@ -275,10 +292,13 @@ export function StrategyCallModal({
   const handleCountrySelect = (iso2: string) => {
     setSelectedCountry(iso2);
     phoneRef.current?.setCountry(iso2 as never, {
-      focusOnInput: false,
+      focusOnInput: true,
     });
     setIsCountryOpen(false);
     setCountrySearch("");
+    requestAnimationFrame(() => {
+      phoneRef.current?.focus();
+    });
   };
 
   const validateForm = () => {
@@ -378,7 +398,7 @@ export function StrategyCallModal({
   if (typeof document === "undefined") return null;
 
   const inputClass =
-    "w-full h-[46px] px-3.5 rounded-xl bg-[#FAFAFA] focus:bg-white border border-zinc-200 hover:border-zinc-400 focus:border-[#09090B] focus:ring-3 focus:ring-[#09090B]/10 text-sm text-[#09090B] placeholder:text-zinc-400 focus:outline-none transition-all duration-200";
+    "zp-modal-field w-full h-[46px] px-3.5 text-sm text-[#09090B] placeholder:text-zinc-400";
 
   const labelClass =
     "block text-xs font-display font-bold text-[#09090B] mb-1.5";
@@ -403,25 +423,33 @@ export function StrategyCallModal({
       />
 
       <style>{`
+        .zp-modal-field,
+        .zp-modal-phone {
+          border: 1px solid #E4E4E7;
+          border-radius: 12px;
+          background: #FAFAFA;
+          transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+          outline: none !important;
+        }
+        .zp-modal-field:hover,
+        .zp-modal-phone:hover {
+          border-color: #A1A1AA;
+        }
+        .zp-modal-field:focus,
+        .zp-modal-field:focus-visible,
+        .zp-modal-phone:focus-within {
+          background: #FFFFFF;
+          border-color: #09090B;
+          box-shadow: 0 0 0 3px rgba(9, 9, 11, 0.08);
+          outline: none !important;
+        }
         .zp-modal-phone {
           position: relative;
           display: flex;
           align-items: center;
           width: 100%;
           height: 46px;
-          border: 1px solid #E4E4E7;
-          border-radius: 12px;
-          background: #FAFAFA;
           padding: 0 12px;
-          transition: all 0.2s ease;
-        }
-        .zp-modal-phone:hover {
-          border-color: #A1A1AA;
-        }
-        .zp-modal-phone:focus-within {
-          background: #FFFFFF;
-          border-color: #09090B;
-          box-shadow: 0 0 0 3px rgba(9, 9, 11, 0.08);
         }
         .zp-modal-country-btn {
           display: inline-flex;
@@ -434,6 +462,12 @@ export function StrategyCallModal({
           color: #09090B;
           cursor: pointer;
           flex-shrink: 0;
+          outline: none !important;
+        }
+        .zp-modal-country-btn:focus,
+        .zp-modal-country-btn:focus-visible {
+          outline: none !important;
+          box-shadow: none !important;
         }
         .zp-modal-phone .react-international-phone-input-container {
           flex: 1;
@@ -456,6 +490,11 @@ export function StrategyCallModal({
           font-size: 14px !important;
           box-shadow: none !important;
         }
+        .zp-modal-phone .react-international-phone-input:focus,
+        .zp-modal-phone .react-international-phone-input:focus-visible {
+          outline: none !important;
+          box-shadow: none !important;
+        }
         .zp-modal-phone .react-international-phone-input::placeholder {
           color: #A1A1AA;
         }
@@ -471,6 +510,7 @@ export function StrategyCallModal({
           border-radius: 16px;
           background: #FFFFFF;
           box-shadow: 0 20px 45px -10px rgba(9, 9, 11, 0.18);
+          outline: none !important;
         }
         .zp-modal-country-search {
           display: flex;
@@ -482,16 +522,31 @@ export function StrategyCallModal({
           border-radius: 10px;
           background: #FAFAFA;
           color: #52525B;
+          transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .zp-modal-country-search:hover {
+          border-color: #A1A1AA;
+        }
+        .zp-modal-country-search:focus-within {
+          background: #FFFFFF;
+          border-color: #09090B;
+          box-shadow: 0 0 0 3px rgba(9, 9, 11, 0.08);
         }
         .zp-modal-country-search input {
           width: 100%;
           height: 32px;
           padding: 0 8px;
           border: none;
-          outline: none;
+          outline: none !important;
+          box-shadow: none !important;
           background: transparent;
           color: #09090B;
           font-size: 12px;
+        }
+        .zp-modal-country-search input:focus,
+        .zp-modal-country-search input:focus-visible {
+          outline: none !important;
+          box-shadow: none !important;
         }
         .zp-modal-country-list {
           height: 205px;
@@ -510,14 +565,20 @@ export function StrategyCallModal({
           text-align: left;
           font-size: 12px;
           cursor: pointer;
+          outline: none !important;
         }
-        .zp-modal-country-option:hover {
+        .zp-modal-country-option:hover,
+        .zp-modal-country-option:focus-visible {
           background: #F4F4F5;
+          outline: none !important;
         }
-        .zp-modal-country-option.active {
+        .zp-modal-country-option.active,
+        .zp-modal-country-option.active:hover,
+        .zp-modal-country-option.active:focus-visible {
           background: #09090B;
           color: #FFFFFF;
           font-weight: 600;
+          outline: none !important;
         }
       `}</style>
 
@@ -779,6 +840,7 @@ export function StrategyCallModal({
                         </label>
                         <div className="zp-modal-phone" ref={countryDropdownRef}>
                           <button
+                            ref={countryButtonRef}
                             type="button"
                             className="zp-modal-country-btn"
                             onClick={() => {
@@ -934,7 +996,7 @@ export function StrategyCallModal({
                         onChange={(e) =>
                           updateField("projectDetails", e.target.value)
                         }
-                        className="w-full p-3.5 rounded-xl bg-[#FAFAFA] focus:bg-white border border-zinc-200 hover:border-zinc-400 focus:border-[#09090B] focus:ring-3 focus:ring-[#09090B]/10 text-sm text-[#09090B] placeholder:text-zinc-400 focus:outline-none transition-all duration-200 resize-y min-h-[120px] leading-relaxed"
+                        className="zp-modal-field w-full p-3.5 text-sm text-[#09090B] placeholder:text-zinc-400 resize-y min-h-[120px] leading-relaxed"
                         required
                       />
                     </div>

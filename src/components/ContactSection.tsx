@@ -207,6 +207,25 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   return (
     <>
       <style>{`
+        .zp-contact-field {
+          outline: none !important;
+          transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .zp-contact-field:focus,
+        .zp-contact-field:focus-visible {
+          background-color: #FFFFFF;
+          border-color: #09090B;
+          box-shadow: 0 0 0 3px rgba(9, 9, 11, 0.08);
+          outline: none !important;
+        }
+        .zp-budget-btn:focus,
+        .zp-budget-btn:focus-visible {
+          outline: none !important;
+        }
+        .zp-budget-btn:focus-visible {
+          border-color: #09090B;
+          box-shadow: 0 0 0 3px rgba(9, 9, 11, 0.08);
+        }
         .zp-phone-box {
           position: relative;
           display: flex;
@@ -217,7 +236,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
           border-radius: 12px;
           background: #FAFAFA;
           padding: 0 12px;
-          transition: all 0.2s ease;
+          transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+          outline: none !important;
         }
         .zp-phone-box:hover {
           border-color: #A1A1AA;
@@ -226,6 +246,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
           background: #FFFFFF;
           border-color: #09090B;
           box-shadow: 0 0 0 3px rgba(9, 9, 11, 0.08);
+          outline: none !important;
         }
         .zp-country-btn {
           display: inline-flex;
@@ -238,6 +259,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
           color: #09090B;
           cursor: pointer;
           flex-shrink: 0;
+          outline: none !important;
+        }
+        .zp-country-btn:focus,
+        .zp-country-btn:focus-visible {
+          outline: none !important;
+          box-shadow: none !important;
         }
         .zp-phone-box .react-international-phone-input-container {
           flex: 1;
@@ -260,6 +287,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
           font-size: 14px !important;
           box-shadow: none !important;
         }
+        .zp-phone-box .react-international-phone-input:focus,
+        .zp-phone-box .react-international-phone-input:focus-visible {
+          outline: none !important;
+          box-shadow: none !important;
+        }
         .zp-phone-box .react-international-phone-input::placeholder {
           color: #71717A;
         }
@@ -275,6 +307,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
           border-radius: 16px;
           background: #FFFFFF;
           box-shadow: 0 20px 45px -10px rgba(9, 9, 11, 0.18);
+          outline: none !important;
         }
         .zp-country-search {
           display: flex;
@@ -286,16 +319,31 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
           border-radius: 10px;
           background: #FAFAFA;
           color: #52525B;
+          transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .zp-country-search:hover {
+          border-color: #A1A1AA;
+        }
+        .zp-country-search:focus-within {
+          background: #FFFFFF;
+          border-color: #09090B;
+          box-shadow: 0 0 0 3px rgba(9, 9, 11, 0.08);
         }
         .zp-country-search input {
           width: 100%;
           height: 32px;
           padding: 0 8px;
           border: none;
-          outline: none;
+          outline: none !important;
+          box-shadow: none !important;
           background: transparent;
           color: #09090B;
           font-size: 12px;
+        }
+        .zp-country-search input:focus,
+        .zp-country-search input:focus-visible {
+          outline: none !important;
+          box-shadow: none !important;
         }
         .zp-country-list {
           height: 210px;
@@ -314,20 +362,26 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
           text-align: left;
           font-size: 12px;
           cursor: pointer;
+          outline: none !important;
         }
-        .zp-country-option:hover {
+        .zp-country-option:hover,
+        .zp-country-option:focus-visible {
           background: #F4F4F5;
+          outline: none !important;
         }
-        .zp-country-option.active {
+        .zp-country-option.active,
+        .zp-country-option.active:hover,
+        .zp-country-option.active:focus-visible {
           background: #09090B;
           color: #FFFFFF;
           font-weight: 600;
+          outline: none !important;
         }
       `}</style>
 
       <section
         id="contact"
-        className="relative pt-20 sm:pt-24 lg:pt-32 pb-6 sm:pb-8 bg-[#FAFAFA] text-[#09090B] border-t border-zinc-200/80 scroll-mt-20 overflow-hidden"
+        className="relative pt-16 sm:pt-20 lg:pt-24 pb-5 sm:pb-6 bg-[#FAFAFA] text-[#09090B] border-t border-zinc-200/80 scroll-mt-20 overflow-hidden"
       >
         <div
           aria-hidden="true"
@@ -343,7 +397,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-3xl mx-auto text-center mb-12 sm:mb-16"
+            className="max-w-3xl mx-auto text-center mb-10 sm:mb-12"
           >
             <span className="dm-pill-light mb-4">
               Start a Conversation
@@ -587,7 +641,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                           setFormData({ ...formData, name: e.target.value })
                         }
                         placeholder="Your full name"
-                        className="w-full h-[46px] px-3.5 rounded-xl bg-[#FAFAFA] focus:bg-white border border-zinc-200 hover:border-zinc-400 focus:border-[#09090B] focus:ring-3 focus:ring-[#09090B]/10 text-sm text-[#09090B] placeholder-zinc-400 focus:outline-none transition-all"
+                        className="zp-contact-field w-full h-[46px] px-3.5 rounded-xl bg-[#FAFAFA] border border-zinc-200 hover:border-zinc-400 text-sm text-[#09090B] placeholder-zinc-400"
                       />
                     </div>
 
@@ -608,7 +662,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                           setFormData({ ...formData, email: e.target.value })
                         }
                         placeholder="you@company.com"
-                        className="w-full h-[46px] px-3.5 rounded-xl bg-[#FAFAFA] focus:bg-white border border-zinc-200 hover:border-zinc-400 focus:border-[#09090B] focus:ring-3 focus:ring-[#09090B]/10 text-sm text-[#09090B] placeholder-zinc-400 focus:outline-none transition-all"
+                        className="zp-contact-field w-full h-[46px] px-3.5 rounded-xl bg-[#FAFAFA] border border-zinc-200 hover:border-zinc-400 text-sm text-[#09090B] placeholder-zinc-400"
                       />
                     </div>
                   </div>
@@ -736,7 +790,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                           })
                         }
                         placeholder="https://yourwebsite.com"
-                        className="w-full h-[46px] px-3.5 rounded-xl bg-[#FAFAFA] focus:bg-white border border-zinc-200 hover:border-zinc-400 focus:border-[#09090B] focus:ring-3 focus:ring-[#09090B]/10 text-sm text-[#09090B] placeholder-zinc-400 focus:outline-none transition-all"
+                        className="zp-contact-field w-full h-[46px] px-3.5 rounded-xl bg-[#FAFAFA] border border-zinc-200 hover:border-zinc-400 text-sm text-[#09090B] placeholder-zinc-400"
                       />
                     </div>
                   </div>
@@ -759,7 +813,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                             serviceInterest: e.target.value,
                           })
                         }
-                        className="w-full h-[46px] pl-3.5 pr-10 rounded-xl bg-[#FAFAFA] focus:bg-white border border-zinc-200 hover:border-zinc-400 focus:border-[#09090B] focus:ring-3 focus:ring-[#09090B]/10 text-sm text-[#09090B] font-medium appearance-none focus:outline-none transition-all cursor-pointer"
+                        className="zp-contact-field w-full h-[46px] pl-3.5 pr-10 rounded-xl bg-[#FAFAFA] border border-zinc-200 hover:border-zinc-400 text-sm text-[#09090B] font-medium appearance-none cursor-pointer"
                       >
                         {serviceOptions.map((service) => (
                           <option key={service} value={service}>
@@ -790,7 +844,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                               })
                             }
                             aria-pressed={isSelected}
-                            className={`px-3.5 py-2 rounded-xl font-mono text-xs transition-all cursor-pointer border ${
+                            className={`zp-budget-btn px-3.5 py-2 rounded-xl font-mono text-xs transition-all cursor-pointer border ${
                               isSelected
                                 ? 'bg-[#09090B] text-white border-[#09090B] font-bold shadow-sm'
                                 : 'bg-[#FAFAFA] text-zinc-700 border-zinc-200 hover:border-zinc-400 hover:bg-zinc-100/80'
@@ -820,7 +874,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                           setFormData({ ...formData, message: e.target.value })
                         }
                         placeholder="Tell me about your business, current advertising setup, tracking needs, or campaign goals..."
-                        className="w-full p-3.5 rounded-xl bg-[#FAFAFA] focus:bg-white border border-zinc-200 hover:border-zinc-400 focus:border-[#09090B] focus:ring-3 focus:ring-[#09090B]/10 text-sm text-[#09090B] placeholder-zinc-400 focus:outline-none transition-all resize-y"
+                        className="zp-contact-field w-full p-3.5 rounded-xl bg-[#FAFAFA] border border-zinc-200 hover:border-zinc-400 text-sm text-[#09090B] placeholder-zinc-400 resize-y"
                       />
                     </div>
                   </div>

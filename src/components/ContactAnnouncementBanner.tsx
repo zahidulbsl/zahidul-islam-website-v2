@@ -29,7 +29,7 @@ export const ContactAnnouncementBanner: React.FC = () => {
   return (
     <section
       aria-label="Announcement"
-      className="bg-[#FAFAFA] pt-0 pb-12 sm:pb-16 relative overflow-hidden"
+      className="bg-[#FAFAFA] pt-0 pb-10 sm:pb-12 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div

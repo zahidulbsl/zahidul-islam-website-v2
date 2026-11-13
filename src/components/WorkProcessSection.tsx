@@ -131,7 +131,7 @@ export const WorkProcessSection: React.FC<WorkProcessSectionProps> = ({
   return (
     <section
       id="process"
-      className="relative overflow-hidden scroll-mt-20 border-b border-zinc-200/80 bg-[#FAFAFA] text-[#09090B] py-20 sm:py-24 lg:py-32"
+      className="relative overflow-hidden scroll-mt-20 border-b border-zinc-200/80 bg-[#FAFAFA] text-[#09090B] py-16 sm:py-20 lg:py-24"
     >
       {/* Subtle Top Editorial Dot Matrix */}
       <div
@@ -141,7 +141,7 @@ export const WorkProcessSection: React.FC<WorkProcessSectionProps> = ({
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* 1. CENTERED EDITORIAL HEADER */}
-        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-12">
           <span className="dm-pill-light mb-4">
             How We Work Together
           </span>
@@ -309,7 +309,7 @@ export const WorkProcessSection: React.FC<WorkProcessSectionProps> = ({
         </div>
 
         {/* 3. PREMIUM CONVERSION CTA BANNER */}
-        <div className="mt-12 sm:mt-16">
+        <div className="mt-10 sm:mt-12">
           <div className="relative overflow-hidden rounded-[28px] sm:rounded-[32px] bg-[#090B10] border border-zinc-800 px-6 py-10 sm:px-10 sm:py-12 lg:px-14 lg:py-14 text-white shadow-[0_24px_60px_-18px_rgba(9,9,11,0.3)]">
             <div
               aria-hidden="true"

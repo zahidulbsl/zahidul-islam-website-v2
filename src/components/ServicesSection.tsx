@@ -178,7 +178,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
   return (
     <section
       id="services"
-      className="relative py-20 sm:py-24 lg:py-32 bg-[#06070B] text-white border-y border-white/[0.08] scroll-mt-20 overflow-hidden"
+      className="relative py-16 sm:py-20 lg:py-24 bg-[#06070B] text-white border-y border-white/[0.08] scroll-mt-20 overflow-hidden"
     >
       {/* Subtle Architectural Matrix & Radial Atmosphere */}
       <div
@@ -199,7 +199,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-3xl mx-auto text-center mb-12 sm:mb-16"
+          className="max-w-3xl mx-auto text-center mb-10 sm:mb-12"
         >
           <span className="dm-pill-dark mb-4">
             How We Can Work Together
@@ -364,7 +364,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
         {/* ===================================================================
             3. BOTTOM CUSTOM SCOPE & CONSULTATION STRIP
         =================================================================== */}
-        <div className="mt-12 sm:mt-14 rounded-[24px] bg-[#0C0F17] border border-white/10 p-6 sm:p-8 flex flex-col lg:flex-row items-center justify-between gap-6">
+        <div className="mt-10 sm:mt-12 rounded-[24px] bg-[#0C0F17] border border-white/10 p-6 sm:p-8 flex flex-col lg:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4 text-center sm:text-left">
             <div className="w-12 h-12 rounded-2xl bg-white/[0.05] border border-white/10 flex items-center justify-center text-emerald-400 shrink-0 hidden sm:flex">
               <Wrench className="w-5 h-5" />

@@ -46,7 +46,7 @@ export const Footer: React.FC<FooterProps> = ({
   ];
 
   return (
-    <footer className="relative overflow-hidden bg-[#05060A] border-t border-white/[0.08] pt-16 sm:pt-20 lg:pt-24 pb-28 sm:pb-24 text-zinc-400">
+    <footer className="relative overflow-hidden bg-[#05060A] border-t border-white/[0.08] pt-12 sm:pt-16 lg:pt-20 pb-24 sm:pb-20 text-zinc-400">
       {/* Subtle Top Specular Line */}
       <div
         aria-hidden="true"
@@ -55,7 +55,7 @@ export const Footer: React.FC<FooterProps> = ({
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* 1. MAIN FOOTER CONTENT — TWO-COLUMN MOBILE DIRECTORY, THREE-COLUMN DESKTOP GRID */}
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-y-9 gap-x-4 sm:gap-x-6 md:gap-y-10 md:gap-x-8 lg:gap-x-12 pb-12 sm:pb-14">
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-y-9 gap-x-4 sm:gap-x-6 md:gap-y-10 md:gap-x-8 lg:gap-x-12 pb-10 sm:pb-12">
           {/* COLUMN 1: ZAHIDUL ISLAM INTRODUCTION & DESCRIPTION (6 COLS) */}
           <div className="col-span-2 md:col-span-12 lg:col-span-6 space-y-4">
             <button

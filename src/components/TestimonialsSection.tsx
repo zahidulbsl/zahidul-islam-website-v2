@@ -184,7 +184,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
   return (
     <section
       id="reviews"
-      className="relative isolate scroll-mt-20 overflow-hidden border-b border-zinc-200/80 bg-white text-[#09090B] py-20 sm:py-24 lg:py-32"
+      className="relative isolate scroll-mt-20 overflow-hidden border-b border-zinc-200/80 bg-white text-[#09090B] py-16 sm:py-20 lg:py-24"
     >
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* ===================================================================
@@ -195,7 +195,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto mb-12 sm:mb-16 max-w-3xl text-center"
+          className="mx-auto mb-10 sm:mb-12 max-w-3xl text-center"
         >
           <span className="dm-pill-light mb-4">
             Verified Client Feedback
@@ -253,7 +253,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
       {/* ===================================================================
           3. SERVICE-MATCHED REVIEW CTA BAR
       =================================================================== */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-14">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-12">
         <div className="rounded-[24px] bg-[#FAFAFA] border border-zinc-200/90 p-6 sm:p-8 flex flex-col lg:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4 text-center sm:text-left">
             <div className="w-12 h-12 rounded-2xl bg-white border border-zinc-200/90 flex items-center justify-center text-emerald-600 shrink-0 hidden sm:flex shadow-2xs">

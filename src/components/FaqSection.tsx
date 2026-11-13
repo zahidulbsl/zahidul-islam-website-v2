@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { OFFICIAL_CREDENTIALS } from '../data/credentials';
 
 interface FaqItem {
   question: string;
@@ -11,62 +10,32 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: 'How can I start a project with Zahidul Islam?',
     answer:
-      'Getting started is straightforward. Book a free strategy call, fill out the project inquiry form below, or send a message on WhatsApp. Share your website URL and goals, and I will review your setup and come back within 24 hours with a practical action plan—with zero obligation.',
+      "Getting started is simple. Book a free strategy call, submit the project inquiry form, or contact me on WhatsApp. Share your website, business goals, and advertising requirements. I'll review your needs and suggest a practical approach before we begin.",
   },
   {
-    question: 'Will I work directly with you or be handed off to a junior manager?',
+    question: 'Will I work directly with you throughout the project?',
     answer:
-      'You work directly with me—Zahidul Islam—from our first call through campaign setup, tracking configuration, and ongoing optimization. Your ad account is never passed off to junior staff or outsourced.',
+      "Yes. You'll work directly with me, Zahidul Islam, throughout the project. I personally handle campaign strategy, setup, optimization, and performance monitoring. There are no agency handoffs or unexpected junior managers.",
   },
   {
-    question: 'Do you guarantee a specific number of leads, sales, or ROAS?',
+    question: 'What advertising services do you offer?',
     answer:
-      'No ethical specialist can guarantee a fixed number of leads, sales, or return on ad spend, because real results depend on market competition, your pricing and offer, website conversion rate, budget, and follow-up speed. What I do guarantee is disciplined campaign setup, accurate conversion tracking, ongoing waste removal, and complete transparency.',
+      'I provide Google Ads management, Meta Ads management, Google Shopping and eCommerce advertising, lead generation, GA4 and Google Tag Manager setup, conversion tracking, and campaign audits and optimization.',
   },
   {
-    question: 'What types of businesses do you work with?',
+    question: 'What budget do I need to get started?',
     answer:
-      'I primarily partner with local and home service businesses (HVAC, roofing, plumbing, electrical, cleaning, and contractors), professional practices (healthcare, dental, legal, financial, and real estate), and eCommerce stores using Google Shopping, Performance Max, and Meta Ads.',
+      "Your advertising budget depends on your business goals, industry, target audience, and competition. I'll help you assess a suitable starting budget based on your requirements. Advertising spend and service fees are separate, and the recommended approach will be discussed before starting.",
   },
   {
-    question: 'Can you audit and fix an underperforming Google Ads or Meta Ads account?',
+    question: 'Do you guarantee leads, sales, or a specific ROAS?',
     answer:
-      'Yes. If your current campaigns are burning budget without clear return, I audit your campaign structure, search terms, negative keywords, location settings, bidding rules, and conversion tracking—then implement practical fixes directly inside your account.',
+      'No professional can honestly guarantee a fixed number of leads, sales, or ROAS in advance. Results depend on factors such as your offer, market demand, competition, website experience, and advertising budget. My focus is on building a suitable strategy, accurate tracking, continuous optimization, and transparent performance reporting.',
   },
   {
-    question: 'Why is conversion tracking so important before scaling ad spend?',
+    question: 'Will I retain full ownership of my advertising accounts and data?',
     answer:
-      'Without accurate conversion tracking, neither you nor Google or Meta algorithms know which keywords, audiences, or ads actually produce phone calls, form leads, or purchases. Clean GA4, Google Tag Manager (GTM), Meta Pixel, and Conversions API setup ensures your budget optimizes around real business revenue.',
-  },
-  {
-    question: 'Do you offer both one-time setups and ongoing monthly management?',
-    answer:
-      'Yes. You can hire me for a one-time campaign build, conversion tracking setup (GA4, GTM, Meta CAPI), or account audit—or choose ongoing monthly management for continuous search term filtering, creative testing, bid adjustments, and performance reporting.',
-  },
-  {
-    question: 'Who owns the ad accounts, billing, and analytics data?',
-    answer:
-      'You keep 100% ownership and full administrative access to your Google Ads, Meta Business Manager, Google Analytics 4, and Google Tag Manager accounts at all times. You pay the ad platforms directly using your own billing method.',
-  },
-  {
-    question: 'What advertising budget do I need to get started?',
-    answer:
-      'Your ideal ad spend depends on your industry, service area, and average cost per click. During our initial review, I will recommend a realistic starting budget based on your market so you can gather reliable conversion data without overspending.',
-  },
-  {
-    question: 'How long does it take to launch a campaign or tracking setup?',
-    answer:
-      'Most GA4, Google Tag Manager, and Meta Conversions API tracking setups or account audits are completed within 3 to 5 business days. Full Google Ads or Meta Ads campaign builds typically launch within 5 to 7 business days once account access and business details are confirmed.',
-  },
-  {
-    question: 'How do you report campaign performance and communicate updates?',
-    answer:
-      'You receive clear, jargon-free updates focused on the numbers that matter to your business—qualified leads, cost per lead, completed purchases, return on ad spend (ROAS), and the exact optimizations made during each cycle.',
-  },
-  {
-    question: 'Can we work together through Upwork or Fiverr?',
-    answer:
-      `Yes. You can work with me directly through this website, or hire me through my verified Fiverr and Upwork profiles—where I am ${OFFICIAL_CREDENTIALS.freelancerStatus} with ${OFFICIAL_CREDENTIALS.completedOrdersLabel}, ${OFFICIAL_CREDENTIALS.fiverrReviewsLabel}, and a ${OFFICIAL_CREDENTIALS.upworkJssLabel}.`,
+      'Absolutely. Your advertising accounts, business data, and tracking assets remain under your ownership. I work with the access permissions you provide and do not require you to transfer ownership of your business advertising accounts.',
   },
 ];
 
@@ -80,13 +49,13 @@ export const FaqSection: React.FC = () => {
   return (
     <section
       id="faq"
-      className="relative py-20 sm:py-24 lg:py-32 bg-[#FAFAFA] text-[#09090B] border-b border-zinc-200/80 scroll-mt-20"
+      className="relative py-16 sm:py-20 lg:py-24 bg-[#FAFAFA] text-[#09090B] border-b border-zinc-200/80 scroll-mt-20"
     >
       <div className="max-w-[920px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* ===================================================================
             DESIGN MONKS EXACT FAQ HEADER ("Your Questions / *Answered!*")
         =================================================================== */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div className="text-center mb-10 sm:mb-12">
           <span className="dm-pill-light mb-4">
             Frequently Asked Questions
           </span>

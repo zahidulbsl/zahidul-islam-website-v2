@@ -48,7 +48,7 @@ export const Hero: React.FC<HeroProps> = ({
   onExploreWork,
 }) => {
   return (
-    <section className="relative pt-28 sm:pt-32 md:pt-36 lg:pt-40 pb-20 sm:pb-24 lg:pb-28 overflow-hidden bg-[#06070B] text-white border-b border-white/[0.07]">
+    <section className="relative pt-24 sm:pt-28 md:pt-32 lg:pt-32 pb-16 sm:pb-20 lg:pb-24 overflow-hidden bg-[#06070B] text-white border-b border-white/[0.07]">
       {/* 1. ARCHITECTURAL DOT-MATRIX TEXTURE & TOP RADIAL ATMOSPHERE */}
       <div
         aria-hidden="true"

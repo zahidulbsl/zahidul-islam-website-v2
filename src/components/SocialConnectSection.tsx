@@ -172,7 +172,7 @@ export const SocialConnectSection: React.FC = () => (
   <section
     id="verified-profiles"
     aria-labelledby="verified-profiles-heading"
-    className="relative isolate overflow-hidden bg-white text-[#09090B] py-16 sm:py-20 lg:py-24 scroll-mt-20"
+    className="relative isolate overflow-hidden bg-white text-[#09090B] py-12 sm:py-16 lg:py-20 scroll-mt-20"
   >
     <motion.div
       initial={{ opacity: 0, y: 16 }}

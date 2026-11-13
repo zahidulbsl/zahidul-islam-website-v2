@@ -54,7 +54,7 @@ export const LogoShowcase: React.FC = () => {
   return (
     <section
       aria-label="Technology and Advertising Platforms"
-      className="relative isolate overflow-hidden bg-white border-b border-zinc-200/80 py-10 sm:py-14 lg:py-16"
+      className="relative isolate overflow-hidden bg-white border-b border-zinc-200/80 py-8 sm:py-11 lg:py-12"
     >
       <div className="relative z-10 mx-auto mb-6 sm:mb-8 max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
