@@ -389,6 +389,89 @@
 }
 
 /* ==========================================================================
+   SEAMLESS INFINITE PLATFORMS & TRACKING LOGOS MARQUEE
+   ========================================================================== */
+
+@keyframes logos-marquee-ltr {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes logos-marquee-rtl {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Desktop — Preserves original 80s calm speed */
+
+.animate-logos-ltr {
+  animation: logos-marquee-ltr 80s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.animate-logos-rtl {
+  animation: logos-marquee-rtl 80s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Tablet — Preserves original 76s speed */
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .animate-logos-ltr {
+    animation-duration: 76s;
+  }
+
+  .animate-logos-rtl {
+    animation-duration: 76s;
+  }
+}
+
+/* Mobile — Faster, smooth, consistent 18s cycle */
+
+@media (max-width: 640px) {
+  .animate-logos-ltr {
+    animation-duration: 18s;
+  }
+
+  .animate-logos-rtl {
+    animation-duration: 18s;
+  }
+}
+
+/* Pause only on hover-capable pointer devices so touch taps never freeze mobile */
+
+@media (hover: hover) and (pointer: fine) {
+  .logo-marquee-track:hover {
+    animation-play-state: paused;
+  }
+}
+
+/* Logos Marquee Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-logos-ltr,
+  .animate-logos-rtl {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto;
+  }
+}
+
+/* ==========================================================================
    ANNOUNCEMENT TICKER MARQUEE
    ========================================================================== */
 

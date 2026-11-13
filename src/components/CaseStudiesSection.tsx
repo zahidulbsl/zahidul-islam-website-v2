@@ -168,7 +168,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
           }
         }}
         aria-label={`View case study: ${project.title}`}
-        className="group w-[82vw] max-w-[330px] shrink-0 snap-start sm:w-auto sm:max-w-none sm:shrink h-full rounded-[22px] sm:rounded-[26px] bg-white hover:bg-[#FAFAFA] border border-zinc-200/90 hover:border-[#09090B]/40 p-4 sm:p-6 flex flex-col justify-between cursor-pointer transition-all duration-300 hover:-translate-y-1 shadow-[0_10px_30px_-12px_rgba(9,9,11,0.06)] hover:shadow-[0_24px_48px_-14px_rgba(9,9,11,0.13)]"
+        className="group w-[84vw] max-w-[330px] shrink-0 snap-start self-stretch sm:w-auto sm:max-w-none sm:shrink sm:h-full rounded-[22px] sm:rounded-[26px] bg-white hover:bg-[#FAFAFA] border border-zinc-200/90 hover:border-[#09090B]/40 p-4 sm:p-6 flex flex-col justify-between cursor-pointer transition-all duration-300 hover:-translate-y-1 shadow-[0_10px_30px_-12px_rgba(9,9,11,0.06)] hover:shadow-[0_24px_48px_-14px_rgba(9,9,11,0.13)]"
       >
         <div className="flex flex-col flex-1">
           {/* 1. CAMPAIGN IMAGE (Consistent 16:10 Aspect Ratio) */}
@@ -196,11 +196,11 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
           </div>
 
           {/* INDUSTRY KICKER & TRACKING */}
-          <div className="flex items-center justify-between gap-2 mb-2">
+          <div className="h-5 sm:h-auto flex items-center justify-between gap-2 mb-2 shrink-0">
             <span className="font-serif italic text-sm text-zinc-600 truncate">
               {project.clientIndustry}
             </span>
-            <span className="inline-flex items-center gap-1 text-[10px] font-mono text-zinc-500 shrink-0">
+            <span className="inline-flex items-center gap-1 text-[10px] font-mono text-zinc-500 shrink-0 whitespace-nowrap">
               <img
                 src={trackingLogo.src}
                 alt={trackingLogo.name}
@@ -213,30 +213,30 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
           </div>
 
           {/* 4. PROJECT TITLE (Consistent 2-Line Height Slot) */}
-          <h3 className="font-display font-bold text-lg sm:text-xl text-[#09090B] tracking-[-0.02em] leading-snug line-clamp-2 min-h-[3.25rem]">
+          <h3 className="font-display font-bold text-lg sm:text-xl text-[#09090B] tracking-[-0.02em] leading-snug line-clamp-2 h-[3.25rem] sm:h-auto sm:min-h-[3.25rem]">
             {project.title}
           </h3>
 
           {/* 5. SHORT DESCRIPTION (Consistent 3-Line Height Slot) */}
-          <p className="mt-2 text-xs sm:text-sm text-zinc-600 leading-relaxed line-clamp-3 min-h-[3.75rem]">
+          <p className="mt-2 text-xs sm:text-sm text-zinc-600 leading-relaxed line-clamp-3 h-[3.75rem] sm:h-auto sm:min-h-[3.75rem]">
             {project.summary}
           </p>
         </div>
 
         {/* 6. PLATFORM INFORMATION & 7. VIEW CASE STUDY LINK */}
-        <div className="mt-5 pt-4 border-t border-zinc-200/80 flex items-center justify-between gap-2 shrink-0">
-          <div className="flex flex-wrap items-center gap-1.5 min-w-0">
+        <div className="mt-4 sm:mt-5 pt-3.5 sm:pt-4 border-t border-zinc-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-2 shrink-0">
+          <div className="flex flex-nowrap sm:flex-wrap items-center gap-1.5 min-w-0">
             {project.platforms.slice(0, 2).map((platform) => (
               <span
                 key={platform}
-                className="px-2.5 py-1 rounded-md bg-zinc-100 border border-zinc-200/80 font-mono text-[10px] font-medium text-zinc-700 truncate"
+                className="px-2.5 py-1 rounded-md bg-zinc-100 border border-zinc-200/80 font-mono text-[10px] font-medium text-zinc-700 whitespace-nowrap truncate"
               >
                 {platform}
               </span>
             ))}
           </div>
 
-          <span className="inline-flex items-center gap-1 text-xs font-display font-bold text-[#09090B] group-hover:translate-x-0.5 transition-transform shrink-0">
+          <span className="inline-flex items-center justify-end sm:justify-start gap-1 text-xs font-display font-bold text-[#09090B] group-hover:translate-x-0.5 transition-transform shrink-0 whitespace-nowrap">
             <span>View Case Study</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </span>

@@ -36,16 +36,14 @@ function normalizeWhatsapp(raw?: string): string {
   const trimmed = (raw || '').trim();
   if (!trimmed) return '';
   const digitsOnly = trimmed.replace(/\D/g, '');
-  // react-international-phone with forceDialCode may hold only the country code (e.g., "+1", "+44")
+  if (!digitsOnly) return '';
+  // react-international-phone with forceDialCode may hold only the country code (e.g., "+1", "+44", "+880")
   if (digitsOnly.length <= 3) return '';
   return trimmed;
 }
 
 function normalizeWebsiteUrl(raw?: string): string {
-  const trimmed = (raw || '').trim();
-  if (!trimmed) return '';
-  if (/^https?:\/\//i.test(trimmed)) return trimmed;
-  return `https://${trimmed}`;
+  return (raw || '').trim();
 }
 
 function buildDuplicateFingerprint(input: {
@@ -112,19 +110,19 @@ export async function submitLead(
   }
 
   const fullName = input.fullName.trim();
-  const email = input.email.trim().toLowerCase();
+  const email = input.email.trim();
   const service = input.service.trim();
   const projectDetails = input.projectDetails.trim();
   const whatsapp = normalizeWhatsapp(input.whatsapp);
   const websiteUrl = normalizeWebsiteUrl(input.websiteUrl);
   const monthlyBudget = (input.monthlyBudget || '').trim();
 
-  if (fullName.length < 2) {
-    throw new Error('Please enter your full name (minimum 2 characters).');
+  if (!fullName) {
+    throw new Error('Please enter your full name.');
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-  if (!emailRegex.test(email)) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+  if (!email || !emailRegex.test(email)) {
     throw new Error('Please enter a valid email address.');
   }
 
@@ -132,28 +130,8 @@ export async function submitLead(
     throw new Error('Please select a primary service needed.');
   }
 
-  if (projectDetails.length < 5) {
-    throw new Error('Please share at least a brief summary of your project details.');
-  }
-
-  if (whatsapp) {
-    const digits = whatsapp.replace(/\D/g, '');
-    if (digits.length < 6 || digits.length > 18) {
-      throw new Error('Please enter a valid WhatsApp number or leave it blank.');
-    }
-  }
-
-  if (websiteUrl) {
-    try {
-      const parsedUrl = new URL(websiteUrl);
-      if (!parsedUrl.hostname.includes('.')) {
-        throw new Error('Invalid domain');
-      }
-    } catch {
-      throw new Error(
-        'Please enter a valid Website / Store URL (e.g., https://yourwebsite.com) or leave it blank.'
-      );
-    }
+  if (!projectDetails) {
+    throw new Error('Please share your project details.');
   }
 
   const fingerprint = buildDuplicateFingerprint({

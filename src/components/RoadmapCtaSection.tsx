@@ -19,8 +19,8 @@ export const RoadmapCtaSection: React.FC<RoadmapCtaSectionProps> = () => {
       description="Let's fix your GA4, Google Tag Manager, and Meta Pixel tracking gaps and build a paid advertising strategy tailored to your business."
       primaryCtaText="Let's Discuss Your Project"
       primaryHref={WHATSAPP_PROJECT_URL}
-      secondaryCtaText="View Fiverr Portfolio"
-      secondaryHref="https://www.fiverr.com/users/studio_2d2u/portfolio"
+      secondaryCtaText="View Fiverr Profile"
+      secondaryHref="https://www.fiverr.com/studio_2d2u"
       theme="lime"
     />
   );

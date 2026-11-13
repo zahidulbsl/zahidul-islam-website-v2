@@ -93,7 +93,8 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
 
   const renderReviewCard = (
     item: { review: Testimonial; originalIndex: number },
-    loopKey: string
+    loopKey: string,
+    isDuplicate = false
   ) => {
     const t = item.review;
     const initials = t.clientName
@@ -105,16 +106,17 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
       <article
         key={loopKey}
         onClick={() => setSelectedReviewIndex(item.originalIndex)}
-        role="button"
-        tabIndex={0}
+        role={isDuplicate ? undefined : 'button'}
+        tabIndex={isDuplicate ? -1 : 0}
+        aria-hidden={isDuplicate ? true : undefined}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             setSelectedReviewIndex(item.originalIndex);
           }
         }}
-        aria-label={`Read full review from ${t.clientName}`}
-        className="group relative w-[262px] min-[400px]:w-[278px] sm:w-[390px] h-[238px] sm:h-[336px] shrink-0 rounded-[22px] sm:rounded-[26px] border border-zinc-200/90 bg-[#FAFAFA] hover:bg-white p-4 sm:p-7 flex flex-col justify-between text-left transition-all duration-300 hover:-translate-y-1 hover:border-[#09090B]/35 shadow-[0_10px_28px_-12px_rgba(9,9,11,0.05)] hover:shadow-[0_22px_45px_-14px_rgba(9,9,11,0.12)] cursor-pointer overflow-hidden select-none"
+        aria-label={isDuplicate ? undefined : `Read full review from ${t.clientName}`}
+        className="group relative w-[286px] min-[390px]:w-[312px] sm:w-[390px] h-[244px] sm:h-[336px] shrink-0 rounded-[22px] sm:rounded-[26px] border border-zinc-200/90 bg-[#FAFAFA] hover:bg-white p-4 sm:p-7 flex flex-col justify-between text-left transition-all duration-300 hover:-translate-y-1 hover:border-[#09090B]/35 shadow-[0_10px_28px_-12px_rgba(9,9,11,0.05)] hover:shadow-[0_22px_45px_-14px_rgba(9,9,11,0.12)] cursor-pointer overflow-hidden select-none"
       >
         {/* TOP & QUOTE AREA */}
         <div className="flex flex-col min-h-0">
@@ -158,7 +160,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
         {/* Slot 4: Fixed-Height Reviewer & Read Full Review Footer */}
         <div className="pt-3 sm:pt-4 border-t border-zinc-200/80 h-[3.125rem] sm:h-[3.75rem] flex items-center justify-between gap-2 sm:gap-3 shrink-0">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#09090B] text-white font-display text-[10px] sm:text-xs font-bold flex items-center justify-center shrink-0">
+            <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-[#09090B] text-white font-display text-[10px] sm:text-xs font-bold flex items-center justify-center shrink-0">
               {initials}
             </div>
 
@@ -172,7 +174,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
             </div>
           </div>
 
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-white group-hover:bg-[#09090B] border border-zinc-200/90 group-hover:border-[#09090B] text-[10px] sm:text-[11px] font-display font-semibold text-[#09090B] group-hover:text-white transition-colors shrink-0">
+          <span className="inline-flex items-center gap-1 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full bg-white group-hover:bg-[#09090B] border border-zinc-200/90 group-hover:border-[#09090B] text-[9.5px] sm:text-[11px] font-display font-semibold text-[#09090B] group-hover:text-white transition-colors shrink-0 whitespace-nowrap">
             <span>Read Full Review</span>
             <ArrowUpRight className="w-3 h-3" />
           </span>
@@ -232,7 +234,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
         >
           <div className="flex gap-3 sm:gap-6 pr-3 sm:pr-6 w-max animate-reviews-rtl hover:[animation-play-state:paused]">
             {row1Repeated.map((item, idx) =>
-              renderReviewCard(item, `row1-${item.review.id}-${idx}`)
+              renderReviewCard(item, `row1-${item.review.id}-${idx}`, idx >= row1Items.length)
             )}
           </div>
         </div>
@@ -244,7 +246,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
         >
           <div className="flex gap-3 sm:gap-6 pr-3 sm:pr-6 w-max animate-reviews-ltr hover:[animation-play-state:paused]">
             {row2Repeated.map((item, idx) =>
-              renderReviewCard(item, `row2-${item.review.id}-${idx}`)
+              renderReviewCard(item, `row2-${item.review.id}-${idx}`, idx >= row2Items.length)
             )}
           </div>
         </div>

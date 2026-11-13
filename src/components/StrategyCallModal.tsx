@@ -98,6 +98,17 @@ const SERVICE_OPTIONS = [
   "Google Ads Audit & Optimization",
 ];
 
+type FormFieldErrorKey = "name" | "email" | "service" | "projectDetails";
+
+const normalizeOptionalWhatsapp = (raw: string, dialCode: string): string => {
+  const trimmed = raw.trim();
+  if (!trimmed) return "";
+  const digitsOnly = trimmed.replace(/\D/g, "");
+  if (!digitsOnly) return "";
+  if (dialCode && digitsOnly === dialCode) return "";
+  return trimmed;
+};
+
 export function StrategyCallModal({
   isOpen,
   onClose,
@@ -106,6 +117,9 @@ export function StrategyCallModal({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<
+    Partial<Record<FormFieldErrorKey, string>>
+  >({});
   const [honeypot, setHoneypot] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("us");
   const [isCountryOpen, setIsCountryOpen] = useState(false);
@@ -125,7 +139,6 @@ export function StrategyCallModal({
   const countryDropdownRef = useRef<HTMLDivElement>(null);
   const countryButtonRef = useRef<HTMLButtonElement>(null);
   const countrySearchInputRef = useRef<HTMLInputElement>(null);
-  const firstInputRef = useRef<HTMLInputElement>(null);
   const previousActiveElementRef = useRef<HTMLElement | null>(null);
   const isCountryOpenRef = useRef(isCountryOpen);
   const isSubmittingRef = useRef(isSubmitting);
@@ -154,8 +167,7 @@ export function StrategyCallModal({
     countries.find((country) => country.iso2 === "us")!;
 
   // 1. BODY & BACKGROUND SCROLL LOCK + ESCAPE / FOCUS TRAP
-  // Depend only on `isOpen` so toggling `isCountryOpen` or `isSubmitting`
-  // never re-runs initial focus onto the Full Name field.
+  // Do not auto-focus any form field on open; let the user choose where to start.
   useEffect(() => {
     if (!isOpen) return;
 
@@ -184,10 +196,6 @@ export function StrategyCallModal({
     if (scrollbarWidth > 0) {
       document.body.style.paddingRight = `${scrollbarWidth}px`;
     }
-
-    const focusTimer = setTimeout(() => {
-      firstInputRef.current?.focus();
-    }, 60);
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -236,7 +244,6 @@ export function StrategyCallModal({
     window.addEventListener("keydown", handleKeyDown, true);
 
     return () => {
-      clearTimeout(focusTimer);
       document.documentElement.style.overflow = originalHtmlOverflow;
       document.body.style.overflow = originalBodyOverflow;
       document.body.style.position = originalBodyPosition;
@@ -292,6 +299,19 @@ export function StrategyCallModal({
       ...prev,
       [field]: value,
     }));
+    if (
+      field === "name" ||
+      field === "email" ||
+      field === "service" ||
+      field === "projectDetails"
+    ) {
+      setFieldErrors((prev) => {
+        if (!prev[field]) return prev;
+        const next = { ...prev };
+        delete next[field];
+        return next;
+      });
+    }
     if (error) setError("");
   };
 
@@ -308,26 +328,33 @@ export function StrategyCallModal({
   };
 
   const validateForm = () => {
+    const nextErrors: Partial<Record<FormFieldErrorKey, string>> = {};
+
     const trimmedName = form.name.trim();
-    if (!trimmedName || trimmedName.length < 2) {
-      setError("Please enter your full name (at least 2 characters).");
-      return false;
+    if (!trimmedName) {
+      nextErrors.name = "Please enter your full name.";
     }
 
     const trimmedEmail = form.email.trim();
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!trimmedEmail || !emailPattern.test(trimmedEmail)) {
-      setError("Please enter a valid email address.");
-      return false;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    if (!trimmedEmail) {
+      nextErrors.email = "Please enter your email address.";
+    } else if (!emailPattern.test(trimmedEmail)) {
+      nextErrors.email = "Please enter a valid email address.";
     }
 
     if (!form.service.trim()) {
-      setError("Please select a primary service needed.");
-      return false;
+      nextErrors.service = "Please select a primary service needed.";
     }
 
     if (!form.projectDetails.trim()) {
-      setError("Please share your project details.");
+      nextErrors.projectDetails = "Please share your project details.";
+    }
+
+    setFieldErrors(nextErrors);
+
+    if (Object.keys(nextErrors).length > 0) {
+      setError("");
       return false;
     }
 
@@ -345,8 +372,11 @@ export function StrategyCallModal({
 
       const requestPayload: ConsultationRequest = {
         name: form.name.trim(),
-        email: form.email.trim().toLowerCase(),
-        whatsappNumber: form.whatsappNumber.trim(),
+        email: form.email.trim(),
+        whatsappNumber: normalizeOptionalWhatsapp(
+          form.whatsappNumber,
+          activeCountry.dialCode
+        ),
         service: form.service.trim(),
         website: form.websiteUrl.trim(),
         monthlyBudget: "",
@@ -753,6 +783,7 @@ export function StrategyCallModal({
                 </div>
               ) : (
                 <form
+                  noValidate
                   onSubmit={handleSubmit}
                   className="relative h-full flex flex-col justify-between gap-5"
                 >
@@ -810,15 +841,31 @@ export function StrategyCallModal({
                         </label>
                         <input
                           id="strategy-full-name"
-                          ref={firstInputRef}
                           type="text"
                           autoComplete="name"
                           placeholder="Your full name"
                           value={form.name}
                           onChange={(e) => updateField("name", e.target.value)}
-                          className={inputClass}
+                          aria-invalid={Boolean(fieldErrors.name)}
+                          aria-describedby={
+                            fieldErrors.name
+                              ? "strategy-full-name-error"
+                              : undefined
+                          }
+                          className={`${inputClass} ${
+                            fieldErrors.name ? "!border-rose-500" : ""
+                          }`}
                           required
                         />
+                        {fieldErrors.name && (
+                          <p
+                            id="strategy-full-name-error"
+                            role="alert"
+                            className="mt-1.5 text-xs font-medium text-rose-600"
+                          >
+                            {fieldErrors.name}
+                          </p>
+                        )}
                       </div>
 
                       <div>
@@ -833,9 +880,26 @@ export function StrategyCallModal({
                           placeholder="you@company.com"
                           value={form.email}
                           onChange={(e) => updateField("email", e.target.value)}
-                          className={inputClass}
+                          aria-invalid={Boolean(fieldErrors.email)}
+                          aria-describedby={
+                            fieldErrors.email
+                              ? "strategy-email-error"
+                              : undefined
+                          }
+                          className={`${inputClass} ${
+                            fieldErrors.email ? "!border-rose-500" : ""
+                          }`}
                           required
                         />
+                        {fieldErrors.email && (
+                          <p
+                            id="strategy-email-error"
+                            role="alert"
+                            className="mt-1.5 text-xs font-medium text-rose-600"
+                          >
+                            {fieldErrors.email}
+                          </p>
+                        )}
                       </div>
                     </div>
 
@@ -951,7 +1015,8 @@ export function StrategyCallModal({
                         </label>
                         <input
                           id="strategy-website"
-                          type="url"
+                          type="text"
+                          autoComplete="url"
                           placeholder="https://yourwebsite.com"
                           value={form.websiteUrl}
                           onChange={(e) =>
@@ -977,7 +1042,15 @@ export function StrategyCallModal({
                           onChange={(e) =>
                             updateField("service", e.target.value)
                           }
-                          className={`${inputClass} pr-10 font-medium appearance-none cursor-pointer`}
+                          aria-invalid={Boolean(fieldErrors.service)}
+                          aria-describedby={
+                            fieldErrors.service
+                              ? "strategy-service-error"
+                              : undefined
+                          }
+                          className={`${inputClass} pr-10 font-medium appearance-none cursor-pointer ${
+                            fieldErrors.service ? "!border-rose-500" : ""
+                          }`}
                         >
                           {SERVICE_OPTIONS.map((service) => (
                             <option key={service} value={service}>
@@ -987,6 +1060,15 @@ export function StrategyCallModal({
                         </select>
                         <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
                       </div>
+                      {fieldErrors.service && (
+                        <p
+                          id="strategy-service-error"
+                          role="alert"
+                          className="mt-1.5 text-xs font-medium text-rose-600"
+                        >
+                          {fieldErrors.service}
+                        </p>
+                      )}
                     </div>
 
                     {/* Row 4: Field 6 (Project Details *) */}
@@ -1006,9 +1088,26 @@ export function StrategyCallModal({
                         onChange={(e) =>
                           updateField("projectDetails", e.target.value)
                         }
-                        className="zp-modal-field w-full p-3.5 text-sm text-[#09090B] placeholder:text-zinc-400 resize-y min-h-[120px] leading-relaxed"
+                        aria-invalid={Boolean(fieldErrors.projectDetails)}
+                        aria-describedby={
+                          fieldErrors.projectDetails
+                            ? "strategy-project-details-error"
+                            : undefined
+                        }
+                        className={`zp-modal-field w-full p-3.5 text-sm text-[#09090B] placeholder:text-zinc-400 resize-y min-h-[120px] leading-relaxed ${
+                          fieldErrors.projectDetails ? "!border-rose-500" : ""
+                        }`}
                         required
                       />
+                      {fieldErrors.projectDetails && (
+                        <p
+                          id="strategy-project-details-error"
+                          role="alert"
+                          className="mt-1.5 text-xs font-medium text-rose-600"
+                        >
+                          {fieldErrors.projectDetails}
+                        </p>
+                      )}
                     </div>
                   </div>
 

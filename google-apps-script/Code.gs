@@ -155,8 +155,8 @@ function doPost(e) {
       data.formSourceLabel,
       sanitizeForSheet_(data.fullName),
       sanitizeForSheet_(data.email),
-      sanitizeForSheet_(data.whatsapp || 'Not provided'),
-      sanitizeForSheet_(data.websiteUrl || 'Not provided'),
+      sanitizeForSheet_(data.whatsapp || ''),
+      sanitizeForSheet_(data.websiteUrl || ''),
       sanitizeForSheet_(data.service),
       sanitizeForSheet_(sheetProjectDetails),
       CONFIG.DEFAULT_LEAD_STATUS,
@@ -293,16 +293,16 @@ function validatePayload_(payload) {
   }
 
   var fullName = cleanString_(payload.fullName, 120);
-  if (!fullName || fullName.length < 2) {
+  if (!fullName) {
     return {
       valid: false,
       formSourceLabel: formSourceLabel,
-      error: 'Please enter your full name (minimum 2 characters).',
+      error: 'Please enter your full name.',
     };
   }
 
-  var email = cleanString_(payload.email, 180).toLowerCase();
-  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  var email = cleanString_(payload.email, 180);
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
   if (!email || !emailRegex.test(email)) {
     return {
       valid: false,
@@ -313,7 +313,7 @@ function validatePayload_(payload) {
   }
 
   var service = cleanString_(payload.service, 150);
-  if (!service || service.length < 2) {
+  if (!service) {
     return {
       valid: false,
       formSourceLabel: formSourceLabel,
@@ -323,12 +323,12 @@ function validatePayload_(payload) {
   }
 
   var projectDetails = cleanMultilineString_(payload.projectDetails, 4000);
-  if (!projectDetails || projectDetails.length < 5) {
+  if (!projectDetails) {
     return {
       valid: false,
       formSourceLabel: formSourceLabel,
       email: email,
-      error: 'Please provide project details (at least 5 characters).',
+      error: 'Please share your project details.',
     };
   }
 
@@ -346,34 +346,13 @@ function validatePayload_(payload) {
   var whatsapp = cleanString_(payload.whatsapp, 40);
   if (whatsapp) {
     var digitsOnly = whatsapp.replace(/\D/g, '');
-    if (digitsOnly.length <= 3) {
+    if (!digitsOnly || digitsOnly.length <= 3) {
       // Ignore dial-code-only placeholder like "+1"
       whatsapp = '';
-    } else if (digitsOnly.length < 6 || digitsOnly.length > 18) {
-      return {
-        valid: false,
-        formSourceLabel: formSourceLabel,
-        email: email,
-        error: 'Please enter a valid WhatsApp number or leave it blank.',
-      };
     }
   }
 
   var websiteUrl = cleanString_(payload.websiteUrl, 300);
-  if (websiteUrl) {
-    if (!/^https?:\/\//i.test(websiteUrl)) {
-      websiteUrl = 'https://' + websiteUrl;
-    }
-    var urlPattern = /^https?:\/\/[a-z0-9.-]+\.[a-z]{2,}(:[0-9]+)?(\/.*)?$/i;
-    if (!urlPattern.test(websiteUrl)) {
-      return {
-        valid: false,
-        formSourceLabel: formSourceLabel,
-        email: email,
-        error: 'Please enter a valid Website / Store URL (e.g., https://yourwebsite.com) or leave it blank.',
-      };
-    }
-  }
 
   var monthlyBudget = cleanString_(payload.monthlyBudget, 80);
 
@@ -395,10 +374,11 @@ function validatePayload_(payload) {
 
 function checkDuplicateAndRateLimit_(data) {
   var cache = CacheService.getScriptCache();
+  var normalizedEmail = String(data.email || '').toLowerCase();
 
   // Duplicate check (same email + source + service + details within 60 seconds)
   var fingerprintRaw = [
-    data.email,
+    normalizedEmail,
     data.formSourceLabel,
     data.service,
     data.projectDetails.slice(0, 200),
@@ -415,7 +395,7 @@ function checkDuplicateAndRateLimit_(data) {
   }
 
   // Per-email rate limit (max 5 submissions per 10 minutes)
-  var rateKey = 'rate_' + md5Hex_(data.email);
+  var rateKey = 'rate_' + md5Hex_(normalizedEmail);
   var currentCount = Number(cache.get(rateKey) || '0');
   if (currentCount >= CONFIG.MAX_SUBMISSIONS_PER_WINDOW) {
     return {
@@ -430,9 +410,10 @@ function checkDuplicateAndRateLimit_(data) {
 
 function markSubmissionProcessed_(data) {
   var cache = CacheService.getScriptCache();
+  var normalizedEmail = String(data.email || '').toLowerCase();
 
   var fingerprintRaw = [
-    data.email,
+    normalizedEmail,
     data.formSourceLabel,
     data.service,
     data.projectDetails.slice(0, 200),
@@ -440,7 +421,7 @@ function markSubmissionProcessed_(data) {
   var dupKey = 'dup_' + md5Hex_(fingerprintRaw);
   cache.put(dupKey, '1', CONFIG.DUPLICATE_WINDOW_SECONDS);
 
-  var rateKey = 'rate_' + md5Hex_(data.email);
+  var rateKey = 'rate_' + md5Hex_(normalizedEmail);
   var currentCount = Number(cache.get(rateKey) || '0');
   cache.put(rateKey, String(currentCount + 1), CONFIG.RATE_LIMIT_WINDOW_SECONDS);
 }
@@ -522,6 +503,14 @@ function sendLeadNotificationEmail_(lead) {
 
   var cleanDigits = lead.whatsapp ? lead.whatsapp.replace(/[^0-9]/g, '') : '';
   var waUrl = cleanDigits.length >= 6 ? 'https://wa.me/' + cleanDigits : '';
+  var websiteHref = '';
+  if (lead.websiteUrl) {
+    websiteHref = /^https?:\/\//i.test(lead.websiteUrl)
+      ? lead.websiteUrl
+      : /\./.test(lead.websiteUrl)
+        ? 'https://' + lead.websiteUrl
+        : '';
+  }
 
   var plainTextLines = [
     'NEW CLIENT INQUIRY RECEIVED',
@@ -578,7 +567,9 @@ function sendLeadNotificationEmail_(lead) {
     emailRow_(
       'Website / Store URL',
       lead.websiteUrl
-        ? '<a href="' + escapeHtml_(lead.websiteUrl) + '" target="_blank" style="color:#047857;font-weight:600;text-decoration:none;">' + escapeHtml_(lead.websiteUrl) + '</a>'
+        ? websiteHref
+          ? '<a href="' + escapeHtml_(websiteHref) + '" target="_blank" style="color:#047857;font-weight:600;text-decoration:none;">' + escapeHtml_(lead.websiteUrl) + '</a>'
+          : escapeHtml_(lead.websiteUrl)
         : '<span style="color:#71717a;">Not provided</span>',
       true
     ) +

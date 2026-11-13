@@ -70,7 +70,7 @@ export const Hero: React.FC<HeroProps> = ({
           className="max-w-5xl mx-auto text-center flex flex-col items-center"
         >
           {/* Top Marketplace Rating Badge Lockup (Fiverr + Upwork + Google 5.0★) */}
-          <div className="inline-flex flex-col items-center gap-1.5 mb-5">
+          <div className="inline-flex flex-col items-center gap-2 mb-5">
             <div className="flex items-center -space-x-2">
               {/* 1. Fiverr — top/front */}
               <span
@@ -80,6 +80,9 @@ export const Hero: React.FC<HeroProps> = ({
                 <img
                   src="/assets/aistudio/_CITYPNG.COM_Fiverr_Round_Logo_Icon_Download_PNG_-_3000x3000_9ec46572.png"
                   alt="Fiverr"
+                  width={32}
+                  height={32}
+                  decoding="async"
                   className="w-full h-full object-contain rounded-full"
                 />
               </span>
@@ -92,6 +95,9 @@ export const Hero: React.FC<HeroProps> = ({
                 <img
                   src="/assets/aistudio/_CITYPNG.COM_Upwork_Round_Logo_Icon_PNG_-_3000x3000_e458fde1.png"
                   alt="Upwork"
+                  width={28}
+                  height={28}
+                  decoding="async"
                   className="w-[88%] h-[88%] object-contain rounded-full"
                 />
               </span>
@@ -127,16 +133,22 @@ export const Hero: React.FC<HeroProps> = ({
               </span>
             </div>
 
-            <div className="flex items-center gap-1.5 text-xs sm:text-sm font-medium text-zinc-200">
-              <span className="font-bold text-white">{OFFICIAL_CREDENTIALS.fiverrRating}</span>
-              <div className="flex items-center gap-0.5 text-amber-400">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                ))}
+            <div className="flex flex-col items-center justify-center gap-1.5 text-center">
+              <div className="flex items-center justify-center gap-1.5 text-sm sm:text-base font-bold text-white">
+                <span>{OFFICIAL_CREDENTIALS.fiverrRating}</span>
+                <div
+                  className="flex items-center gap-0.5 text-amber-400"
+                  aria-label="5 out of 5 stars"
+                >
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
               </div>
-              <span className="text-zinc-400 text-xs font-mono">
-                ({OFFICIAL_CREDENTIALS.fiverrReviewsLabel} · {OFFICIAL_CREDENTIALS.upworkJssShort} Upwork JSS)
-              </span>
+
+              <p className="text-xs sm:text-[13px] font-mono text-zinc-400 leading-snug">
+                {OFFICIAL_CREDENTIALS.fiverrReviewsLabel} · {OFFICIAL_CREDENTIALS.upworkJssShort} Upwork JSS
+              </p>
             </div>
           </div>
 
@@ -171,6 +183,9 @@ export const Hero: React.FC<HeroProps> = ({
                   <img
                     src="/assets/aistudio/google-ads-icon_3b21cb24.png"
                     alt="Google Ads"
+                    width={34}
+                    height={34}
+                    decoding="async"
                     className="w-[56%] h-[56%] object-contain select-none"
                   />
                 </span>
@@ -183,6 +198,9 @@ export const Hero: React.FC<HeroProps> = ({
                   <img
                     src="/assets/aistudio/_CITYPNG.COM_Facebook_Meta_Logo_Icon_HD_PNG_-_1000x1000_7226e452.png"
                     alt="Meta Ads"
+                    width={41}
+                    height={41}
+                    decoding="async"
                     className="w-[68%] h-[68%] object-contain select-none"
                   />
                 </span>
@@ -196,6 +214,9 @@ export const Hero: React.FC<HeroProps> = ({
                     <img
                       src="/assets/aistudio/6400cf54a94ff11ca124bd1e_ga4_49d40d78.png"
                       alt="Google Analytics 4"
+                      width={34}
+                      height={34}
+                      decoding="async"
                       className="absolute max-w-none select-none"
                       style={{
                         width: '230.794%',

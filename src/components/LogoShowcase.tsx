@@ -21,8 +21,33 @@ const MarqueeRow: React.FC<MarqueeRowProps> = ({
   animationClass,
   rowLabel,
 }) => {
-  // Repeat 4× so -50% translate3d loops seamlessly across all viewport widths (matches Reviews Section)
-  const repeatedLogos = [...logos, ...logos, ...logos, ...logos];
+  // Two identical halves (each repeating the 7 logos twice) guarantee an exact 50% translate3d loop seam
+  const halfTrackLogos = [...logos, ...logos];
+
+  const renderGroup = (isDuplicateHalf: boolean) => (
+    <div
+      aria-hidden={isDuplicateHalf ? true : undefined}
+      className="flex shrink-0 items-center gap-4 sm:gap-6 lg:gap-8 pr-4 sm:pr-6 lg:pr-8"
+    >
+      {halfTrackLogos.map((item, index) => (
+        <div
+          key={`${isDuplicateHalf ? 'b' : 'a'}-${item.id}-${index}`}
+          title={`${item.name} — ${item.description}`}
+          aria-hidden={isDuplicateHalf || index >= logos.length ? true : undefined}
+          className="flex shrink-0 items-center justify-center px-4 py-2.5 rounded-2xl bg-[#FAFAFA] border border-zinc-200/80 hover:border-zinc-300 transition-colors duration-300 select-none"
+        >
+          <img
+            src={item.logoPath}
+            alt={isDuplicateHalf || index >= logos.length ? '' : item.alt}
+            loading="eager"
+            decoding="async"
+            draggable={false}
+            className="h-6 sm:h-7 w-auto shrink-0 max-w-[145px] sm:max-w-[165px] object-contain pointer-events-none brightness-[0.38] contrast-125 opacity-85 hover:opacity-100 transition-opacity"
+          />
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <div
@@ -30,25 +55,9 @@ const MarqueeRow: React.FC<MarqueeRowProps> = ({
       aria-label={rowLabel}
       style={EDGE_FADE_MASK_STYLE}
     >
-      <div
-        className={`flex gap-4 sm:gap-6 lg:gap-8 pr-4 sm:pr-6 lg:pr-8 w-max ${animationClass} hover:[animation-play-state:paused]`}
-      >
-        {repeatedLogos.map((item, index) => (
-          <div
-            key={`${item.id}-${index}`}
-            title={`${item.name} — ${item.description}`}
-            aria-hidden={index >= logos.length ? true : undefined}
-            className="flex shrink-0 items-center justify-center px-4 py-2.5 rounded-2xl bg-[#FAFAFA] border border-zinc-200/80 hover:border-zinc-300 transition-all duration-300 select-none"
-          >
-            <img
-              src={item.logoPath}
-              alt={index >= logos.length ? '' : item.alt}
-              loading="lazy"
-              draggable={false}
-              className="h-6 sm:h-7 w-auto max-w-[145px] sm:max-w-[165px] object-contain pointer-events-none brightness-[0.38] contrast-125 opacity-85 hover:opacity-100 transition-opacity"
-            />
-          </div>
-        ))}
+      <div className={`logo-marquee-track flex w-max ${animationClass}`}>
+        {renderGroup(false)}
+        {renderGroup(true)}
       </div>
     </div>
   );
@@ -86,12 +95,12 @@ export const LogoShowcase: React.FC = () => {
       >
         <MarqueeRow
           logos={ROW_1_LOGOS}
-          animationClass="animate-reviews-rtl"
+          animationClass="animate-logos-rtl"
           rowLabel="Advertising and eCommerce platforms"
         />
         <MarqueeRow
           logos={ROW_2_LOGOS}
-          animationClass="animate-reviews-ltr"
+          animationClass="animate-logos-ltr"
           rowLabel="Analytics and tracking platforms"
         />
       </div>

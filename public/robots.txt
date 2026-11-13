@@ -1,5 +1,5 @@
-# Robots.txt for https://zahidul-islam.ai.studio/
+# Robots.txt for https://zahidul.pro.bd/
 User-agent: *
 Allow: /
 
-Sitemap: https://zahidul-islam.ai.studio/sitemap.xml
+Sitemap: https://zahidul.pro.bd/sitemap.xml
