@@ -5,20 +5,24 @@ import {
   ROW_2_LOGOS,
 } from '../data/platforms';
 import type { PlatformLogo } from '../data/platforms';
-import { EDGE_FADE_MASK_STYLE } from '../utils/edgeFade';
+import {
+  EDGE_FADE_MASK_STYLE,
+  EDGE_FADE_CONTAINER_CLASS,
+} from '../utils/edgeFade';
 
 interface MarqueeRowProps {
   logos: PlatformLogo[];
-  speedClass: string;
+  animationClass: string;
   rowLabel: string;
 }
 
 const MarqueeRow: React.FC<MarqueeRowProps> = ({
   logos,
-  speedClass,
+  animationClass,
   rowLabel,
 }) => {
-  const repeatedLogos = [...logos, ...logos];
+  // Repeat 4× so -50% translate3d loops seamlessly across all viewport widths (matches Reviews Section)
+  const repeatedLogos = [...logos, ...logos, ...logos, ...logos];
 
   return (
     <div
@@ -27,14 +31,14 @@ const MarqueeRow: React.FC<MarqueeRowProps> = ({
       style={EDGE_FADE_MASK_STYLE}
     >
       <div
-        className={`flex w-max shrink-0 items-center justify-start gap-4 sm:gap-6 lg:gap-8 ${speedClass} hover:[animation-play-state:paused] motion-reduce:animate-none`}
+        className={`flex gap-4 sm:gap-6 lg:gap-8 pr-4 sm:pr-6 lg:pr-8 w-max ${animationClass} hover:[animation-play-state:paused]`}
       >
         {repeatedLogos.map((item, index) => (
           <div
             key={`${item.id}-${index}`}
             title={`${item.name} — ${item.description}`}
             aria-hidden={index >= logos.length ? true : undefined}
-            className="flex shrink-0 items-center justify-center px-4 py-2.5 rounded-2xl bg-[#FAFAFA] border border-zinc-200/80 hover:border-zinc-300 transition-all duration-300"
+            className="flex shrink-0 items-center justify-center px-4 py-2.5 rounded-2xl bg-[#FAFAFA] border border-zinc-200/80 hover:border-zinc-300 transition-all duration-300 select-none"
           >
             <img
               src={item.logoPath}
@@ -77,15 +81,17 @@ export const LogoShowcase: React.FC = () => {
         </motion.div>
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-[1360px] overflow-hidden space-y-2.5">
+      <div
+        className={`relative z-10 ${EDGE_FADE_CONTAINER_CLASS} overflow-hidden space-y-2.5`}
+      >
         <MarqueeRow
           logos={ROW_1_LOGOS}
-          speedClass="animate-marquee-ltr"
+          animationClass="animate-reviews-rtl"
           rowLabel="Advertising and eCommerce platforms"
         />
         <MarqueeRow
           logos={ROW_2_LOGOS}
-          speedClass="animate-marquee-rtl"
+          animationClass="animate-reviews-ltr"
           rowLabel="Analytics and tracking platforms"
         />
       </div>
