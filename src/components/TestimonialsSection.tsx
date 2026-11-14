@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { motion } from 'motion/react';
 import { TESTIMONIALS, Testimonial } from '../data/testimonials';
+import { trackCtaClick } from '../utils/tracking';
 import {
   Star,
   ShieldCheck,
@@ -276,7 +277,13 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
 
           <button
             type="button"
-            onClick={onOpenBooking}
+            onClick={() => {
+              trackCtaClick({
+                ctaText: 'Book Free Strategy Call',
+                ctaLocation: 'testimonials_section',
+              });
+              onOpenBooking?.();
+            }}
             className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#09090B] hover:bg-zinc-800 text-white font-display font-bold text-xs sm:text-sm transition-all cursor-pointer shrink-0 shadow-sm w-full sm:w-auto"
           >
             <span>Book Free Strategy Call</span>

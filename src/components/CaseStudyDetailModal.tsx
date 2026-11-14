@@ -6,6 +6,7 @@ import {
   type CaseStudy,
   type CaseStudyImage,
 } from '../data/caseStudies';
+import { trackCtaClick } from '../utils/tracking';
 import {
   X,
   CheckCircle2,
@@ -750,6 +751,10 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
               <button
                 type="button"
                 onClick={() => {
+                  trackCtaClick({
+                    ctaText: 'Discuss a Similar Campaign',
+                    ctaLocation: 'case_study_modal',
+                  });
                   onClose();
                   onOpenBooking();
                 }}

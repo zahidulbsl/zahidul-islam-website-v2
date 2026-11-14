@@ -4,6 +4,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { scrollToSection } from '../utils/scroll';
+import { trackCtaClick } from '../utils/tracking';
 import { OFFICIAL_CREDENTIALS } from '../data/credentials';
 import { BRAND_LOGO_CONFIG, BrandLogo } from './BrandLogo';
 
@@ -140,7 +141,13 @@ export const Footer: React.FC<FooterProps> = ({
           <div className="flex flex-wrap items-center justify-center gap-5">
             <button
               type="button"
-              onClick={onOpenBooking}
+              onClick={() => {
+                trackCtaClick({
+                  ctaText: 'Book Free Strategy Call',
+                  ctaLocation: 'footer',
+                });
+                onOpenBooking();
+              }}
               className="inline-flex items-center gap-1.5 font-mono text-zinc-300 hover:text-lime-400 transition-colors cursor-pointer"
             >
               <span>Book Free Strategy Call</span>

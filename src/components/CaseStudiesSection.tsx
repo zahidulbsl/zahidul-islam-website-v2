@@ -3,6 +3,11 @@ import { motion, AnimatePresence } from 'motion/react';
 import type { CaseStudy } from '../data/caseStudies';
 import { CASE_STUDIES } from '../data/caseStudies';
 import {
+  trackCaseStudyClick,
+  trackCtaClick,
+  trackWhatsAppClick,
+} from '../utils/tracking';
+import {
   ArrowRight,
   ArrowUpRight,
   CheckCircle2,
@@ -158,12 +163,24 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
       <article
         key={project.id}
         data-case-card="true"
-        onClick={() => onSelectCaseStudy(project)}
+        onClick={() => {
+          trackCaseStudyClick({
+            caseStudyName: project.title,
+            caseStudyCategory: project.category,
+            caseStudyPosition: indexNumber,
+          });
+          onSelectCaseStudy(project);
+        }}
         role="button"
         tabIndex={0}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
+            trackCaseStudyClick({
+              caseStudyName: project.title,
+              caseStudyCategory: project.category,
+              caseStudyPosition: indexNumber,
+            });
             onSelectCaseStudy(project);
           }
         }}
@@ -326,12 +343,24 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            onClick={() => onSelectCaseStudy(featuredProject)}
+            onClick={() => {
+              trackCaseStudyClick({
+                caseStudyName: featuredProject.title,
+                caseStudyCategory: featuredProject.category,
+                caseStudyPosition: 1,
+              });
+              onSelectCaseStudy(featuredProject);
+            }}
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
+                trackCaseStudyClick({
+                  caseStudyName: featuredProject.title,
+                  caseStudyCategory: featuredProject.category,
+                  caseStudyPosition: 1,
+                });
                 onSelectCaseStudy(featuredProject);
               }
             }}
@@ -564,7 +593,13 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
           <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
             <button
               type="button"
-              onClick={onOpenBooking}
+              onClick={() => {
+                trackCtaClick({
+                  ctaText: 'Book Free Strategy Call',
+                  ctaLocation: 'case_studies_section',
+                });
+                onOpenBooking();
+              }}
               className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#09090B] hover:bg-zinc-800 text-white text-xs sm:text-sm font-display font-bold transition-colors cursor-pointer"
             >
               <span>Book Free Strategy Call</span>
@@ -574,6 +609,13 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
               href="https://wa.me/8801911184235?text=Hello%20Zahidul%2C%20I%20would%20like%20to%20discuss%20a%20marketing%20project."
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() =>
+                trackWhatsAppClick({
+                  buttonText: 'Chat on WhatsApp',
+                  buttonLocation: 'case_studies_section',
+                  linkUrl: 'https://wa.me/8801911184235',
+                })
+              }
               className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl bg-[#FAFAFA] hover:bg-zinc-100 border border-zinc-300 text-[#09090B] text-xs sm:text-sm font-display font-semibold transition-colors"
             >
               <span>Chat on WhatsApp</span>

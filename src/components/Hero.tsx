@@ -1,4 +1,5 @@
 import React from 'react';
+import { trackCtaClick } from '../utils/tracking';
 import { motion } from 'motion/react';
 import {
   ArrowRight,
@@ -247,7 +248,10 @@ export const Hero: React.FC<HeroProps> = ({
           <div className="mt-8 sm:mt-9 flex flex-wrap items-center justify-center gap-3.5">
             <button
               type="button"
-              onClick={onOpenBooking}
+              onClick={() => {
+                trackCtaClick({ ctaText: "Let's Talk", ctaLocation: 'hero' });
+                onOpenBooking();
+              }}
               className="group relative inline-flex items-center justify-center gap-2.5 px-7 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-white hover:bg-zinc-100 text-[#09090B] font-display font-bold text-sm sm:text-base border border-white shadow-[0_12px_35px_rgba(255,255,255,0.18)] transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
             >
               <span>Let&apos;s Talk</span>
@@ -256,7 +260,13 @@ export const Hero: React.FC<HeroProps> = ({
 
             <button
               type="button"
-              onClick={onExploreWork}
+              onClick={() => {
+                trackCtaClick({
+                  ctaText: 'Explore Case Studies',
+                  ctaLocation: 'hero',
+                });
+                onExploreWork();
+              }}
               className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:py-4 rounded-xl bg-white/[0.06] hover:bg-white/[0.11] text-white font-display font-semibold text-sm sm:text-base border border-white/15 hover:border-white/30 transition-all duration-200 cursor-pointer"
             >
               <span>Explore Case Studies</span>

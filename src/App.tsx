@@ -20,6 +20,11 @@ import { Footer } from './components/Footer';
 import { CASE_STUDIES, CaseStudy } from './data/caseStudies';
 import { scrollToSection } from './utils/scroll';
 import { submitLead } from './services/leadSubmission';
+import {
+  trackCaseStudyClick,
+  trackLeadSubmission,
+  trackPageView,
+} from './utils/tracking';
 
 const CaseStudyDetailModal = React.lazy(() =>
   import('./components/CaseStudyDetailModal').then((module) => ({
@@ -38,6 +43,36 @@ export default function App() {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [serviceInquiry, setServiceInquiry] = useState<string | undefined>(undefined);
 
+  // Track initial page load, SPA history navigation, and browser back/forward
+  React.useEffect(() => {
+    trackPageView();
+
+    const handleRouteChange = () => {
+      trackPageView();
+    };
+
+    const originalPushState = window.history.pushState.bind(window.history);
+    const originalReplaceState = window.history.replaceState.bind(window.history);
+
+    window.history.pushState = (...args) => {
+      originalPushState(...args);
+      handleRouteChange();
+    };
+
+    window.history.replaceState = (...args) => {
+      originalReplaceState(...args);
+      handleRouteChange();
+    };
+
+    window.addEventListener('popstate', handleRouteChange);
+
+    return () => {
+      window.history.pushState = originalPushState;
+      window.history.replaceState = originalReplaceState;
+      window.removeEventListener('popstate', handleRouteChange);
+    };
+  }, []);
+
   const handleOpenBooking = () => {
     setIsBookingModalOpen(true);
   };
@@ -55,8 +90,14 @@ export default function App() {
   };
 
   const handleSelectCaseStudyBySlug = (slug: string) => {
-    const found = CASE_STUDIES.find((c) => c.slug === slug);
-    if (found) {
+    const idx = CASE_STUDIES.findIndex((c) => c.slug === slug);
+    if (idx !== -1) {
+      const found = CASE_STUDIES[idx];
+      trackCaseStudyClick({
+        caseStudyName: found.title,
+        caseStudyCategory: found.category,
+        caseStudyPosition: idx + 1,
+      });
       setSelectedCaseStudy(found);
     }
   };
@@ -157,7 +198,7 @@ export default function App() {
             isOpen={isBookingModalOpen}
             onClose={() => setIsBookingModalOpen(false)}
             onSubmit={async (request) => {
-              await submitLead({
+              const result = await submitLead({
                 source: 'consultation_popup',
                 fullName: request.name,
                 email: request.email,
@@ -168,6 +209,18 @@ export default function App() {
                 projectDetails: request.notes,
                 honeypot: request.honeypot,
                 formLoadedAt: request.formLoadedAt,
+              });
+
+              trackLeadSubmission({
+                formType: 'strategy_call_form',
+                leadId: result.submissionId,
+                submissionTimestamp: result.submittedAt,
+                fullName: request.name,
+                email: request.email,
+                whatsapp: request.whatsappNumber,
+                website: request.website,
+                service: request.service,
+                projectDetails: request.notes,
               });
             }}
           />

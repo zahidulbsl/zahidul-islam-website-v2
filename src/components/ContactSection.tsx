@@ -18,6 +18,7 @@ import {
 import 'react-international-phone/style.css';
 import { OFFICIAL_CREDENTIALS } from '../data/credentials';
 import { submitLead } from '../services/leadSubmission';
+import { trackLeadSubmission, trackWhatsAppClick } from '../utils/tracking';
 
 interface ContactSectionProps {
   onOpenBooking: () => void;
@@ -155,7 +156,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     setError(null);
 
     try {
-      await submitLead({
+      const result = await submitLead({
         source: 'contact_section',
         fullName: formData.name,
         email: formData.email,
@@ -166,6 +167,18 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
         projectDetails: formData.message,
         honeypot,
         formLoadedAt: formLoadedAtRef.current,
+      });
+
+      trackLeadSubmission({
+        formType: 'main_contact_form',
+        leadId: result.submissionId,
+        submissionTimestamp: result.submittedAt,
+        fullName: formData.name,
+        email: formData.email,
+        whatsapp: formData.whatsappNumber,
+        website: formData.websiteUrl,
+        service: formData.serviceInterest,
+        projectDetails: formData.message,
       });
 
       setSubmitted(true);
@@ -518,6 +531,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                     href={`https://api.whatsapp.com/send?text=${whatsappMessage}`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() =>
+                      trackWhatsAppClick({
+                        buttonText: 'WhatsApp Chat',
+                        buttonLocation: 'contact_section',
+                        linkUrl: 'https://api.whatsapp.com/send',
+                      })
+                    }
                     className="w-full inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-[#09090B] font-display font-bold text-xs sm:text-sm transition-colors shadow-sm"
                   >
                     <span>WhatsApp Chat</span>
@@ -585,6 +605,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
               ) : (
                 <form
                   onSubmit={handleSubmit}
+                  data-clarity-mask="true"
                   className="relative h-full flex flex-col justify-between gap-5"
                 >
                   <div

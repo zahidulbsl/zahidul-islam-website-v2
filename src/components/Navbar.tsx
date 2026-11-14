@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { trackCtaClick } from '../utils/tracking';
 import {
   ArrowRight,
   ArrowUp,
@@ -213,7 +214,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <button
               type="button"
-              onClick={onOpenBooking}
+              onClick={() => {
+                trackCtaClick({ ctaText: 'Book Call', ctaLocation: 'navbar_top' });
+                onOpenBooking();
+              }}
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-[#09090B] hover:bg-zinc-100 text-xs font-display font-semibold transition-all cursor-pointer shadow-sm"
             >
               <span>Book Call</span>

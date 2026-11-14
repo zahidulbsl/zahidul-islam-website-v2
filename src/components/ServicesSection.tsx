@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { motion } from 'motion/react';
 import { SERVICES, ServiceItem } from '../data/services';
+import { trackCtaClick, trackServiceClick } from '../utils/tracking';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -243,12 +244,22 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
               <article
                 key={service.id}
                 data-service-card="true"
-                onClick={() => setSelectedServiceIndex(idx)}
+                onClick={() => {
+                  trackServiceClick({
+                    serviceName: service.title,
+                    servicePosition: idx + 1,
+                  });
+                  setSelectedServiceIndex(idx);
+                }}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
+                    trackServiceClick({
+                      serviceName: service.title,
+                      servicePosition: idx + 1,
+                    });
                     setSelectedServiceIndex(idx);
                   }
                 }}
@@ -384,7 +395,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
 
           <button
             type="button"
-            onClick={onOpenBooking}
+            onClick={() => {
+              trackCtaClick({
+                ctaText: 'Discuss Your Project',
+                ctaLocation: 'services_section',
+              });
+              onOpenBooking();
+            }}
             className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-zinc-100 text-[#09090B] font-display font-bold text-xs sm:text-sm transition-all cursor-pointer shrink-0 shadow-lg"
           >
             <span>Discuss Your Project</span>

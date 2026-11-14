@@ -785,6 +785,7 @@ export function StrategyCallModal({
                 <form
                   noValidate
                   onSubmit={handleSubmit}
+                  data-clarity-mask="true"
                   className="relative h-full flex flex-col justify-between gap-5"
                 >
                   <div

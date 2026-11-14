@@ -10,6 +10,7 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { scrollToSection } from '../utils/scroll';
+import { trackCtaClick, trackWhatsAppClick } from '../utils/tracking';
 
 interface WorkProcessSectionProps {
   onOpenBooking?: () => void;
@@ -345,7 +346,13 @@ export const WorkProcessSection: React.FC<WorkProcessSectionProps> = ({
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 shrink-0">
                 <button
                   type="button"
-                  onClick={handleAuditClick}
+                  onClick={() => {
+                    trackCtaClick({
+                      ctaText: 'Request an Ads Audit',
+                      ctaLocation: 'work_process_section',
+                    });
+                    handleAuditClick();
+                  }}
                   className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-zinc-100 text-[#09090B] text-xs sm:text-sm font-display font-bold transition-all cursor-pointer shadow-lg"
                 >
                   <span>Request an Ads Audit</span>
@@ -356,6 +363,13 @@ export const WorkProcessSection: React.FC<WorkProcessSectionProps> = ({
                   href="https://wa.me/8801911184235?text=Hello%20Zahidul%2C%20I%20would%20like%20to%20discuss%20a%20marketing%20project."
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackWhatsAppClick({
+                      buttonText: 'WhatsApp Me',
+                      buttonLocation: 'work_process_section',
+                      linkUrl: 'https://wa.me/8801911184235',
+                    })
+                  }
                   className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white/[0.07] hover:bg-white/[0.14] border border-white/15 text-white text-xs sm:text-sm font-display font-semibold transition-all cursor-pointer"
                 >
                   <span>WhatsApp Me</span>

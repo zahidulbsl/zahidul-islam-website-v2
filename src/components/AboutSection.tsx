@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { trackCtaClick } from '../utils/tracking';
 import { motion } from 'motion/react';
 import {
   Target,
@@ -342,7 +343,13 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               <div className="mt-5 pt-5 border-t border-zinc-100 flex flex-wrap items-center gap-3">
                 <button
                   type="button"
-                  onClick={onOpenBooking}
+                  onClick={() => {
+                    trackCtaClick({
+                      ctaText: 'Work With Me',
+                      ctaLocation: 'about_section',
+                    });
+                    onOpenBooking();
+                  }}
                   className="group inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#09090B] hover:bg-zinc-800 text-white font-display font-semibold text-xs sm:text-sm transition-all cursor-pointer shadow-md"
                 >
                   <span>Work With Me</span>
