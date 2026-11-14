@@ -1,9 +1,13 @@
+export type PortfolioCategory =
+  | 'eCommerce — Google Ads'
+  | 'Lead Generation — Google Ads'
+  | 'Lead Generation — Meta Ads';
+
 export interface CaseStudyImage {
   id: string;
   src: string;
   alt: string;
   caption: string;
-  isPlaceholder?: boolean;
 }
 
 export interface CaseStudy {
@@ -14,12 +18,15 @@ export interface CaseStudy {
   metricLabel: string;
   secondaryMetric?: string;
   secondaryMetricLabel?: string;
-  category: 'Google Ads' | 'Meta Ads' | 'eCommerce' | 'Lead Generation';
+  portfolioCategory: PortfolioCategory;
+  category: 'eCommerce' | 'Lead Generation';
+  platform: 'Google Ads' | 'Meta Ads';
+  campaignType: string;
   platforms: string[];
   clientIndustry: string;
   campaignObjective: string;
   summary: string;
-  coverImage: CaseStudyImage;
+  coverImage: CaseStudyImage | null;
   galleryImages: CaseStudyImage[];
   challenges: string[];
   strategy: string[];
@@ -33,928 +40,732 @@ export interface CaseStudy {
   keyTakeaways: string[];
 }
 
-/**
- * Centralized shared image for all case study cards, thumbnails, and detail modals.
- * Update this single path to replace the image globally across every case study.
- */
-export const CASE_STUDY_SHARED_IMAGE = '/assets/p-ads.webp';
-
 export const CASE_STUDIES: CaseStudy[] = [
-  // =====================================================
-  // PROJECT 01 — GOOGLE SHOPPING ECOMMERCE (22.8X ROAS)
-  // =====================================================
+  // =========================================================================
+  // ECOMMERCE — GOOGLE ADS (1–5)
+  // =========================================================================
   {
     id: 'cs-1',
     slug: '22-8x-roas-google-ads-ecommerce-shopping',
-    title: '22.8X ROAS — eCommerce Shopping Campaign',
+    title: '22.8X ROAS with Google Ads eCommerce Shopping Ads',
     primaryMetric: '22.8X',
     metricLabel: 'Return on Ad Spend (ROAS)',
-    secondaryMetric: 'Google Ads',
-    secondaryMetricLabel: 'Shopping & Feed Strategy',
+    secondaryMetric: '105 Purchases',
+    secondaryMetricLabel: '€2.06K Ad Cost',
+    portfolioCategory: 'eCommerce — Google Ads',
     category: 'eCommerce',
+    platform: 'Google Ads',
+    campaignType: 'Google Shopping Ads',
     platforms: ['Google Ads', 'Google Shopping', 'Google Merchant Center', 'GA4'],
-    clientIndustry: 'eCommerce Retail Brand',
-    campaignObjective: 'Improve Google Shopping return on ad spend by cleaning up product feed attributes, filtering irrelevant search queries, and tracking purchase values accurately.',
-    summary: 'An eCommerce Shopping campaign focused on product feed optimization, structured product group bidding, negative keyword filtering, and verified GA4 purchase tracking—achieving a 22.8X Return on Ad Spend.',
-
+    clientIndustry: 'eCommerce Store',
+    campaignObjective:
+      'Drive profitable online store orders from high-intent product searches while achieving strong return on ad spend through structured Google Shopping campaigns.',
+    summary:
+      'Google Ads eCommerce Shopping campaign built around Merchant Center feed optimization, commercial query filtering, and verified checkout tracking—achieving a 22.8X ROAS (2,277.48%) and 105 purchases on €2.06K ad spend.',
     coverImage: {
-      id: 'img-cs1-cover',
-      src: CASE_STUDY_SHARED_IMAGE,
-      alt: 'Google Ads eCommerce Shopping Campaign 22.8X ROAS performance overview',
-      caption: 'Google Ads eCommerce Shopping campaign delivering a 22.8X Return on Ad Spend.',
-      isPlaceholder: false,
+      id: 'img-cs1-01',
+      src: '/assets/portfolio/ecommerce-22-8x-roas-01.webp',
+      alt: 'Google Ads eCommerce Shopping performance showing 22.8X ROAS (2,277.48%), 105 purchases, 5.89K–8.31K clicks, and €2.06K ad cost',
+      caption:
+        'Google Ads eCommerce Shopping results: 22.8X ROAS (2,277.48% actual ROAS), 105 purchases, and €2.06K total cost.',
     },
-
-    galleryImages: [
-      {
-        id: 'img-cs1-1',
-        src: CASE_STUDY_SHARED_IMAGE,
-        alt: 'Google Merchant Center product feed optimization',
-        caption: 'Product title, category, and attribute optimization inside Google Merchant Center.',
-        isPlaceholder: false,
-      },
-      {
-        id: 'img-cs1-2',
-        src: CASE_STUDY_SHARED_IMAGE,
-        alt: 'Segmented Google Shopping campaign structure',
-        caption: 'Product group segmentation and search query filtering to prioritize high-intent shoppers.',
-        isPlaceholder: false,
-      },
-    ],
-
+    galleryImages: [],
     challenges: [
-      'Unoptimized product titles in Google Merchant Center limiting visibility for high-intent shopping searches.',
-      'All catalog items grouped into a single campaign structure without product-level bidding control.',
-      'Inconsistent purchase value tracking making it difficult for automated bidding to optimize effectively.',
+      'Focusing Google Shopping budget on high-converting catalog items rather than low-intent browsing queries.',
+      'Maintaining accurate transaction value measurement across checkout events to guide return-based bidding.',
     ],
-
     strategy: [
-      'Optimized product titles, descriptions, and product categories in Google Merchant Center to match buyer search intent.',
-      'Segmented products into structured product groups to focus budget on best-performing items.',
-      'Applied negative keyword lists to block low-intent and informational search queries.',
-      'Configured Google Analytics 4 and Google Ads purchase conversion tracking for accurate ROAS measurement.',
+      'Aligned Google Merchant Center product feed titles and attributes with commercial buyer searches.',
+      'Structured Shopping product groups around item performance to concentrate spend on strong sellers.',
+      'Applied ongoing negative keyword exclusions to filter non-buying search traffic.',
     ],
-
     campaignStructure: [
-      'Segmented Google Shopping campaign organized by product category and item performance.',
-      'Dedicated negative keyword lists actively maintained through search term reviews.',
-      'Conversion-value bidding aligned with verified checkout purchase tracking.',
+      'Segmented Google Shopping product groups prioritized by return efficiency.',
+      'Dedicated negative keyword lists refined from live search term reports.',
     ],
-
     trackingSetup: [
-      'GA4 eCommerce purchase tracking configured via Google Tag Manager to record transaction values.',
-      'Google Ads conversion tracking verified to ensure accurate ROAS reporting.',
+      'GA4 and Google Ads purchase value conversion tracking verified via Google Tag Manager.',
     ],
-
     results: {
-      highlight: 'Achieved a 22.8X Return on Ad Spend (ROAS) for the eCommerce Shopping campaign.',
+      highlight:
+        'Achieved 22.8X ROAS (2,277.48%) and 105 purchases on €2.06K ad spend.',
       metrics: [
-        { label: 'Return on Ad Spend', value: '22.8X ROAS' },
-        { label: 'Campaign Type', value: 'Google Shopping' },
-        { label: 'Tracking Setup', value: 'GA4 & GTM' },
+        { label: 'Actual ROAS', value: '22.8X (2,277.48%)' },
+        { label: 'Purchases', value: '105' },
+        { label: 'Ad Cost', value: '€2.06K' },
+        { label: 'Clicks', value: '5.89K' },
       ],
-      summary: 'Combining Merchant Center feed optimization, structured Shopping product groups, and accurate purchase tracking produced a 22.8X ROAS. Historical campaign result; individual outcomes vary by business, offer, and market conditions.',
+      summary:
+        'Structured Google Shopping feed refinement, disciplined query filtering, and accurate order-value tracking generated 105 purchases at a 22.8X ROAS on €2.06K spend. Historical campaign result; outcomes vary by store catalog, demand, and budget.',
     },
-
     keyTakeaways: [
-      'Clear, descriptive product titles in Google Merchant Center improve matching with high-intent shopping searches.',
-      'Accurate purchase value tracking allows bidding strategies to prioritize higher-value product searches.',
+      'Product feed relevance and search term filtering directly improve Google Shopping return efficiency.',
+      'Verified order-value attribution lets bidding strategies prioritize profitable shopper intent.',
     ],
   },
 
-  // =====================================================
-  // PROJECT 02 — GOOGLE ADS ECOMMERCE ($66.3K REVENUE | 1,600% ROAS)
-  // =====================================================
   {
     id: 'cs-2',
     slug: '1600-percent-roas-google-ads-ecommerce',
-    title: '$66.3K Revenue | 1,600% ROAS — eCommerce Advertising Campaign',
+    title: '1600% ROAS & $66.3K Sales with Google Ads Campaign',
     primaryMetric: '$66.3K',
-    metricLabel: 'Attributed Sales Revenue',
-    secondaryMetric: '1,600%',
-    secondaryMetricLabel: 'Return on Ad Spend (ROAS)',
+    metricLabel: 'Attributed Sales (1600% ROAS)',
+    secondaryMetric: '1600% ROAS',
+    secondaryMetricLabel: '$19.31 Cost / Conv.',
+    portfolioCategory: 'eCommerce — Google Ads',
     category: 'eCommerce',
-    platforms: ['Google Ads', 'Performance Max', 'Google Shopping', 'GA4'],
+    platform: 'Google Ads',
+    campaignType: 'Google Ads eCommerce Campaign',
+    platforms: ['Google Ads', 'Google Shopping', 'Google Merchant Center', 'GA4'],
     clientIndustry: 'eCommerce Store',
-    campaignObjective: 'Grow attributed online store sales and improve advertising efficiency through structured Google Ads eCommerce campaigns and reliable conversion value measurement.',
-    summary: 'A Google Ads eCommerce advertising campaign structured around top-performing product categories, audience signals, and verified transaction tracking—generating $66.3K in attributed sales revenue at a 1,600% ROAS.',
-
+    campaignObjective:
+      'Scale attributed online store sales with Google Ads eCommerce campaigns while maintaining high return on ad spend efficiency.',
+    summary:
+      'Google Ads eCommerce campaign built around core bestselling products, commercial targeting, and verified transaction tracking—generating $66.3K in attributed sales at a 1,600% ROAS across 262 conversions.',
     coverImage: {
-      id: 'img-cs2-cover',
-      src: CASE_STUDY_SHARED_IMAGE,
-      alt: 'Google Ads $66.3K revenue and 1,600% ROAS eCommerce campaign',
-      caption: 'Google Ads eCommerce campaign generating $66.3K in attributed sales revenue with 1,600% ROAS.',
-      isPlaceholder: false,
+      id: 'img-cs2-01',
+      src: '/assets/portfolio/ecommerce-1600-roas-66-3k-sales-01.webp',
+      alt: 'Google Ads eCommerce campaign dashboard showing $66.3K Purchases/Sales, 262.06 conversions, 1,600.00% Actual ROAS, and $19.31 cost per conversion',
+      caption:
+        'Google Ads eCommerce overview: $66.3K attributed sales, 262.06 conversions, 1,600.00% ROAS, and $19.31 cost per conversion.',
     },
-
-    galleryImages: [
-      {
-        id: 'img-cs2-1',
-        src: CASE_STUDY_SHARED_IMAGE,
-        alt: 'eCommerce campaign asset group and catalog structure',
-        caption: 'Structured product groups and audience signals tailored to high-intent shoppers.',
-        isPlaceholder: false,
-      },
-      {
-        id: 'img-cs2-2',
-        src: CASE_STUDY_SHARED_IMAGE,
-        alt: 'Attributed eCommerce sales revenue in Google Ads',
-        caption: 'Dynamic transaction value tracking verifying $66.3K in gross attributed store revenue.',
-        isPlaceholder: false,
-      },
-    ],
-
+    galleryImages: [],
     challenges: [
-      'Broad, unsegmented campaign structure spreading budget across low-performing products.',
-      'Lack of structured audience signals and search term controls reducing campaign efficiency.',
-      'Need for clean dynamic transaction tracking to measure gross attributed revenue and ROAS accurately.',
+      'Scaling online store revenue without letting low-converting items or broad queries dilute ROAS.',
+      'Ensuring dynamic checkout order values are reported accurately across Google Ads and GA4.',
     ],
-
     strategy: [
-      'Restructured campaigns around core product categories and bestselling items.',
-      'Applied targeted audience signals and search themes to guide campaign delivery toward likely buyers.',
-      'Refined ad copy, product assets, and bidding targets based on conversion value data.',
-      'Configured GA4 and Google Ads dynamic purchase tracking via Google Tag Manager.',
+      'Prioritized core product categories and active commercial buyer intent across Google Ads.',
+      'Filtered low-intent search queries continuously to protect conversion value.',
+      'Connected verified checkout value tracking to support revenue-focused optimization.',
     ],
-
     campaignStructure: [
-      'Category-segmented Shopping and Performance Max asset groups.',
-      'Search term monitoring and negative keyword exclusions to reduce wasted spend.',
-      'Conversion-value bidding focused on return on ad spend.',
+      'Segmented Google Ads eCommerce product coverage focused on priority categories.',
+      'Value-based bidding aligned with verified online purchase revenue.',
     ],
-
     trackingSetup: [
-      'Google Tag Manager and GA4 dynamic purchase event setup capturing order values.',
-      'Google Ads conversion tracking verified for accurate revenue and ROAS reporting.',
+      'GA4 and Google Ads purchase revenue tracking configured cleanly via Google Tag Manager.',
     ],
-
     results: {
-      highlight: 'Generated $66.3K in attributed gross sales revenue with a 1,600% Return on Ad Spend.',
+      highlight:
+        'Generated $66.3K in attributed sales across 262 conversions at a 1,600.00% ROAS.',
       metrics: [
-        { label: 'Attributed Sales Revenue', value: '$66.3K' },
-        { label: 'Return on Ad Spend', value: '1,600% ROAS' },
-        { label: 'Platform', value: 'Google Ads' },
+        { label: 'Attributed Sales', value: '$66.3K' },
+        { label: 'Actual ROAS', value: '1,600.00%' },
+        { label: 'Conversions', value: '262.06' },
+        { label: 'Cost / Conversion', value: '$19.31' },
       ],
-      summary: 'Structured product segmentation, audience signals, and verified conversion tracking produced $66.3K in attributed sales revenue at 1,600% ROAS. Note: Revenue represents gross attributed sales, not net profit, and is not a guarantee of future performance.',
+      summary:
+        'Disciplined catalog segmentation and verified revenue tracking generated $66.3K in attributed sales at 1,600% ROAS ($19.31 cost per conversion). Sales represent gross attributed store revenue, not net profit, and historical results are not guaranteed.',
     },
-
     keyTakeaways: [
-      'Organizing eCommerce campaigns by product category helps allocate budget toward items that convert best.',
-      'Reliable dynamic conversion tracking is essential for evaluating true gross revenue and ROAS.',
+      'Concentrating budget on proven product categories preserves return efficiency during revenue scaling.',
+      'Reliable order-value tracking provides clean signals for conversion-value bidding.',
     ],
   },
 
-  // =====================================================
-  // PROJECT 03 — META ADS FINANCIAL SERVICES (7,150 LEADS)
-  // =====================================================
-  {
-    id: 'cs-3',
-    slug: '7150-qualified-leads-meta-ads-financial-services',
-    title: '7,150 Qualified Leads — Financial Services Campaign',
-    primaryMetric: '7,150',
-    metricLabel: 'Qualified Leads Generated',
-    secondaryMetric: 'Meta Ads',
-    secondaryMetricLabel: 'Lead Generation Campaign',
-    category: 'Lead Generation',
-    platforms: ['Meta Ads', 'Facebook Ads', 'Instagram Ads', 'Meta Pixel & CAPI'],
-    clientIndustry: 'Financial Services',
-    campaignObjective: 'Generate a consistent volume of qualified client inquiries through Facebook and Instagram lead generation campaigns.',
-    summary: 'A Meta Ads lead generation campaign for a financial services business combining structured audience targeting, clear ad messaging, qualifying lead forms, and Meta Pixel & Conversions API tracking—generating 7,150 qualified leads.',
-
-    coverImage: {
-      id: 'img-cs3-cover',
-      src: CASE_STUDY_SHARED_IMAGE,
-      alt: 'Meta Ads 7,150 qualified leads financial services campaign performance overview',
-      caption: 'Meta Ads financial services campaign generating 7,150 qualified leads ($4.97 Cost Per Lead on $35,508.67 ad spend).',
-      isPlaceholder: false,
-    },
-
-    galleryImages: [
-      {
-        id: 'img-cs3-1',
-        src: CASE_STUDY_SHARED_IMAGE,
-        alt: 'Meta Ads audience segmentation and creative testing',
-        caption: 'Structured audience testing and problem-focused ad copy variations.',
-        isPlaceholder: false,
-      },
-      {
-        id: 'img-cs3-2',
-        src: CASE_STUDY_SHARED_IMAGE,
-        alt: 'Meta Pixel and Conversions API lead event tracking',
-        caption: 'Reliable lead event tracking configured via Meta Pixel and Conversions API.',
-        isPlaceholder: false,
-      },
-    ],
-
-    challenges: [
-      'Reaching the right prospective clients in a competitive financial services market.',
-      'Filtering out low-intent clicks and casual form submissions that do not qualify for services.',
-      'Maintaining accurate lead event tracking across mobile and desktop browsers.',
-    ],
-
-    strategy: [
-      'Developed clear, compliant ad copy and creative angles addressing specific client needs.',
-      'Structured prospecting and retargeting audiences to reach qualified prospects and re-engage warm visitors.',
-      'Used qualifying questions in lead capture forms to improve inquiry relevance.',
-      'Configured Meta Pixel and Conversions API (CAPI) to feed accurate lead signals back into Meta Ads Manager.',
-    ],
-
-    campaignStructure: [
-      'Prospecting campaigns testing multiple audience segments and creative variations.',
-      'Retargeting campaigns re-engaging engaged video viewers, page visitors, and form openers.',
-      'Structured lead forms designed to capture contact details and qualifying information.',
-    ],
-
-    trackingSetup: [
-      'Meta Pixel and Conversions API configured via Google Tag Manager for reliable lead attribution.',
-    ],
-
-    results: {
-      highlight: 'Generated 7,150 qualified leads for the financial services campaign.',
-      metrics: [
-        { label: 'Qualified Leads', value: '7,150' },
-        { label: 'Industry', value: 'Financial Services' },
-        { label: 'Platform', value: 'Meta Ads' },
-      ],
-      summary: 'Structured audience targeting, clear ad messaging, and qualifying lead forms generated 7,150 qualified leads on Meta Ads. Historical result; individual outcomes depend on market conditions, offer, and budget.',
-    },
-
-    keyTakeaways: [
-      'Including clear qualifying questions in lead forms helps focus budget on prospects who genuinely need the service.',
-      'Accurate Meta Pixel and Conversions API tracking helps the platform optimize delivery toward higher-intent prospects.',
-    ],
-  },
-
-  // =====================================================
-  // PROJECT 04 — GOOGLE ADS LOCAL BUSINESS (1.79K LEADS)
-  // =====================================================
-  {
-    id: 'cs-4',
-    slug: '179k-qualified-leads-google-ads-local-business',
-    title: '1.79K Qualified Leads — Local Service Business',
-    primaryMetric: '1.79K',
-    metricLabel: 'Qualified Leads Generated',
-    secondaryMetric: 'Google Ads',
-    secondaryMetricLabel: 'Local Service Campaign',
-    category: 'Lead Generation',
-    platforms: ['Google Ads', 'Google Search Ads', 'Google Tag Manager', 'GA4'],
-    clientIndustry: 'Local Service Business',
-    campaignObjective: 'Capture high-intent local search demand and generate qualified phone calls and quote requests within the client’s service area.',
-    summary: 'A Google Ads local lead generation campaign built around service-specific keywords, location targeting, negative keyword filtering, and call and form conversion tracking—generating 1.79K qualified leads.',
-
-    coverImage: {
-      id: 'img-cs4-cover',
-      src: CASE_STUDY_SHARED_IMAGE,
-      alt: 'Google Ads 1.79K qualified leads local service business campaign',
-      caption: 'Google Ads local service campaign generating 1.79K qualified leads.',
-      isPlaceholder: false,
-    },
-
-    galleryImages: [
-      {
-        id: 'img-cs4-1',
-        src: CASE_STUDY_SHARED_IMAGE,
-        alt: 'High-intent local keyword targeting',
-        caption: 'Service-focused ad groups targeting local customers ready to request service.',
-        isPlaceholder: false,
-      },
-      {
-        id: 'img-cs4-2',
-        src: CASE_STUDY_SHARED_IMAGE,
-        alt: 'Call and lead form conversion tracking setup',
-        caption: 'Tracking phone call clicks and quote form submissions via Google Tag Manager.',
-        isPlaceholder: false,
-      },
-    ],
-
-    challenges: [
-      'Wasted clicks from broad, informational searches and out-of-area traffic.',
-      'Strong local competition requiring clear ad copy and tightly organized ad groups.',
-      'Need for dependable tracking of both phone calls and website form inquiries.',
-    ],
-
-    strategy: [
-      'Targeted specific service territories and high-intent local search keywords.',
-      'Built negative keyword lists to block DIY queries, job seekers, and unrelated searches.',
-      'Created responsive search ads with call extensions, location assets, and service sitelinks.',
-      'Configured Google Tag Manager and GA4 to track phone calls and lead form submissions.',
-    ],
-
-    campaignStructure: [
-      'Service-themed Google Search ad groups focused on immediate local customer intent.',
-      'Location targeting restricted to the business’s active service radius.',
-      'Call and lead form assets enabled to make contacting the business effortless on mobile.',
-    ],
-
-    trackingSetup: [
-      'Google Tag Manager and Google Ads conversion tracking configured for phone calls and form submissions.',
-    ],
-
-    results: {
-      highlight: 'Generated 1.79K qualified leads for the local service business through Google Ads.',
-      metrics: [
-        { label: 'Qualified Leads', value: '1.79K' },
-        { label: 'Business Type', value: 'Local Service' },
-        { label: 'Platform', value: 'Google Ads' },
-      ],
-      summary: 'Combining high-intent local search targeting, negative keyword filtering, and accurate call and form tracking generated 1.79K qualified leads. Historical result; outcomes vary by location, industry, and budget.',
-    },
-
-    keyTakeaways: [
-      'Strict location settings and negative keyword lists protect local budgets from irrelevant clicks.',
-      'Tracking both phone calls and form submissions gives a complete view of local search performance.',
-    ],
-  },
-
-  // =====================================================
-  // PROJECT 05 — GOOGLE ADS LOCAL SEARCH (1,805 CONVERSIONS)
-  // =====================================================
-  {
-    id: 'cs-5',
-    slug: '1805-conversions-google-ads-search-campaign',
-    title: '1,805 Conversions — Local Business Search Campaign',
-    primaryMetric: '1,805',
-    metricLabel: 'Verified Conversions',
-    secondaryMetric: 'Google Ads',
-    secondaryMetricLabel: 'Search Campaign',
-    category: 'Google Ads',
-    platforms: ['Google Ads', 'Google Search Ads', 'Google Tag Manager', 'GA4'],
-    clientIndustry: 'Local Business',
-    campaignObjective: 'Drive consistent customer inquiries and conversion actions from high-intent Google Search traffic.',
-    summary: 'A Google Ads Search campaign structured around high-intent customer searches, relevant ad copy, ongoing search term optimization, and conversion tracking—achieving 1,805 conversions.',
-
-    coverImage: {
-      id: 'img-cs5-cover',
-      src: CASE_STUDY_SHARED_IMAGE,
-      alt: 'Google Ads 1,805 conversions local business search campaign',
-      caption: 'Google Ads Search campaign delivering 1,805 conversions for a local business.',
-      isPlaceholder: false,
-    },
-
-    galleryImages: [
-      {
-        id: 'img-cs5-1',
-        src: CASE_STUDY_SHARED_IMAGE,
-        alt: 'Search term optimization and ad group structure',
-        caption: 'Tightly themed ad groups and ongoing negative keyword refinement.',
-        isPlaceholder: false,
-      },
-    ],
-
-    challenges: [
-      'Capturing high-intent search queries while avoiding wasted spend on broad terms.',
-      'Aligning ad copy directly with what local customers were searching for.',
-      'Ensuring all primary customer actions were accurately recorded as conversions.',
-    ],
-
-    strategy: [
-      'Organized search campaigns into focused ad groups by service intent.',
-      'Wrote clear responsive search ads highlighting core business value and local availability.',
-      'Regularly reviewed search term reports to add negative keywords and refine match types.',
-      'Configured conversion tracking through Google Tag Manager and GA4.',
-    ],
-
-    campaignStructure: [
-      'High-intent Google Search ad groups paired with relevant landing pages.',
-      'Complete ad extensions including callouts, structured snippets, and sitelinks.',
-      'Conversion-focused bidding guided by verified conversion actions.',
-    ],
-
-    trackingSetup: [
-      'Google Ads conversion tracking and GA4 event tracking implemented via Google Tag Manager.',
-    ],
-
-    results: {
-      highlight: 'Delivered 1,805 verified conversions for the local business search campaign.',
-      metrics: [
-        { label: 'Total Conversions', value: '1,805' },
-        { label: 'Campaign Type', value: 'Google Search' },
-        { label: 'Platform', value: 'Google Ads' },
-      ],
-      summary: 'Disciplined keyword targeting, relevant ad messaging, and accurate conversion tracking produced 1,805 conversions. Historical campaign result; not a guarantee of future performance.',
-    },
-
-    keyTakeaways: [
-      'Matching ad copy closely to search intent improves click relevance and conversion consistency.',
-      'Ongoing search term cleanup keeps budget focused on productive keywords.',
-    ],
-  },
-
-  // =====================================================
-  // PROJECT 06 — GOOGLE ADS ROOFING (391 QUALIFIED LEADS)
-  // =====================================================
-  {
-    id: 'cs-6',
-    slug: '391-qualified-leads-google-ads-roofing',
-    title: '391 Qualified Leads — Roofing Lead Generation Campaign',
-    primaryMetric: '391',
-    metricLabel: 'Qualified Roofing Leads',
-    secondaryMetric: 'Google Ads',
-    secondaryMetricLabel: 'Roofing Lead Generation',
-    category: 'Lead Generation',
-    platforms: ['Google Ads', 'Google Search Ads', 'Google Tag Manager', 'GA4'],
-    clientIndustry: 'Roofing Contractor',
-    campaignObjective: 'Generate qualified roof repair, replacement, and inspection inquiries from homeowners in the contractor’s service area.',
-    summary: 'A Google Ads lead generation campaign built for a roofing company, focusing on high-intent homeowner searches, service-area targeting, negative keyword filtering, and call and form tracking—delivering 391 qualified leads.',
-
-    coverImage: {
-      id: 'img-cs6-cover',
-      src: CASE_STUDY_SHARED_IMAGE,
-      alt: 'Google Ads 391 qualified leads roofing campaign',
-      caption: 'Google Ads roofing lead generation campaign delivering 391 qualified leads.',
-      isPlaceholder: false,
-    },
-
-    galleryImages: [
-      {
-        id: 'img-cs6-1',
-        src: CASE_STUDY_SHARED_IMAGE,
-        alt: 'Roofing search campaign structure',
-        caption: 'Targeted ad groups for roof replacement, storm damage repair, and inspections.',
-        isPlaceholder: false,
-      },
-    ],
-
-    challenges: [
-      'High cost per click in the competitive local roofing market.',
-      'Filtering out clicks from job seekers, roofing supply searches, and out-of-area locations.',
-      'Tracking both phone calls and estimate request forms accurately.',
-    ],
-
-    strategy: [
-      'Focused keyword targeting on high-intent homeowner searches (roof replacement, roof repair, roof inspection).',
-      'Applied negative keyword lists to exclude DIY, materials, employment, and competitor terms.',
-      'Restricted location targeting to the contractor’s exact service cities and zip codes.',
-      'Set up call and form conversion tracking via Google Tag Manager.',
-    ],
-
-    campaignStructure: [
-      'Dedicated Search ad groups for roof replacement, emergency roof repair, and inspections.',
-      'Call extensions and mobile-friendly ad assets for direct phone inquiries.',
-      'Location-restricted bidding focused on verified lead conversions.',
-    ],
-
-    trackingSetup: [
-      'Phone call click and estimate form submission tracking configured via Google Tag Manager and Google Ads.',
-    ],
-
-    results: {
-      highlight: 'Generated 391 qualified roofing leads through targeted Google Search campaigns.',
-      metrics: [
-        { label: 'Qualified Leads', value: '391' },
-        { label: 'Industry', value: 'Roofing Services' },
-        { label: 'Platform', value: 'Google Ads' },
-      ],
-      summary: 'High-intent homeowner keyword targeting and strict negative keyword filtering delivered 391 qualified roofing leads. Historical result; outcomes vary by market competition and budget.',
-    },
-
-    keyTakeaways: [
-      'Separating roof replacement and roof repair searches into distinct ad groups improves ad relevance.',
-      'Negative keyword filtering is critical in high-CPC home service industries like roofing.',
-    ],
-  },
-
-  // =====================================================
-  // PROJECT 07 — GOOGLE ADS ECOMMERCE SHOPPING (920 PURCHASES)
-  // =====================================================
   {
     id: 'cs-7',
     slug: '920-purchases-google-ads-ecommerce-shopping',
-    title: '920 Purchases — eCommerce Shopping Campaign',
+    title: '920 Purchases with Google Ads eCommerce Shopping',
     primaryMetric: '920',
-    metricLabel: 'Completed Store Purchases',
-    secondaryMetric: 'Google Ads',
-    secondaryMetricLabel: 'eCommerce Shopping',
+    metricLabel: 'Store Purchases',
+    secondaryMetric: '$13.53 CPA',
+    secondaryMetricLabel: '9.31K Qualified Clicks',
+    portfolioCategory: 'eCommerce — Google Ads',
     category: 'eCommerce',
+    platform: 'Google Ads',
+    campaignType: 'Google Shopping eCommerce Campaign',
     platforms: ['Google Ads', 'Google Shopping', 'Google Merchant Center', 'GA4'],
-    clientIndustry: 'eCommerce Online Store',
-    campaignObjective: 'Increase online order volume through structured Google Shopping campaigns and accurate eCommerce conversion tracking.',
-    summary: 'A Google Ads eCommerce Shopping campaign combining Merchant Center feed optimization, segmented product groups, and verified checkout tracking—driving 920 completed purchases.',
-
+    clientIndustry: 'eCommerce Store',
+    campaignObjective:
+      'Drive sustained eCommerce order volume by connecting commercial product searches with optimized Google Shopping listings and verified purchase tracking.',
+    summary:
+      'Google Ads eCommerce Shopping campaign combining structured product visibility, search query exclusions, and verified checkout tracking—delivering 920 purchases at $13.53 cost per sale across $12.5K ad spend.',
     coverImage: {
-      id: 'img-cs7-cover',
-      src: CASE_STUDY_SHARED_IMAGE,
-      alt: 'Google Ads 920 purchases eCommerce shopping campaign',
-      caption: 'Google Ads eCommerce Shopping campaign generating 920 completed purchases.',
-      isPlaceholder: false,
+      id: 'img-cs7-01',
+      src: '/assets/portfolio/ecommerce-920-purchases-01.webp',
+      alt: 'Google Ads eCommerce Shopping campaign reporting 920.23 conversions (920 purchases), 9.31K clicks, $13.53 cost per conversion, and $12.5K ad cost',
+      caption:
+        'Google Ads eCommerce Shopping performance: 920 purchases (920.23 conversions), $13.53 cost per sale, 9.31K clicks, and $12.5K spend.',
     },
-
-    galleryImages: [
-      {
-        id: 'img-cs7-1',
-        src: CASE_STUDY_SHARED_IMAGE,
-        alt: 'Shopping product group performance',
-        caption: 'Structured product groups prioritizing high-converting catalog items.',
-        isPlaceholder: false,
-      },
-    ],
-
+    galleryImages: [],
     challenges: [
-      'Improving product visibility across competitive shopping search terms.',
-      'Preventing low-converting catalog items from consuming the majority of daily budget.',
-      'Ensuring every completed checkout was accurately recorded in Google Ads and GA4.',
+      'Scaling steady order volume from Google Shopping while keeping cost per purchase predictable.',
+      'Maintaining accurate purchase event tracking across online store checkouts.',
     ],
-
     strategy: [
-      'Improved product titles and feed attributes in Google Merchant Center.',
-      'Organized Shopping campaigns by product category to control bidding and budget allocation.',
-      'Filtered out irrelevant search queries with ongoing negative keyword updates.',
-      'Verified GA4 and Google Ads purchase tracking through Google Tag Manager.',
+      'Structured Shopping listings to match clear commercial buyer search queries.',
+      'Filtered irrelevant search terms to keep ad spend focused on purchase intent.',
+      'Verified purchase conversion tracking in GA4 and Google Ads.',
     ],
-
     campaignStructure: [
-      'Category-based Google Shopping product groups with tailored bidding.',
-      'Active negative keyword lists blocking non-buyer search terms.',
-      'Purchase conversion tracking connected to automated bidding.',
+      'Organized Google Shopping product groups with ongoing bid and query refinement.',
+      'Purchase conversion bidding aligned with completed checkout events.',
     ],
-
     trackingSetup: [
-      'GA4 eCommerce purchase events and Google Ads conversion tracking configured via Google Tag Manager.',
+      'GA4 and Google Ads eCommerce purchase tracking verified cleanly.',
     ],
-
     results: {
-      highlight: 'Drove 920 completed eCommerce purchases through Google Shopping campaigns.',
+      highlight:
+        'Drove 920 purchases (920.23 conversions) at $13.53 cost per conversion across 9.31K clicks and $12.5K spend.',
       metrics: [
-        { label: 'Completed Purchases', value: '920' },
-        { label: 'Campaign Type', value: 'Google Shopping' },
-        { label: 'Platform', value: 'Google Ads' },
+        { label: 'Purchases', value: '920' },
+        { label: 'Cost / Sale', value: '$13.53' },
+        { label: 'Total Cost', value: '$12.5K' },
+        { label: 'Clicks', value: '9.31K' },
       ],
-      summary: 'Structured Shopping campaigns, clean Merchant Center data, and verified purchase tracking generated 920 store purchases. Historical campaign result; not a guarantee of future performance.',
+      summary:
+        'Clean Shopping structure, continuous search-term pruning, and verified checkout tracking produced 920 completed purchases at $13.53 cost per sale ($12.5K spend). Historical outcome; individual store results vary.',
     },
-
     keyTakeaways: [
-      'Clean product feeds and organized product groups allow budget to flow toward proven sellers.',
-      'Verified purchase tracking gives bidding algorithms reliable signals to find online shoppers.',
+      'Consistent search-term hygiene keeps Shopping spend focused on high-intent buyers.',
+      'Verified purchase signals help automated bidding sustain efficient acquisition costs.',
     ],
   },
 
-  // =====================================================
-  // PROJECT 08 — GOOGLE ADS FOOD BRAND ($38.3K SALES)
-  // =====================================================
+  {
+    id: 'cs-12',
+    slug: '22-purchases-google-ads-ecommerce',
+    title: '22 Purchases with Google Ads eCommerce Campaign',
+    primaryMetric: '22',
+    metricLabel: 'Completed Purchases',
+    secondaryMetric: '€9.62 CPA',
+    secondaryMetricLabel: '€211 Ad Cost',
+    portfolioCategory: 'eCommerce — Google Ads',
+    category: 'eCommerce',
+    platform: 'Google Ads',
+    campaignType: 'Google Ads eCommerce Campaign',
+    platforms: ['Google Ads', 'Google Shopping', 'Google Tag Manager', 'GA4'],
+    clientIndustry: 'eCommerce Store',
+    campaignObjective:
+      'Generate verified online store orders efficiently through structured Google Ads eCommerce targeting and reliable purchase tracking.',
+    summary:
+      'Focused Google Ads eCommerce campaign driving high-intent product visibility, clean query filtering, and accurate checkout tracking—delivering 22 purchases at €9.62 cost per sale on €211 total ad spend.',
+    coverImage: {
+      id: 'img-cs12-01',
+      src: '/assets/portfolio/ecommerce-22-purchases-01.webp',
+      alt: 'Google Ads eCommerce dashboard showing 21.97 purchases (22 purchases), 429 clicks, €9.62 cost per conversion, and €211 total ad cost',
+      caption:
+        'Google Ads eCommerce results: 22 purchases (21.97 conversions), €9.62 cost per sale, 429 clicks, and €211 ad cost.',
+    },
+    galleryImages: [],
+    challenges: [
+      'Directing a focused budget efficiently toward ready-to-buy product searches on Google.',
+      'Confirming accurate checkout purchase tracking from the start.',
+    ],
+    strategy: [
+      'Structured Google Ads eCommerce coverage around priority catalog items.',
+      'Applied ongoing search query exclusions to eliminate wasted clicks.',
+      'Verified checkout conversion tracking across GA4 and Google Ads.',
+    ],
+    campaignStructure: [
+      'Focused Google Ads eCommerce structure built around commercial product intent.',
+      'Verified purchase conversion goal optimization.',
+    ],
+    trackingSetup: [
+      'GA4 and Google Ads purchase conversion tracking verified via Google Tag Manager.',
+    ],
+    results: {
+      highlight:
+        'Delivered 22 verified purchases at €9.62 cost per sale from 429 clicks (€211 total cost).',
+      metrics: [
+        { label: 'Purchases', value: '22' },
+        { label: 'Cost / Sale', value: '€9.62' },
+        { label: 'Total Cost', value: '€211' },
+        { label: 'Clicks', value: '429' },
+      ],
+      summary:
+        'Targeted product visibility and verified checkout conversion tracking delivered 22 purchases at €9.62 per sale across 429 clicks (€211 spend). Historical result; outcomes vary by offer, demand, and budget.',
+    },
+    keyTakeaways: [
+      'Establishing clean purchase tracking early keeps optimization tied directly to completed orders.',
+      'Tight search query filtering helps focused eCommerce budgets convert efficiently.',
+    ],
+  },
+
   {
     id: 'cs-8',
     slug: '38-3k-sales-google-ads-food-brand',
-    title: '$38.3K Sales — Food Brand Advertising Campaign',
+    title: '$38.3K Sales Generated with Google Ads Food Brand',
     primaryMetric: '$38.3K',
     metricLabel: 'Attributed Store Sales',
-    secondaryMetric: 'Google Ads',
-    secondaryMetricLabel: 'Food Brand eCommerce',
+    secondaryMetric: '303 Orders',
+    secondaryMetricLabel: '4.4% Conversion Rate',
+    portfolioCategory: 'eCommerce — Google Ads',
     category: 'eCommerce',
-    platforms: ['Google Ads', 'Google Shopping', 'Performance Max', 'GA4'],
+    platform: 'Google Ads',
+    campaignType: 'Google Ads Food Brand eCommerce',
+    platforms: ['Google Ads', 'Google Shopping', 'Google Tag Manager', 'GA4'],
     clientIndustry: 'Food & Beverage Brand',
-    campaignObjective: 'Grow online direct-to-consumer product sales for a food brand using Google Shopping, Search, and Performance Max campaigns.',
-    summary: 'An eCommerce Google Ads campaign for a food brand focused on product feed optimization, high-intent product searches, and accurate purchase value measurement—generating $38.3K in attributed sales.',
-
+    campaignObjective:
+      'Grow direct-to-consumer online sales for a food brand through targeted Google Ads campaigns focused on commercial product intent.',
+    summary:
+      'Google Ads eCommerce campaign for a food brand pairing commercial query targeting with negative keyword exclusions and clean order tracking—generating $38,307.12 ($38.3K) in sales across 303 orders and a 4.4% store conversion rate.',
     coverImage: {
-      id: 'img-cs8-cover',
-      src: CASE_STUDY_SHARED_IMAGE,
-      alt: 'Google Ads $38.3K sales food brand campaign',
-      caption: 'Google Ads campaign generating $38.3K in attributed sales for a food brand.',
-      isPlaceholder: false,
+      id: 'img-cs8-01',
+      src: '/assets/portfolio/ecommerce-food-brand-38-3k-sales-01.webp',
+      alt: 'Food brand store analytics reporting $38,307.12 ($38.3K) total sales, 303 orders, 4.4% conversion rate, and 3,207 sessions',
+      caption:
+        'Food brand performance overview: $38,307.12 ($38.3K) total sales, 303 orders, 4.4% conversion rate, and 3,207 sessions.',
     },
-
-    galleryImages: [
-      {
-        id: 'img-cs8-1',
-        src: CASE_STUDY_SHARED_IMAGE,
-        alt: 'Food brand eCommerce campaign overview',
-        caption: 'Shopping and Performance Max structure highlighting core product packs.',
-        isPlaceholder: false,
-      },
-    ],
-
+    galleryImages: [],
     challenges: [
-      'Reaching online shoppers actively looking for specialty food products.',
-      'Structuring product listings and ad groups so bestselling items received consistent visibility.',
-      'Accurately tracking order values across desktop and mobile checkouts.',
+      'Preventing informational and recipe-style food queries from absorbing product ad budget.',
+      'Measuring direct online order revenue accurately across Google Ads and store analytics.',
     ],
-
     strategy: [
-      'Optimized product titles and descriptions in Google Merchant Center for food and gifting searches.',
-      'Structured Shopping and Performance Max campaigns around bestselling products and bundles.',
-      'Added negative keywords to reduce spend on recipe and informational food searches.',
-      'Configured GA4 and Google Ads purchase value tracking via Google Tag Manager.',
+      'Targeted product-focused and commercial food buyer searches across Google Ads.',
+      'Excluded non-buying informational and recipe searches through negative keywords.',
+      'Tracked completed order revenue cleanly in GA4 and Google Ads.',
     ],
-
     campaignStructure: [
-      'Google Shopping and Performance Max campaigns segmented by core product lines.',
-      'Brand and high-intent product search coverage.',
-      'Dynamic purchase value tracking supporting return-focused bidding.',
+      'Product-line focused Google Ads eCommerce structure prioritizing commercial queries.',
+      'Order-value tracking aligned with campaign optimization.',
     ],
-
     trackingSetup: [
-      'GA4 eCommerce tracking and Google Ads purchase conversion tracking implemented via Google Tag Manager.',
+      'GA4 eCommerce purchase and revenue tracking verified via Google Tag Manager.',
     ],
-
     results: {
-      highlight: 'Generated $38.3K in attributed online sales for the food brand.',
+      highlight:
+        'Generated $38,307.12 ($38.3K) in total sales across 303 orders (4.4% conversion rate, 3,207 sessions).',
       metrics: [
-        { label: 'Attributed Sales', value: '$38.3K' },
-        { label: 'Industry', value: 'Food Brand' },
-        { label: 'Platform', value: 'Google Ads' },
+        { label: 'Total Sales', value: '$38.3K' },
+        { label: 'Orders', value: '303' },
+        { label: 'Conversion Rate', value: '4.4%' },
+        { label: 'Sessions', value: '3,207' },
       ],
-      summary: 'Targeted product campaigns, negative keyword filtering for recipe queries, and accurate purchase tracking generated $38.3K in attributed store sales. Note: Sales figures represent gross attributed revenue, not profit.',
+      summary:
+        'Commercial query targeting and clean purchase measurement generated $38,307.12 in total store sales across 303 orders and a 4.4% conversion rate. Sales reflect gross store revenue, not net profit.',
     },
-
     keyTakeaways: [
-      'Filtering out informational and recipe searches prevents wasted spend for food and beverage brands.',
-      'Highlighting bestselling products and bundles helps improve eCommerce conversion efficiency.',
+      'Filtering non-buying informational terms protects eCommerce spend for food brands.',
+      'Reliable order revenue tracking supports sustainable scaling decisions.',
     ],
   },
 
-  // =====================================================
-  // PROJECT 09 — META ADS CONSTRUCTION (280 QUALIFIED LEADS)
-  // =====================================================
+  // =========================================================================
+  // LEAD GENERATION — GOOGLE ADS (6–9)
+  // =========================================================================
   {
-    id: 'cs-9',
-    slug: '280-qualified-leads-meta-ads-construction',
-    title: '280 Qualified Leads — Construction Company Campaign',
-    primaryMetric: '280',
-    metricLabel: 'Qualified Project Leads',
-    secondaryMetric: 'Meta Ads',
-    secondaryMetricLabel: 'Construction Lead Gen',
-    category: 'Meta Ads',
-    platforms: ['Meta Ads', 'Facebook Ads', 'Instagram Ads', 'Meta Pixel'],
-    clientIndustry: 'Construction Company',
-    campaignObjective: 'Generate qualified residential and commercial construction inquiries from property owners in the company’s target region.',
-    summary: 'A Meta Ads lead generation campaign for a construction company using localized audience targeting, project-focused ad creatives, and qualifying lead forms—generating 280 qualified leads.',
-
+    id: 'cs-4',
+    slug: '179k-qualified-leads-google-ads-local-business',
+    title: '1.79K Qualified Leads with Google Ads for Local',
+    primaryMetric: '1.79K',
+    metricLabel: 'Qualified Leads',
+    secondaryMetric: '$14.17 CPL',
+    secondaryMetricLabel: '17.8K Clicks · $25.4K Cost',
+    portfolioCategory: 'Lead Generation — Google Ads',
+    category: 'Lead Generation',
+    platform: 'Google Ads',
+    campaignType: 'Local Google Ads Lead Generation',
+    platforms: ['Google Ads', 'Google Search Ads', 'Google Tag Manager', 'GA4'],
+    clientIndustry: 'Local Service Business',
+    campaignObjective:
+      'Generate qualified local customer inquiries and phone calls through geographically targeted Google Ads Search campaigns.',
+    summary:
+      'Local Google Ads lead generation campaign combining high-intent service keywords, territory-specific targeting, and conversion tracking—generating 1.79K qualified leads at $14.17 cost per lead across 17.8K clicks ($25.4K spend).',
     coverImage: {
-      id: 'img-cs9-cover',
-      src: CASE_STUDY_SHARED_IMAGE,
-      alt: 'Meta Ads 280 qualified leads construction company campaign',
-      caption: 'Meta Ads campaign generating 280 qualified leads for a construction company.',
-      isPlaceholder: false,
+      id: 'img-cs4-01',
+      src: '/assets/portfolio/google-ads-1790-qualified-leads-01.webp',
+      alt: 'Local business Google Ads dashboard showing 1.79K conversions (leads), 17.8K clicks, $14.17 cost per conversion, and $25.4K total cost',
+      caption:
+        'Local Business Google Ads results: 1.79K leads, $14.17 cost per lead, 17.8K clicks, and $25.4K total ad cost.',
     },
-
-    galleryImages: [
-      {
-        id: 'img-cs9-1',
-        src: CASE_STUDY_SHARED_IMAGE,
-        alt: 'Construction company Meta Ads lead generation funnel',
-        caption: 'Localized targeting paired with project showcase creatives and qualifying lead forms.',
-        isPlaceholder: false,
-      },
-    ],
-
+    galleryImages: [],
     challenges: [
-      'Reaching property owners planning construction or remodeling projects within the local service area.',
-      'Avoiding low-intent inquiries from outside the company’s operational territory.',
-      'Tracking lead submissions accurately across Facebook and Instagram placements.',
+      'Focusing ad delivery strictly on serviceable local territories without out-of-area click waste.',
+      'Capturing both phone inquiries and quote form submissions accurately.',
     ],
-
     strategy: [
-      'Targeted local geographic areas with messaging tailored to property owners considering construction services.',
-      'Tested project-focused visuals and clear service headlines across Facebook and Instagram.',
-      'Used structured lead forms with project-type questions to qualify inquiries.',
-      'Configured Meta Pixel and conversion event tracking to optimize for completed lead submissions.',
+      'Targeted high-intent local service search terms matched to active customer demand.',
+      'Applied geographic controls and negative keywords to keep traffic relevant and local.',
+      'Tracked inbound lead submissions and call interactions in Google Ads and GA4.',
     ],
-
     campaignStructure: [
-      'Local prospecting campaign targeting property owners within the service territory.',
-      'Retargeting campaign re-engaging visitors who interacted with ads or the website.',
-      'Qualifying lead form capturing contact details and project scope.',
+      'Local Search ad groups structured around core customer service needs.',
+      'Location and call assets supporting immediate local inquiries.',
     ],
-
     trackingSetup: [
-      'Meta Pixel and lead conversion tracking configured via Google Tag Manager.',
+      'Lead form and call conversion tracking configured via Google Tag Manager and GA4.',
     ],
-
     results: {
-      highlight: 'Generated 280 qualified leads for the construction company via Meta Ads.',
+      highlight:
+        'Generated 1.79K qualified local leads at $14.17 cost per lead from 17.8K clicks ($25.4K spend).',
       metrics: [
-        { label: 'Qualified Leads', value: '280' },
-        { label: 'Industry', value: 'Construction' },
-        { label: 'Platform', value: 'Meta Ads' },
+        { label: 'Leads Generated', value: '1.79K' },
+        { label: 'Cost / Lead', value: '$14.17' },
+        { label: 'Clicks', value: '17.8K' },
+        { label: 'Total Cost', value: '$25.4K' },
       ],
-      summary: 'Localized Facebook and Instagram campaigns paired with qualifying lead forms delivered 280 construction inquiries. Historical result; outcomes vary by market, offer, and budget.',
+      summary:
+        'Local search intent targeting, geographic discipline, and verified lead tracking generated 1.79K qualified leads at $14.17 per lead across 17.8K clicks ($25.4K total cost). Historical result; outcomes vary by market and budget.',
     },
-
     keyTakeaways: [
-      'Showcasing real project work and clear service areas helps attract relevant construction inquiries.',
-      'Asking a brief project-scope question on the lead form improves inquiry quality.',
+      'Tight geographic controls prevent local service budgets from leaking outside target areas.',
+      'Measuring every inquiry channel provides an accurate view of local campaign efficiency.',
     ],
   },
 
-  // =====================================================
-  // PROJECT 10 — META ADS HEALTHCARE (145 QUALIFIED LEADS)
-  // =====================================================
   {
-    id: 'cs-10',
-    slug: '145-qualified-leads-meta-ads-healthcare',
-    title: '145 Qualified Leads — Healthcare Lead Generation Campaign',
-    primaryMetric: '145',
-    metricLabel: 'Qualified Patient Inquiries',
-    secondaryMetric: 'Meta Ads',
-    secondaryMetricLabel: 'Healthcare Lead Gen',
-    category: 'Meta Ads',
-    platforms: ['Meta Ads', 'Facebook Ads', 'Instagram Ads', 'Meta Pixel & CAPI'],
-    clientIndustry: 'Healthcare Practice',
-    campaignObjective: 'Attract local patient inquiries and consultation requests through compliant Facebook and Instagram advertising.',
-    summary: 'A Meta Ads lead generation campaign for a healthcare provider featuring clear educational ad copy, local radius targeting, and accurate conversion tracking—generating 145 qualified leads.',
-
+    id: 'cs-5',
+    slug: '1805-conversions-google-ads-search-campaign',
+    title: '1,805 Conversions with Google Ads Search Campaign',
+    primaryMetric: '1,805',
+    metricLabel: 'Verified Conversions',
+    secondaryMetric: '19.5K Clicks',
+    secondaryMetricLabel: '688K Impressions',
+    portfolioCategory: 'Lead Generation — Google Ads',
+    category: 'Lead Generation',
+    platform: 'Google Ads',
+    campaignType: 'Google Search Conversion Campaign',
+    platforms: ['Google Ads', 'Google Search Ads', 'Google Tag Manager', 'GA4'],
+    clientIndustry: 'Local Service Business',
+    campaignObjective:
+      'Drive high-volume customer conversions from active Google Search queries through structured ad groups, tailored messaging, and verified tracking.',
+    summary:
+      'Google Ads Search campaign engineered around intent-aligned keywords, continuous search-term optimization, and accurate conversion tracking—delivering 1,805 conversions across 19.5K clicks and 688K impressions (£47.9K cost).',
     coverImage: {
-      id: 'img-cs10-cover',
-      src: CASE_STUDY_SHARED_IMAGE,
-      alt: 'Meta Ads 145 qualified leads healthcare campaign',
-      caption: 'Meta Ads healthcare campaign generating 145 qualified patient inquiries.',
-      isPlaceholder: false,
+      id: 'img-cs5-01',
+      src: '/assets/portfolio/google-ads-1805-conversions-01.webp',
+      alt: 'Google Ads Search campaign dashboard displaying 1,805.00 conversions, 19.5K clicks, 688K impressions, and £47.9K total cost',
+      caption:
+        'Google Ads Search performance: 1,805 conversions, 19.5K clicks, 688K impressions, and £47.9K total cost.',
     },
-
-    galleryImages: [
-      {
-        id: 'img-cs10-1',
-        src: CASE_STUDY_SHARED_IMAGE,
-        alt: 'Healthcare Meta Ads campaign overview',
-        caption: 'Local radius targeting and clear appointment inquiry forms.',
-        isPlaceholder: false,
-      },
-    ],
-
+    galleryImages: [],
     challenges: [
-      'Writing clear, policy-compliant healthcare ad copy that builds trust with local patients.',
-      'Focusing ad delivery strictly within commuting distance of the clinic.',
-      'Measuring inquiry submissions accurately while respecting platform privacy guidelines.',
+      'Maintaining conversion consistency on Google Search while preventing irrelevant query spend.',
+      'Ensuring primary conversion tracking reflects genuine customer actions.',
     ],
-
     strategy: [
-      'Crafted approachable, policy-compliant ad messaging focused on service benefits and consultation availability.',
-      'Applied local radius targeting around the practice location.',
-      'Set up streamlined inquiry forms and landing page tracking to capture appointment requests.',
-      'Implemented Meta Pixel and Conversions API through Google Tag Manager.',
+      'Structured Search ad groups around clear customer search intent.',
+      'Refined search term coverage regularly with targeted negative keyword updates.',
+      'Configured accurate Google Ads and GA4 conversion actions.',
     ],
-
     campaignStructure: [
-      'Local awareness and lead generation campaign targeting adults within the clinic’s radius.',
-      'Retargeting ads for website visitors and social page engagers.',
-      'Streamlined lead capture flow for consultation requests.',
+      'Intent-grouped Google Search campaigns paired with relevant ad assets.',
+      'Ongoing query monitoring and conversion-oriented optimization.',
     ],
-
     trackingSetup: [
-      'Meta Pixel and Conversions API configured via Google Tag Manager for lead event measurement.',
+      'Google Ads and GA4 conversion tracking verified via Google Tag Manager.',
     ],
-
     results: {
-      highlight: 'Generated 145 qualified inquiries for the healthcare practice through Meta Ads.',
+      highlight:
+        'Achieved 1,805 conversions from 19.5K clicks and 688K impressions (£47.9K cost).',
       metrics: [
-        { label: 'Qualified Leads', value: '145' },
-        { label: 'Industry', value: 'Healthcare' },
-        { label: 'Platform', value: 'Meta Ads' },
+        { label: 'Conversions', value: '1,805' },
+        { label: 'Clicks', value: '19.5K' },
+        { label: 'Impressions', value: '688K' },
+        { label: 'Total Cost', value: '£47.9K' },
       ],
-      summary: 'Compliant, trust-building ad copy and local targeting delivered 145 qualified healthcare inquiries. Historical campaign result; individual outcomes vary.',
+      summary:
+        'Intent-aligned Search structure and reliable conversion tracking generated 1,805 verified conversions from 19.5K clicks and 688K impressions (£47.9K cost). Historical outcome; not a guarantee of future results.',
     },
-
     keyTakeaways: [
-      'Healthcare advertising performs best when messaging is clear, reassuring, and compliant with platform policies.',
-      'Tight local radius targeting ensures ad spend stays focused on nearby prospective patients.',
+      'Aligning Search ad copy closely with query intent improves conversion efficiency.',
+      'Regular search-term reviews keep campaign spend concentrated on high-intent traffic.',
     ],
   },
 
-  // =====================================================
-  // PROJECT 11 — GOOGLE ADS HVAC (39 QUALIFIED LEADS)
-  // =====================================================
+  {
+    id: 'cs-6',
+    slug: '391-qualified-leads-google-ads-roofing',
+    title: '391 Qualified Leads with Google Ads For Roofing',
+    primaryMetric: '391',
+    metricLabel: 'Qualified Roofing Leads',
+    secondaryMetric: '$6.71 CPL',
+    secondaryMetricLabel: '8.31K Clicks · $2.62K Cost',
+    portfolioCategory: 'Lead Generation — Google Ads',
+    category: 'Lead Generation',
+    platform: 'Google Ads',
+    campaignType: 'Roofing Google Ads Lead Generation',
+    platforms: ['Google Ads', 'Google Search Ads', 'Google Tag Manager', 'GA4'],
+    clientIndustry: 'Roofing Contractor',
+    campaignObjective:
+      'Capture qualified homeowner roofing inquiries within the contractor’s active local service territory at an efficient cost per lead.',
+    summary:
+      'Google Ads Search campaign for a roofing business structured around homeowner service intent, strict local targeting, negative keyword filtering, and lead tracking—generating 391 leads (391.33 conversions) at $6.71 per lead ($2.62K cost).',
+    coverImage: {
+      id: 'img-cs6-01',
+      src: '/assets/portfolio/google-ads-roofing-391-leads-01.webp',
+      alt: 'Roofing Google Ads dashboard showing 391.33 conversions (391 leads), $6.71 cost per conversion, 8.31K clicks, and $2.62K cost',
+      caption:
+        'Roofing Google Ads campaign: 391 leads (391.33 conversions), $6.71 cost per lead, 8.31K clicks, and $2.62K ad cost.',
+    },
+    galleryImages: [],
+    challenges: [
+      'Managing competitive roofing Search clicks while filtering out DIY, material, and out-of-area traffic.',
+      'Measuring inbound roofing inquiries accurately across calls and quote forms.',
+    ],
+    strategy: [
+      'Targeted high-intent homeowner roofing repair and replacement searches.',
+      'Built negative keyword lists filtering non-service and DIY roofing queries.',
+      'Configured call and estimate form conversion tracking.',
+    ],
+    campaignStructure: [
+      'Dedicated Search ad groups aligned with core roofing services and local territories.',
+      'Call and location extensions supporting immediate homeowner contact.',
+    ],
+    trackingSetup: [
+      'Phone call and estimate form tracking implemented via Google Tag Manager and Google Ads.',
+    ],
+    results: {
+      highlight:
+        'Generated 391 qualified roofing leads at $6.71 cost per lead across 8.31K clicks ($2.62K spend).',
+      metrics: [
+        { label: 'Leads Generated', value: '391' },
+        { label: 'Cost / Lead', value: '$6.71' },
+        { label: 'Clicks', value: '8.31K' },
+        { label: 'Total Cost', value: '$2.62K' },
+      ],
+      summary:
+        'Focused roofing Search targeting, local boundaries, and clean lead measurement generated 391 leads at $6.71 cost per lead ($2.62K cost). Historical result; market competition and budgets vary.',
+    },
+    keyTakeaways: [
+      'Dedicated negative keyword filtering protects competitive roofing budgets from wasted clicks.',
+      'Location-restricted targeting keeps contractor leads inside serviceable areas.',
+    ],
+  },
+
   {
     id: 'cs-11',
     slug: '39-qualified-leads-google-ads-hvac',
-    title: '39 Qualified Leads — HVAC Lead Generation Campaign',
+    title: '39 Qualified Leads with Google Ads HVAC Campaign',
     primaryMetric: '39',
     metricLabel: 'Qualified HVAC Leads',
-    secondaryMetric: 'Google Ads',
-    secondaryMetricLabel: 'HVAC Search Campaign',
-    category: 'Google Ads',
+    secondaryMetric: '$12.36 CPL',
+    secondaryMetricLabel: '470 Clicks · $902 Cost',
+    portfolioCategory: 'Lead Generation — Google Ads',
+    category: 'Lead Generation',
+    platform: 'Google Ads',
+    campaignType: 'HVAC Google Ads Search Campaign',
     platforms: ['Google Ads', 'Google Search Ads', 'Google Tag Manager', 'GA4'],
-    clientIndustry: 'HVAC Service Company',
-    campaignObjective: 'Capture urgent local heating and cooling repair and installation searches from homeowners in the service territory.',
-    summary: 'A targeted Google Ads Search campaign for an HVAC business focusing on high-intent repair and installation keywords, strict location targeting, and call and form tracking—generating 39 qualified HVAC leads.',
-
+    clientIndustry: 'HVAC Services',
+    campaignObjective:
+      'Generate qualified local heating and cooling service inquiries from homeowners actively searching for HVAC assistance.',
+    summary:
+      'Google Ads HVAC lead generation campaign focused on repair and installation search intent, negative keyword filtering, local targeting, and inquiry tracking—delivering 39 form leads at $12.36 cost per lead across 470 clicks ($902 cost).',
     coverImage: {
-      id: 'img-cs11-cover',
-      src: CASE_STUDY_SHARED_IMAGE,
-      alt: 'Google Ads 39 qualified leads HVAC campaign',
-      caption: 'Google Ads HVAC campaign generating 39 qualified local service leads.',
-      isPlaceholder: false,
+      id: 'img-cs11-01',
+      src: '/assets/portfolio/google-ads-hvac-39-leads-01.webp',
+      alt: 'HVAC Google Ads dashboard reporting 39.00 lead form conversions, $12.36 cost per conversion, 470 clicks, and $902 cost',
+      caption:
+        'HVAC Google Ads results: 39 qualified leads, $12.36 cost per lead, 470 clicks, and $902 ad spend.',
     },
-
-    galleryImages: [
-      {
-        id: 'img-cs11-1',
-        src: CASE_STUDY_SHARED_IMAGE,
-        alt: 'HVAC search campaign keyword targeting',
-        caption: 'Focused ad groups for AC repair, furnace service, and system installation.',
-        isPlaceholder: false,
-      },
-    ],
-
+    galleryImages: [],
     challenges: [
-      'High cost per click in competitive local HVAC search markets.',
-      'Avoiding wasted clicks on HVAC parts, DIY troubleshooting, and out-of-area searches.',
-      'Ensuring phone calls and service request forms were tracked accurately.',
+      'Preventing spare-parts, troubleshooting manual, and DIY queries from consuming HVAC Search spend.',
+      'Ensuring local homeowner request forms and calls are tracked accurately.',
     ],
-
     strategy: [
-      'Built focused search ad groups around emergency AC/heating repair and system replacement keywords.',
-      'Implemented negative keyword lists to block parts, manuals, DIY, and job-seeker queries.',
-      'Targeted only the specific cities and zip codes served by the HVAC technicians.',
-      'Configured call click and form submission tracking via Google Tag Manager.',
+      'Focused Search targeting on high-intent HVAC repair and service queries.',
+      'Added negative keywords excluding parts, manuals, and non-buyer terms.',
+      'Restricted campaign reach to active local HVAC service zones.',
     ],
-
     campaignStructure: [
-      'Segmented Search ad groups for AC repair, heating service, and HVAC installation.',
-      'Call extensions and location assets enabled for fast mobile contact.',
-      'Negative keyword lists actively updated from search term reports.',
+      'Service-focused HVAC Search ad groups with local call assets.',
+      'Continuous search term optimization protecting lead quality.',
     ],
-
     trackingSetup: [
-      'Google Tag Manager and Google Ads conversion tracking configured for phone calls and quote forms.',
+      'Inbound service form and call conversion tracking verified via Google Tag Manager.',
     ],
-
     results: {
-      highlight: 'Generated 39 qualified HVAC service leads from high-intent local Google searches.',
+      highlight:
+        'Delivered 39 qualified HVAC leads at $12.36 cost per lead across 470 clicks ($902 total cost).',
       metrics: [
-        { label: 'Qualified Leads', value: '39' },
-        { label: 'Industry', value: 'HVAC Services' },
-        { label: 'Platform', value: 'Google Ads' },
+        { label: 'Leads Generated', value: '39' },
+        { label: 'Cost / Lead', value: '$12.36' },
+        { label: 'Clicks', value: '470' },
+        { label: 'Total Cost', value: '$902' },
       ],
-      summary: 'High-intent local keyword targeting, negative keyword filtering, and verified call and form tracking generated 39 qualified HVAC leads. Historical result; outcomes vary by season, market, and budget.',
+      summary:
+        'Focused HVAC intent targeting, negative keyword filtering, and verified inquiry tracking generated 39 leads at $12.36 cost per lead on $902 ad cost. Historical campaign outcome.',
     },
-
     keyTakeaways: [
-      'Excluding parts, manuals, and DIY queries is essential to protect HVAC advertising budgets.',
-      'Prominent call extensions help capture homeowners who need immediate heating or cooling service.',
+      'Filtering parts and DIY search terms quickly improves budget efficiency for HVAC campaigns.',
+      'Local ad assets help connect urgent homeowners directly with service teams.',
     ],
   },
 
-  // =====================================================
-  // PROJECT 12 — META ADS ECOMMERCE (22 PURCHASES)
-  // =====================================================
+  // =========================================================================
+  // LEAD GENERATION — META ADS (10–12)
+  // =========================================================================
   {
-    id: 'cs-12',
-    slug: '22-purchases-meta-ads-ecommerce',
-    title: '22 Purchases — eCommerce Advertising Campaign',
-    primaryMetric: '22',
-    metricLabel: 'Completed Store Purchases',
-    secondaryMetric: 'Meta Ads',
-    secondaryMetricLabel: 'eCommerce Campaign',
-    category: 'Meta Ads',
+    id: 'cs-3',
+    slug: '7150-qualified-leads-meta-ads-financial-services',
+    title: '7,150 Qualified Leads from Meta Ads for Finance',
+    primaryMetric: '7,150',
+    metricLabel: 'Qualified Finance Leads',
+    secondaryMetric: '$4.97 CPL',
+    secondaryMetricLabel: '$35,508.67 Ad Spend',
+    portfolioCategory: 'Lead Generation — Meta Ads',
+    category: 'Lead Generation',
+    platform: 'Meta Ads',
+    campaignType: 'Finance Meta Ads Lead Generation',
     platforms: ['Meta Ads', 'Facebook Ads', 'Instagram Ads', 'Meta Pixel & CAPI'],
-    clientIndustry: 'eCommerce Brand',
-    campaignObjective: 'Drive initial online store purchases and validate audience and creative angles on Facebook and Instagram.',
-    summary: 'A Meta Ads eCommerce campaign combining targeted product prospecting, website retargeting, and verified Meta Pixel & Conversions API purchase tracking—generating 22 completed store purchases.',
-
+    clientIndustry: 'Financial Services',
+    campaignObjective:
+      'Generate qualified financial services inquiries at scale across Facebook and Instagram using structured audience targeting and conversion tracking.',
+    summary:
+      'Meta Ads lead generation campaign for financial services utilizing targeted audiences, clear ad messaging, qualifying lead capture, and Pixel tracking—delivering 7,150 leads at $4.97 cost per lead ($35,508.67 spend, 264.4K reach, 617.9K impressions).',
     coverImage: {
-      id: 'img-cs12-cover',
-      src: CASE_STUDY_SHARED_IMAGE,
-      alt: 'Meta Ads 22 purchases eCommerce campaign',
-      caption: 'Meta Ads eCommerce campaign generating 22 completed store purchases.',
-      isPlaceholder: false,
+      id: 'img-cs3-01',
+      src: '/assets/portfolio/meta-ads-finance-7150-leads-01.webp',
+      alt: 'Meta Ads Manager campaign reporting 7,150 Meta leads at $4.97 cost per lead, $35,508.67 amount spent, 264,428 reach, and 617,979 impressions',
+      caption:
+        'Meta Ads Finance results: 7,150 leads at $4.97 cost per lead ($35,508.67 spend, 264,428 reach, 617,979 impressions).',
     },
-
-    galleryImages: [
-      {
-        id: 'img-cs12-1',
-        src: CASE_STUDY_SHARED_IMAGE,
-        alt: 'Meta Ads eCommerce prospecting and retargeting',
-        caption: 'Product-focused creative testing paired with Pixel and Conversions API purchase tracking.',
-        isPlaceholder: false,
-      },
-    ],
-
+    galleryImages: [],
     challenges: [
-      'Identifying responsive audience segments and product angles for an online store.',
-      'Re-engaging product page viewers and cart abandoners effectively.',
-      'Tracking checkout purchases accurately across mobile browsers.',
+      'Scaling lead generation volume in the financial services vertical while keeping cost per lead low.',
+      'Maintaining dependable conversion attribution across Facebook and Instagram lead journeys.',
     ],
-
     strategy: [
-      'Tested product imagery and benefit-driven ad copy across Facebook and Instagram placements.',
-      'Set up retargeting for website visitors, product viewers, and cart abandoners.',
-      'Configured Meta Pixel and Conversions API (CAPI) via Google Tag Manager for accurate purchase event deduplication.',
-      'Optimized campaign delivery around verified purchase events.',
+      'Targeted relevant audience segments with clear, policy-aligned financial service messaging.',
+      'Structured lead capture to qualify prospect intent before follow-up.',
+      'Used Meta conversion tracking signals to guide ongoing campaign optimization.',
     ],
-
     campaignStructure: [
-      'Prospecting ad sets testing interest and lookalike audience segments.',
-      'Dynamic retargeting for recent product viewers and add-to-cart visitors.',
-      'Purchase conversion optimization backed by Pixel and CAPI signals.',
+      'Multi-audience Meta lead generation campaigns across Facebook and Instagram placements.',
+      'Structured creative testing and lead form optimization.',
     ],
-
     trackingSetup: [
-      'Meta Pixel and Conversions API configured via Google Tag Manager to track view_content, add_to_cart, and purchase events.',
+      'Meta Pixel and Conversions API configured for dependable lead event tracking.',
     ],
-
     results: {
-      highlight: 'Generated 22 completed store purchases through targeted Meta Ads campaigns.',
+      highlight:
+        'Generated 7,150 qualified Meta leads at $4.97 cost per lead ($35,508.67 spend, 264,428 reach, 617,979 impressions).',
       metrics: [
-        { label: 'Completed Purchases', value: '22' },
-        { label: 'Campaign Type', value: 'eCommerce Ads' },
-        { label: 'Platform', value: 'Meta Ads' },
+        { label: 'Total Leads', value: '7,150' },
+        { label: 'Cost / Lead', value: '$4.97' },
+        { label: 'Amount Spent', value: '$35,508.67' },
+        { label: 'Reach / Impressions', value: '264.4K / 618K' },
       ],
-      summary: 'Structured creative testing, cart retargeting, and verified Meta Pixel & CAPI tracking delivered 22 eCommerce purchases. Historical campaign result; not a guarantee of future performance.',
+      summary:
+        'Structured audience targeting, compliant creative messaging, and verified Meta conversion tracking produced 7,150 leads at $4.97 cost per lead across $35,508.67 spend. Historical campaign outcome.',
     },
-
     keyTakeaways: [
-      'Accurate purchase tracking with Meta Pixel and Conversions API helps campaigns optimize for real buyers rather than link clicks.',
-      'Pairing prospecting ads with cart and product-viewer retargeting captures shoppers who need multiple touchpoints before buying.',
+      'Clear, policy-compliant messaging builds prospect trust in financial lead generation.',
+      'Consistent lead event feedback helps Meta optimization scale efficiently.',
+    ],
+  },
+
+  {
+    id: 'cs-9',
+    slug: '280-qualified-leads-meta-ads-construction',
+    title: '280 Qualified Leads with Meta Ads Construction Company',
+    primaryMetric: '280',
+    metricLabel: 'Qualified Construction Leads',
+    secondaryMetric: '$44.28 CPL',
+    secondaryMetricLabel: '$12.4K Total Ad Spend',
+    portfolioCategory: 'Lead Generation — Meta Ads',
+    category: 'Lead Generation',
+    platform: 'Meta Ads',
+    campaignType: 'Construction Meta Ads Lead Generation',
+    platforms: ['Meta Ads', 'Facebook Ads', 'Instagram Ads', 'Meta Pixel'],
+    clientIndustry: 'Construction Company',
+    campaignObjective:
+      'Generate qualified construction and ADU project inquiries from property owners inside the company’s local service area via Meta Ads.',
+    summary:
+      'Meta Ads lead generation campaign for a construction company combining local audience targeting, ADU/construction project messaging, and lead capture—producing 280 leads at $44.28 cost per lead ($12,398.91 spend, 150.7K reach, 444.9K impressions).',
+    coverImage: {
+      id: 'img-cs9-01',
+      src: '/assets/portfolio/meta-ads-construction-280-leads-01.webp',
+      alt: 'Meta Ads Manager campaign for construction company reporting 280 total leads at $44.28 cost per lead, $12,398.91 ($12.4K) spend, 150,796 reach, and 444,970 impressions',
+      caption:
+        'Meta Ads Construction results: 280 leads at $44.28 cost per lead ($12.4K total spend, 150,796 reach, 444,970 impressions).',
+    },
+    galleryImages: [],
+    challenges: [
+      'Reaching relevant property owners within the construction company’s operating region.',
+      'Filtering casual social engagement from serious ADU and remodeling inquiries.',
+    ],
+    strategy: [
+      'Applied regional audience targeting aligned with the contractor’s active territory.',
+      'Featured clear service positioning and direct project inquiry calls to action.',
+      'Configured Meta lead tracking to measure completed submissions accurately.',
+    ],
+    campaignStructure: [
+      'Localized Meta Ads campaigns across lead form and website conversion objectives.',
+      'Qualifying lead capture flow built around prospect contact and scope details.',
+    ],
+    trackingSetup: [
+      'Meta Pixel website and native lead conversion tracking verified via Google Tag Manager.',
+    ],
+    results: {
+      highlight:
+        'Generated 280 qualified construction leads at $44.28 cost per lead ($12,398.91 spend, 150,796 reach, 444,970 impressions).',
+      metrics: [
+        { label: 'Total Leads', value: '280' },
+        { label: 'Cost / Lead', value: '$44.28' },
+        { label: 'Total Ad Spend', value: '$12.4K' },
+        { label: 'Reach / Impressions', value: '150.8K / 445K' },
+      ],
+      summary:
+        'Localized Meta audience targeting, project-focused messaging, and lead form optimization generated 280 leads at $44.28 per lead ($12,398.91 total spend). Historical campaign outcome.',
+    },
+    keyTakeaways: [
+      'Combining geographic boundaries with clear project scope messaging improves construction lead relevance.',
+      'Structured lead capture supports smoother sales follow-up for contracting teams.',
+    ],
+  },
+
+  {
+    id: 'cs-10',
+    slug: '145-qualified-leads-meta-ads-healthcare',
+    title: '145 Qualified Leads with Meta Ads For Healthcare',
+    primaryMetric: '145',
+    metricLabel: 'Qualified Healthcare Leads',
+    secondaryMetric: '$106.97 CPL',
+    secondaryMetricLabel: '$15,511 Ad Budget',
+    portfolioCategory: 'Lead Generation — Meta Ads',
+    category: 'Lead Generation',
+    platform: 'Meta Ads',
+    campaignType: 'Healthcare Meta Ads Lead Generation',
+    platforms: ['Meta Ads', 'Facebook Ads', 'Instagram Ads', 'Meta Pixel & CAPI'],
+    clientIndustry: 'Healthcare',
+    campaignObjective:
+      'Attract qualified local patient consultation inquiries (including dental implants) using compliant Facebook and Instagram advertising.',
+    summary:
+      'Healthcare Meta Ads lead generation campaign utilizing local radius targeting, compliant messaging, streamlined inquiry capture, and Pixel tracking—delivering 145 patient leads at $106.97 cost per lead ($15,511.11 ad spend).',
+    coverImage: {
+      id: 'img-cs10-01',
+      src: '/assets/portfolio/meta-ads-healthcare-145-leads-01.webp',
+      alt: 'Meta Ads healthcare performance overview showing 145 Dental Implants leads, $106.97 cost per lead, and $15,511.11 total amount spent',
+      caption:
+        'Meta Ads Healthcare results: 145 patient consultation leads, $106.97 cost per lead, and $15,511.11 ad budget.',
+    },
+    galleryImages: [],
+    challenges: [
+      'Maintaining strict ad policy compliance and respectful patient communication across healthcare creatives.',
+      'Reaching prospective local patients within practical commuting distance.',
+    ],
+    strategy: [
+      'Crafted clear, reassuring healthcare ad messaging compliant with Meta policies.',
+      'Applied local radius targeting around the healthcare service location.',
+      'Streamlined mobile-friendly inquiry submission and conversion tracking.',
+    ],
+    campaignStructure: [
+      'Local Meta lead generation campaigns focused on patient consultation inquiries.',
+      'Structured static creative testing and retargeting coverage.',
+    ],
+    trackingSetup: [
+      'Meta Pixel and Conversions API configured for dependable healthcare lead tracking.',
+    ],
+    results: {
+      highlight:
+        'Generated 145 qualified healthcare leads at $106.97 cost per lead ($15,511.11 amount spent).',
+      metrics: [
+        { label: 'Total Leads', value: '145' },
+        { label: 'Cost / Lead', value: '$106.97' },
+        { label: 'Amount Spent', value: '$15,511.11' },
+      ],
+      summary:
+        'Policy-compliant healthcare messaging, local targeting, and streamlined inquiry tracking generated 145 patient leads at $106.97 cost per lead ($15,511.11 spend). Historical outcome.',
+    },
+    keyTakeaways: [
+      'Clear, informative messaging builds confidence for prospective healthcare inquiries.',
+      'Tight local geographic targeting keeps patient lead volume practical and relevant.',
     ],
   },
 ];

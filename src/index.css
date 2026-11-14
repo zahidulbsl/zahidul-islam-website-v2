@@ -440,15 +440,15 @@
   }
 }
 
-/* Mobile — Faster, smooth, consistent 18s cycle */
+/* Mobile — Comfortable, smooth 32s cycle (~1.8x slower than 18s) */
 
 @media (max-width: 640px) {
   .animate-logos-ltr {
-    animation-duration: 18s;
+    animation-duration: 32s;
   }
 
   .animate-logos-rtl {
-    animation-duration: 18s;
+    animation-duration: 32s;
   }
 }
 

@@ -43,7 +43,7 @@ const matchesCategory = (project: CaseStudy, category: Category): boolean => {
 
   if (category === 'Google Ads') {
     return (
-      project.category === 'Google Ads' ||
+      project.platform === 'Google Ads' ||
       project.platforms.some((platform) =>
         platform.toLowerCase().includes('google')
       )
@@ -52,7 +52,7 @@ const matchesCategory = (project: CaseStudy, category: Category): boolean => {
 
   if (category === 'Meta Ads') {
     return (
-      project.category === 'Meta Ads' ||
+      project.platform === 'Meta Ads' ||
       project.platforms.some((platform) =>
         platform.toLowerCase().includes('meta')
       )
@@ -189,10 +189,13 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
       >
         <div className="flex flex-col flex-1">
           {/* 1. CAMPAIGN IMAGE (Consistent 16:10 Aspect Ratio) */}
-          <div className="relative aspect-[16/10] w-full rounded-[16px] sm:rounded-[18px] overflow-hidden bg-[#090D16] border border-zinc-900/10 mb-3.5 sm:mb-5 shrink-0">
+          <div className="relative aspect-[16/10] w-full rounded-[16px] sm:rounded-[18px] overflow-hidden bg-[#0B1644] bg-gradient-to-r from-[#0D2378] via-[#0B1644] to-[#1A1443] border border-zinc-900/10 mb-3.5 sm:mb-5 shrink-0">
             <img
-              src={project.coverImage.src}
-              alt={project.coverImage.alt}
+              src={
+                project.coverImage?.src ??
+                buildFallbackSvg(project.title, project.primaryMetric)
+              }
+              alt={project.coverImage?.alt ?? project.title}
               width={640}
               height={400}
               loading="lazy"
@@ -201,7 +204,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
                 target.onerror = null;
                 target.src = buildFallbackSvg(project.title, project.primaryMetric);
               }}
-              className="w-full h-full object-cover object-[50%_60%] transition-transform duration-500 ease-out group-hover:scale-[1.035]"
+              className="block w-full h-full object-contain object-center"
             />
 
             {/* 2. CASE INDEX BADGE */}
@@ -370,10 +373,16 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 lg:items-stretch">
               {/* LEFT COLUMN: UNOBSTRUCTED CAMPAIGN PROOF IMAGE (6 COLS) */}
               <div className="lg:col-span-6 flex">
-                <div className="relative w-full aspect-[4/3] lg:h-full rounded-[18px] sm:rounded-[22px] overflow-hidden bg-[#07090F] border border-white/12 shadow-[0_18px_45px_-15px_rgba(0,0,0,0.65)]">
+                <div className="relative w-full aspect-[4/3] lg:h-full rounded-[18px] sm:rounded-[22px] overflow-hidden bg-[#0B1644] bg-gradient-to-r from-[#0D2378] via-[#0B1644] to-[#1A1443] border border-white/12 shadow-[0_18px_45px_-15px_rgba(0,0,0,0.65)]">
                   <img
-                    src={featuredProject.coverImage.src}
-                    alt={featuredProject.coverImage.alt}
+                    src={
+                      featuredProject.coverImage?.src ??
+                      buildFallbackSvg(
+                        featuredProject.title,
+                        featuredProject.primaryMetric
+                      )
+                    }
+                    alt={featuredProject.coverImage?.alt ?? featuredProject.title}
                     width={960}
                     height={600}
                     loading="eager"
@@ -385,7 +394,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({
                         featuredProject.primaryMetric
                       );
                     }}
-                    className="w-full h-full object-cover object-[50%_54%] transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                    className="block w-full h-full object-contain object-center"
                   />
                 </div>
               </div>

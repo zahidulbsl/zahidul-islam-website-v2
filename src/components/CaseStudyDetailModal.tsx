@@ -59,12 +59,14 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
     null
   );
   const [activeVisualSlide, setActiveVisualSlide] = useState(0);
+  const [showAllVisuals, setShowAllVisuals] = useState(false);
   const modalBodyRef = useRef<HTMLDivElement>(null);
   const visualSliderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setLightboxImage(null);
     setActiveVisualSlide(0);
+    setShowAllVisuals(false);
     if (modalBodyRef.current) {
       modalBodyRef.current.scrollTop = 0;
     }
@@ -78,9 +80,20 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
     : -1;
   const totalCount = CASE_STUDIES.length;
 
-  const allImages = caseStudy
-    ? [caseStudy.coverImage, ...caseStudy.galleryImages]
+  const rawImages: CaseStudyImage[] = caseStudy
+    ? [caseStudy.coverImage, ...caseStudy.galleryImages].filter(
+        (img): img is CaseStudyImage => Boolean(img)
+      )
     : [];
+
+  const allImages: CaseStudyImage[] = rawImages.filter(
+    (img, idx, arr) => arr.findIndex((other) => other.src === img.src) === idx
+  );
+
+  const visibleDesktopImages =
+    allImages.length > 4 && !showAllVisuals
+      ? allImages.slice(0, 4)
+      : allImages;
 
   const handleNextProject = () => {
     if (currentIndex < 0 || !onSelectCaseStudy || totalCount === 0) return;
@@ -97,7 +110,9 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
   const handleVisualScroll = () => {
     if (!visualSliderRef.current) return;
     const container = visualSliderRef.current;
-    const slides = container.querySelectorAll<HTMLElement>('[data-visual-slide="true"]');
+    const slides = container.querySelectorAll<HTMLElement>(
+      '[data-visual-slide="true"]'
+    );
     if (!slides.length) return;
     const containerLeft = container.getBoundingClientRect().left;
     let closestIndex = 0;
@@ -115,7 +130,9 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
   const scrollToVisualSlide = (index: number) => {
     if (!visualSliderRef.current) return;
     const container = visualSliderRef.current;
-    const slides = container.querySelectorAll<HTMLElement>('[data-visual-slide="true"]');
+    const slides = container.querySelectorAll<HTMLElement>(
+      '[data-visual-slide="true"]'
+    );
     const targetSlide = slides[index];
     if (targetSlide) {
       const containerRect = container.getBoundingClientRect();
@@ -196,8 +213,8 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
               <span className="px-2.5 sm:px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/30 font-mono text-[11px] sm:text-xs font-bold text-emerald-300 shrink-0 tabular-nums">
                 Case {formattedNumber} / {formattedTotal}
               </span>
-              <span className="hidden min-[375px]:inline-block px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/10 font-mono text-[10.5px] sm:text-[11px] text-zinc-200 truncate max-w-[130px] sm:max-w-none">
-                {caseStudy.category}
+              <span className="hidden min-[375px]:inline-block px-2.5 py-1 rounded-full bg-white/[0.06] border border-white/10 font-mono text-[10.5px] sm:text-[11px] text-zinc-200 truncate max-w-[165px] sm:max-w-none">
+                {caseStudy.portfolioCategory}
               </span>
               <span className="hidden md:inline font-serif italic text-sm text-zinc-400 truncate">
                 {caseStudy.clientIndustry}
@@ -244,7 +261,7 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
           </div>
 
           {/* =================================================================
-              2. INDEPENDENTLY SCROLLABLE BODY — 7-SECTION CASE STUDY FLOW
+              2. INDEPENDENTLY SCROLLABLE BODY — ORIGINAL 7-SECTION CASE STUDY FLOW
           ================================================================= */}
           <div
             ref={modalBodyRef}
@@ -268,7 +285,9 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
                     <span aria-hidden="true" className="text-zinc-600">
                       ·
                     </span>
-                    <span className="text-zinc-300">{caseStudy.category}</span>
+                    <span className="text-zinc-300">
+                      {caseStudy.portfolioCategory}
+                    </span>
                     <span aria-hidden="true" className="text-zinc-600">
                       ·
                     </span>
@@ -389,7 +408,8 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
                           Campaign Focus
                         </span>
                         <span className="font-display font-bold text-[#09090B] block truncate">
-                          {caseStudy.secondaryMetricLabel || caseStudy.category}
+                          {caseStudy.secondaryMetricLabel ||
+                            caseStudy.portfolioCategory}
                         </span>
                       </div>
                     </div>
@@ -610,9 +630,9 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
                         aria-label={`Inspect visual: ${img.caption}`}
                         className={`${
                           allImages.length > 1 ? 'w-[86%]' : 'w-full'
-                        } shrink-0 snap-start rounded-[18px] overflow-hidden bg-[#090D16] border border-zinc-200 cursor-pointer shadow-sm`}
+                        } shrink-0 snap-start rounded-[18px] overflow-hidden bg-[#0B1644] border border-zinc-200 cursor-pointer shadow-sm`}
                       >
-                        <div className="aspect-[4/3] w-full overflow-hidden">
+                        <div className="aspect-square w-full overflow-hidden bg-[#0B1644] p-1.5">
                           <img
                             src={img.src}
                             alt={img.alt}
@@ -625,7 +645,7 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
                                 caseStudy.primaryMetric
                               );
                             }}
-                            className="w-full h-full object-cover object-[50%_54%]"
+                            className="w-full h-full object-contain"
                           />
                         </div>
                         <div className="px-3.5 py-3 bg-[#FAFAFA] border-t border-zinc-200/80 flex items-center justify-between gap-2.5">
@@ -679,52 +699,65 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
                 </div>
 
                 {/* Tablet & Desktop (>= 768px): Unobstructed Two-Column Gallery */}
-                <div
-                  className={`hidden md:grid gap-5 ${
-                    allImages.length === 1 ? 'md:grid-cols-1' : 'md:grid-cols-2'
-                  }`}
-                >
-                  {allImages.map((img) => (
-                    <div
-                      key={img.id}
-                      onClick={() => setLightboxImage(img)}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          e.preventDefault();
-                          setLightboxImage(img);
-                        }
-                      }}
-                      className="group relative rounded-[20px] overflow-hidden bg-[#090D16] border border-zinc-200 cursor-pointer shadow-sm"
-                    >
-                      <div className="aspect-[4/3] w-full overflow-hidden">
-                        <img
-                          src={img.src}
-                          alt={img.alt}
-                          loading="lazy"
-                          onError={(e) => {
-                            const target = e.currentTarget;
-                            target.onerror = null;
-                            target.src = buildFallbackSvg(
-                              caseStudy.title,
-                              caseStudy.primaryMetric
-                            );
-                          }}
-                          className="w-full h-full object-cover object-[50%_54%] transition-transform duration-500 group-hover:scale-[1.03]"
-                        />
+                <div className="hidden md:block space-y-4">
+                  <div className="grid md:grid-cols-2 gap-5">
+                    {visibleDesktopImages.map((img) => (
+                      <div
+                        key={img.id}
+                        onClick={() => setLightboxImage(img)}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            setLightboxImage(img);
+                          }
+                        }}
+                        aria-label={`Expand screenshot: ${img.caption}`}
+                        className="group relative rounded-[20px] overflow-hidden bg-[#0B1644] border border-zinc-200 cursor-pointer shadow-sm"
+                      >
+                        <div className="aspect-square w-full overflow-hidden bg-[#0B1644] p-2">
+                          <img
+                            src={img.src}
+                            alt={img.alt}
+                            loading="lazy"
+                            onError={(e) => {
+                              const target = e.currentTarget;
+                              target.onerror = null;
+                              target.src = buildFallbackSvg(
+                                caseStudy.title,
+                                caseStudy.primaryMetric
+                              );
+                            }}
+                            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+                          />
+                        </div>
+                        <div className="px-4 py-3 bg-[#FAFAFA] border-t border-zinc-200/80 flex items-center justify-between gap-2">
+                          <span className="text-xs text-zinc-600 truncate">
+                            {img.caption}
+                          </span>
+                          <span className="inline-flex items-center gap-1 text-[11px] font-mono font-semibold text-[#09090B] shrink-0">
+                            <Maximize2 className="w-3.5 h-3.5" />
+                            <span>Expand</span>
+                          </span>
+                        </div>
                       </div>
-                      <div className="px-4 py-3 bg-[#FAFAFA] border-t border-zinc-200/80 flex items-center justify-between gap-2">
-                        <span className="text-xs text-zinc-600 truncate">
-                          {img.caption}
-                        </span>
-                        <span className="inline-flex items-center gap-1 text-[11px] font-mono font-semibold text-[#09090B] shrink-0">
-                          <Maximize2 className="w-3.5 h-3.5" />
-                          <span>Expand</span>
-                        </span>
-                      </div>
+                    ))}
+                  </div>
+
+                  {allImages.length > 4 && (
+                    <div className="flex justify-center pt-1">
+                      <button
+                        type="button"
+                        onClick={() => setShowAllVisuals((prev) => !prev)}
+                        className="px-4 py-2 rounded-xl bg-[#FAFAFA] hover:bg-zinc-100 border border-zinc-300 text-xs font-display font-semibold text-[#09090B] transition-colors cursor-pointer"
+                      >
+                        {showAllVisuals
+                          ? 'Show Fewer Screenshots'
+                          : `Show All ${allImages.length} Screenshots (+${allImages.length - 4} more)`}
+                      </button>
                     </div>
-                  ))}
+                  )}
                 </div>
               </section>
             )}
