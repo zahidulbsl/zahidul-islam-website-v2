@@ -452,14 +452,6 @@
   }
 }
 
-/* Pause only on hover-capable pointer devices so touch taps never freeze mobile */
-
-@media (hover: hover) and (pointer: fine) {
-  .logo-marquee-track:hover {
-    animation-play-state: paused;
-  }
-}
-
 /* Logos Marquee Accessibility */
 
 @media (prefers-reduced-motion: reduce) {

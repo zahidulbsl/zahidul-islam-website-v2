@@ -55,7 +55,7 @@ const MarqueeRow: React.FC<MarqueeRowProps> = ({
       aria-label={rowLabel}
       style={EDGE_FADE_MASK_STYLE}
     >
-      <div className={`logo-marquee-track flex w-max ${animationClass}`}>
+      <div className={`flex w-max ${animationClass}`}>
         {renderGroup(false)}
         {renderGroup(true)}
       </div>
