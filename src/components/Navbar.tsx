@@ -29,7 +29,7 @@ interface NavbarProps {
 }
 
 const dockLinksLeft = [
-  { label: 'Results', href: CASE_STUDIES_PATH },
+  { label: 'Results', href: '#case-studies' },
   { label: 'Services', href: '#services' },
 ];
 
@@ -98,10 +98,13 @@ export const Navbar: React.FC<NavbarProps> = ({
   const navTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isProgrammaticScrollRef = useRef(false);
 
+  const showFloatingDock = currentRoute !== 'case-studies';
+
   useEffect(() => {
     setActiveSection(
       currentRoute === 'case-studies' ? CASE_STUDIES_PATH : '#home'
     );
+    setMoreOpen(false);
   }, [currentRoute]);
 
   useEffect(() => {
@@ -136,8 +139,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         if (!element) continue;
         const rect = element.getBoundingClientRect();
         if (rect.top <= activationPoint && rect.bottom > navOffset) {
-          currentSection =
-            href === '#case-studies' ? CASE_STUDIES_PATH : href;
+          currentSection = href;
         }
       }
 
@@ -183,7 +185,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
     e.preventDefault();
     isProgrammaticScrollRef.current = true;
-    setActiveSection(href === '/' ? '#home' : href);
+    setActiveSection(
+      href === '/' ? '#home' : href.startsWith('/#') ? href.slice(1) : href
+    );
     setMoreOpen(false);
 
     if (onNavigate) {
@@ -286,7 +290,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* ===================================================================
           3. SIGNATURE DESIGN MONKS FLOATING BOTTOM GLASS DOCK
+             Excluded on the dedicated /case-studies/ page so portfolio cards stay unobstructed
       =================================================================== */}
+      {showFloatingDock && (
       <div
         ref={moreMenuRef}
         className="fixed inset-x-0 bottom-3 sm:bottom-5 z-50 flex justify-center px-3 pointer-events-none"
@@ -388,11 +394,15 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Left Links: Results, Services */}
             {dockLinksLeft.map((link) => {
               const isActive = activeSection === link.href;
+              const resolvedHref =
+                link.href === '#case-studies' && currentRoute !== 'home'
+                  ? '/#case-studies'
+                  : link.href;
               return (
                 <a
                   key={link.href}
-                  href={link.href}
-                  onClick={(e) => handleNavigate(e, link.href)}
+                  href={resolvedHref}
+                  onClick={(e) => handleNavigate(e, resolvedHref)}
                   className={`px-1.5 min-[375px]:px-2.5 sm:px-3.5 py-2 rounded-xl text-[11px] min-[375px]:text-xs sm:text-[13px] font-display font-medium transition-colors whitespace-nowrap ${
                     isActive
                       ? 'text-white bg-white/[0.08]'
@@ -455,6 +465,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
         </div>
       </div>
+      )}
     </>
   );
 };

@@ -19,7 +19,7 @@ import { ContactSection } from './components/ContactSection';
 import { ContactAnnouncementBanner } from './components/ContactAnnouncementBanner';
 import { Footer } from './components/Footer';
 import { CASE_STUDIES, CaseStudy } from './data/caseStudies';
-import { scrollToSection } from './utils/scroll';
+import { scrollToSection, scrollToSectionWhenReady } from './utils/scroll';
 import {
   APP_NAVIGATE_EVENT,
   CASE_STUDIES_PATH,
@@ -135,18 +135,15 @@ export default function App({ initialPath }: AppProps = {}) {
     if (pendingHashRef.current) {
       const targetHash = pendingHashRef.current;
       pendingHashRef.current = null;
-      requestAnimationFrame(() => {
-        scrollToSection(targetHash);
-      });
-      return;
+      scrollToTopImmediate();
+      return scrollToSectionWhenReady(targetHash);
     }
 
     if (routeChanged) {
       if (window.location.hash && window.location.hash !== '#home') {
         const hash = window.location.hash;
-        requestAnimationFrame(() => {
-          scrollToSection(hash);
-        });
+        scrollToTopImmediate();
+        return scrollToSectionWhenReady(hash);
       } else {
         scrollToTopImmediate();
       }

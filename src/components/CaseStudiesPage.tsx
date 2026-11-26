@@ -7,6 +7,7 @@ import {
   ChevronUp,
   Home,
   Maximize2,
+  ShieldCheck,
   X,
 } from 'lucide-react';
 import {
@@ -309,8 +310,25 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
             }}
             className="max-w-3xl mx-auto text-center flex flex-col items-center"
           >
-            <span className="dm-pill-dark mb-4 font-mono text-[11px] font-semibold uppercase tracking-[0.14em]">
-              REAL-WORLD CAMPAIGN RESULTS
+            <span
+              data-testid="portfolio-credibility-badge"
+              className="dm-pill-dark mb-4 px-3.5 py-1.5 text-[11px] min-[390px]:text-[11.5px] sm:text-xs font-medium tracking-normal text-zinc-200 border-lime-400/30 bg-lime-400/[0.07]"
+            >
+              <ShieldCheck
+                aria-hidden="true"
+                className="w-3.5 h-3.5 text-lime-400 shrink-0"
+              />
+              <span>
+                <strong className="font-semibold text-white">
+                  Zahidul Islam
+                </strong>
+                <span aria-hidden="true" className="mx-1.5 text-lime-400/75">
+                  ·
+                </span>
+                <span className="text-zinc-300">
+                  Top Rated on Fiverr &amp; Upwork
+                </span>
+              </span>
             </span>
 
             <h1

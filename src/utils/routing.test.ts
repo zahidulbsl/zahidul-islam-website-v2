@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { normalizeRoute, getRoutePath } from './routing';
 import { getPageSeoConfig } from './seo';
+import { getScrollBehavior } from './scroll';
 
 test('normalizeRoute resolves home and case-studies paths reliably', () => {
   assert.equal(normalizeRoute('/'), 'home');
@@ -17,6 +18,11 @@ test('normalizeRoute resolves home and case-studies paths reliably', () => {
 test('getRoutePath returns canonical paths', () => {
   assert.equal(getRoutePath('home'), '/');
   assert.equal(getRoutePath('case-studies'), '/case-studies/');
+});
+
+test('getScrollBehavior uses instant scroll when prefers-reduced-motion is enabled', () => {
+  assert.equal(getScrollBehavior(true), 'auto');
+  assert.equal(getScrollBehavior(false), 'smooth');
 });
 
 test('getPageSeoConfig returns dedicated metadata for /case-studies/ without altering home', () => {
