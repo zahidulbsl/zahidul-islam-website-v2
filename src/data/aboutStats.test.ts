@@ -73,3 +73,15 @@ test('Lower section preserves all three expertise cards verbatim', () => {
     ]
   );
 });
+
+test('All statistics and expertise cards map to their expected subtle Lucide icons', () => {
+  assert.deepEqual(
+    ABOUT_STATISTICS.map((s) => s.iconName),
+    ['package-check', 'star', 'award', 'target', 'megaphone', 'activity']
+  );
+
+  assert.deepEqual(
+    ABOUT_EXPERTISE_CARDS.map((c) => c.iconName),
+    ['target', 'megaphone', 'chart-no-axes-combined']
+  );
+});

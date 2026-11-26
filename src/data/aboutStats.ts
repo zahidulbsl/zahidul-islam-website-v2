@@ -2,10 +2,24 @@ import { OFFICIAL_CREDENTIALS } from './credentials';
 
 export type StatGroupId = 'credibility' | 'expertise';
 
+export type StatIconName =
+  | 'package-check'
+  | 'star'
+  | 'award'
+  | 'target'
+  | 'megaphone'
+  | 'activity';
+
+export type ExpertiseIconName =
+  | 'target'
+  | 'megaphone'
+  | 'chart-no-axes-combined';
+
 export interface AboutStatistic {
   id: string;
   group: StatGroupId;
   groupLabel: string;
+  iconName: StatIconName;
   label: string;
   prefix: string;
   value: number;
@@ -15,6 +29,7 @@ export interface AboutStatistic {
 
 export interface AboutExpertiseCard {
   index: string;
+  iconName: ExpertiseIconName;
   title: string;
   description: string;
   keywords: readonly string[];
@@ -28,6 +43,7 @@ export const CREDIBILITY_STATISTICS: readonly AboutStatistic[] = [
     id: 'orders-completed',
     group: 'credibility',
     groupLabel: 'Professional Credibility',
+    iconName: 'package-check',
     label: 'Orders Completed',
     prefix: '',
     value: OFFICIAL_CREDENTIALS.completedOrdersValue,
@@ -38,6 +54,7 @@ export const CREDIBILITY_STATISTICS: readonly AboutStatistic[] = [
     id: 'fiverr-reviews',
     group: 'credibility',
     groupLabel: 'Professional Credibility',
+    iconName: 'star',
     label: '5-Star Reviews',
     prefix: '',
     value: OFFICIAL_CREDENTIALS.fiverrReviewsValue,
@@ -48,6 +65,7 @@ export const CREDIBILITY_STATISTICS: readonly AboutStatistic[] = [
     id: 'recognition',
     group: 'credibility',
     groupLabel: 'Professional Credibility',
+    iconName: 'award',
     label: 'Job Success Score',
     prefix: '',
     value: OFFICIAL_CREDENTIALS.upworkJssValue,
@@ -64,6 +82,7 @@ export const EXPERTISE_STATISTICS: readonly AboutStatistic[] = [
     id: 'google-ads-spend',
     group: 'expertise',
     groupLabel: 'Advertising & Tracking Expertise',
+    iconName: 'target',
     label: 'Google Ads Spend',
     prefix: '$',
     value: 10,
@@ -74,6 +93,7 @@ export const EXPERTISE_STATISTICS: readonly AboutStatistic[] = [
     id: 'meta-ads-spend',
     group: 'expertise',
     groupLabel: 'Advertising & Tracking Expertise',
+    iconName: 'megaphone',
     label: 'Meta Ads Spend',
     prefix: '$',
     value: 12,
@@ -84,6 +104,7 @@ export const EXPERTISE_STATISTICS: readonly AboutStatistic[] = [
     id: 'tracking-implementations',
     group: 'expertise',
     groupLabel: 'Advertising & Tracking Expertise',
+    iconName: 'activity',
     label: 'Tracking Implementations',
     prefix: '',
     value: 300,
@@ -106,6 +127,7 @@ export const ABOUT_STATISTICS: readonly AboutStatistic[] = [
 export const ABOUT_EXPERTISE_CARDS: readonly AboutExpertiseCard[] = [
   {
     index: '01',
+    iconName: 'target',
     title: 'Google Ads & Search Growth',
     description:
       'Putting your business in front of customers actively searching to buy or book—filtering out irrelevant clicks and directing budget toward phone calls, forms, and sales.',
@@ -113,6 +135,7 @@ export const ABOUT_EXPERTISE_CARDS: readonly AboutExpertiseCard[] = [
   },
   {
     index: '02',
+    iconName: 'megaphone',
     title: 'Meta Ads & Customer Acquisition',
     description:
       'Turning Facebook and Instagram reach into qualified inquiries and online store orders through structured audience targeting, ad testing, and retargeting.',
@@ -124,6 +147,7 @@ export const ABOUT_EXPERTISE_CARDS: readonly AboutExpertiseCard[] = [
   },
   {
     index: '03',
+    iconName: 'chart-no-axes-combined',
     title: 'Analytics & Conversion Tracking',
     description:
       'Giving you and your ad accounts dependable data—tracking phone calls, lead forms, and purchases cleanly across GA4, Google Tag Manager, and Meta CAPI.',

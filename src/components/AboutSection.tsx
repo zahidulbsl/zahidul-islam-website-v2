@@ -1,14 +1,42 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { trackCtaClick } from '../utils/tracking';
 import { motion, useReducedMotion } from 'motion/react';
-import { ArrowUpRight, ArrowRight } from 'lucide-react';
+import {
+  Activity,
+  ArrowRight,
+  ArrowUpRight,
+  Award,
+  ChartNoAxesCombined,
+  Megaphone,
+  PackageCheck,
+  Star,
+  Target,
+  type LucideIcon,
+} from 'lucide-react';
 import { NumberTicker } from './ui/NumberTicker';
 import { scrollToSection } from '../utils/scroll';
 import { OFFICIAL_CREDENTIALS } from '../data/credentials';
 import {
   ABOUT_STATISTICS,
   ABOUT_EXPERTISE_CARDS,
+  type StatIconName,
+  type ExpertiseIconName,
 } from '../data/aboutStats';
+
+const STAT_ICON_MAP: Record<StatIconName, LucideIcon> = {
+  'package-check': PackageCheck,
+  star: Star,
+  award: Award,
+  target: Target,
+  megaphone: Megaphone,
+  activity: Activity,
+};
+
+const EXPERTISE_ICON_MAP: Record<ExpertiseIconName, LucideIcon> = {
+  target: Target,
+  megaphone: Megaphone,
+  'chart-no-axes-combined': ChartNoAxesCombined,
+};
 
 interface AboutSectionProps {
   onOpenBooking: () => void;
@@ -270,34 +298,48 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
             aria-label="Key performance statistics"
             className="lg:col-span-5 min-w-0 grid grid-cols-3 md:grid-cols-2 auto-rows-fr gap-2 sm:gap-3 md:gap-4 h-full"
           >
-            {ABOUT_STATISTICS.map((stat) => (
-              <div
-                key={stat.id}
-                data-stat-card="true"
-                data-stat-id={stat.id}
-                data-stat-group={stat.group}
-                className="group h-full min-w-0 rounded-[16px] sm:rounded-[20px] md:rounded-[22px] bg-white hover:bg-[#FAFAFA] border border-zinc-200/90 hover:border-[#09090B]/35 px-2 py-2.5 min-[375px]:px-2.5 min-[375px]:py-3 sm:p-4 md:p-5 flex flex-col justify-between transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:hover:-translate-y-1 motion-reduce:transition-none motion-reduce:transform-none shadow-[0_10px_30px_-12px_rgba(9,9,11,0.06)] hover:shadow-[0_22px_44px_-14px_rgba(9,9,11,0.12)]"
-              >
-                <div className="min-w-0">
-                  <p className="min-h-[2.45em] md:min-h-[1.35em] text-[9.5px] min-[375px]:text-[10px] min-[400px]:text-[10.5px] sm:text-xs md:text-[13px] font-medium text-zinc-500 group-hover:text-zinc-700 tracking-[-0.01em] sm:tracking-normal leading-[1.25] break-words transition-colors duration-300">
-                    {stat.label}
-                  </p>
+            {ABOUT_STATISTICS.map((stat) => {
+              const StatIcon = STAT_ICON_MAP[stat.iconName];
 
-                  <div className="mt-1.5 min-[375px]:mt-2 md:mt-2.5 font-display font-bold text-[17px] min-[360px]:text-[18.5px] min-[390px]:text-[20px] sm:text-2xl md:text-[1.75rem] lg:text-[1.9rem] text-[#09090B] tracking-[-0.025em] tabular-nums leading-none">
-                    <NumberTicker
-                      value={stat.value}
-                      prefix={stat.prefix}
-                      suffix={stat.suffix}
-                      className="font-display font-bold tabular-nums"
-                    />
+              return (
+                <div
+                  key={stat.id}
+                  data-stat-card="true"
+                  data-stat-id={stat.id}
+                  data-stat-group={stat.group}
+                  className="group h-full min-w-0 rounded-[16px] sm:rounded-[20px] md:rounded-[22px] bg-white hover:bg-[#FAFAFA] border border-zinc-200/90 hover:border-[#09090B]/35 px-2 py-2.5 min-[375px]:px-2.5 min-[375px]:py-3 sm:p-4 md:p-5 flex flex-col justify-between transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:hover:-translate-y-1 motion-reduce:transition-none motion-reduce:transform-none shadow-[0_10px_30px_-12px_rgba(9,9,11,0.06)] hover:shadow-[0_22px_44px_-14px_rgba(9,9,11,0.12)]"
+                >
+                  <div className="min-w-0">
+                    <div className="flex flex-col-reverse sm:flex-row sm:items-start sm:justify-between gap-1.5 sm:gap-2">
+                      <p className="min-w-0 min-h-[2.45em] sm:min-h-[1.35em] text-[9.5px] min-[375px]:text-[10px] min-[400px]:text-[10.5px] sm:text-xs md:text-[13px] font-medium text-zinc-500 group-hover:text-zinc-700 tracking-[-0.01em] sm:tracking-normal leading-[1.25] break-words transition-colors duration-300">
+                        {stat.label}
+                      </p>
+
+                      <span
+                        aria-hidden="true"
+                        data-stat-icon={stat.iconName}
+                        className="w-5 h-5 min-[375px]:w-6 min-[375px]:h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-md sm:rounded-lg bg-[#FAFAFA] border border-zinc-200/90 text-zinc-600 group-hover:bg-[#09090B] group-hover:border-[#09090B] group-hover:text-white flex items-center justify-center shrink-0 self-end sm:self-auto transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+                      >
+                        <StatIcon className="w-3 h-3 min-[375px]:w-3.5 min-[375px]:h-3.5 md:w-4 md:h-4 stroke-[1.85]" />
+                      </span>
+                    </div>
+
+                    <div className="mt-1.5 min-[375px]:mt-2 md:mt-2.5 font-display font-bold text-[17px] min-[360px]:text-[18.5px] min-[390px]:text-[20px] sm:text-2xl md:text-[1.75rem] lg:text-[1.9rem] text-[#09090B] tracking-[-0.025em] tabular-nums leading-none">
+                      <NumberTicker
+                        value={stat.value}
+                        prefix={stat.prefix}
+                        suffix={stat.suffix}
+                        className="font-display font-bold tabular-nums"
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <p className="mt-2 min-[375px]:mt-2.5 md:mt-3 text-[9px] min-[375px]:text-[9.5px] min-[400px]:text-[10px] sm:text-[11px] md:text-xs text-zinc-500 group-hover:text-zinc-600 leading-[1.38] break-words transition-colors duration-300">
-                  {stat.support}
-                </p>
-              </div>
-            ))}
+                  <p className="mt-2 min-[375px]:mt-2.5 md:mt-3 text-[9px] min-[375px]:text-[9.5px] min-[400px]:text-[10px] sm:text-[11px] md:text-xs text-zinc-500 group-hover:text-zinc-600 leading-[1.38] break-words transition-colors duration-300">
+                    {stat.support}
+                  </p>
+                </div>
+              );
+            })}
           </motion.div>
         </div>
 
@@ -340,40 +382,54 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#09090B]/40 rounded-[22px]
             "
           >
-            {ABOUT_EXPERTISE_CARDS.map((card, idx) => (
-              <article
-                key={card.index}
-                data-pillar-card="true"
-                className={`group w-[84vw] max-w-[360px] shrink-0 snap-start md:w-auto md:max-w-none md:shrink h-auto md:h-full rounded-[22px] sm:rounded-[24px] bg-white hover:bg-[#FAFAFA] border border-zinc-200/90 hover:border-[#09090B]/35 p-5 sm:p-6 lg:p-7 flex flex-col justify-between transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:hover:-translate-y-1 motion-reduce:transition-none motion-reduce:transform-none shadow-[0_10px_30px_-12px_rgba(9,9,11,0.06)] hover:shadow-[0_22px_45px_-14px_rgba(9,9,11,0.12)] ${
-                  idx === 2 ? 'md:col-span-2 lg:col-span-1' : ''
-                }`}
-              >
-                <div className="flex-1 flex flex-col">
-                  <span className="font-mono text-[11px] font-semibold text-emerald-700 tracking-[0.14em]">
-                    {card.index}
-                  </span>
+            {ABOUT_EXPERTISE_CARDS.map((card, idx) => {
+              const ExpertiseIcon = EXPERTISE_ICON_MAP[card.iconName];
 
-                  <h3 className="mt-2.5 font-display font-bold text-lg sm:text-xl text-[#09090B] tracking-[-0.02em] leading-snug">
-                    {card.title}
-                  </h3>
+              return (
+                <article
+                  key={card.index}
+                  data-pillar-card="true"
+                  className={`group w-[84vw] max-w-[360px] shrink-0 snap-start md:w-auto md:max-w-none md:shrink h-auto md:h-full rounded-[22px] sm:rounded-[24px] bg-white hover:bg-[#FAFAFA] border border-zinc-200/90 hover:border-[#09090B]/35 p-5 sm:p-6 lg:p-7 flex flex-col justify-between transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:hover:-translate-y-1 motion-reduce:transition-none motion-reduce:transform-none shadow-[0_10px_30px_-12px_rgba(9,9,11,0.06)] hover:shadow-[0_22px_45px_-14px_rgba(9,9,11,0.12)] ${
+                    idx === 2 ? 'md:col-span-2 lg:col-span-1' : ''
+                  }`}
+                >
+                  <div className="flex-1 flex flex-col">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="font-mono text-[11px] font-semibold text-emerald-700 tracking-[0.14em]">
+                        {card.index}
+                      </span>
 
-                  <p className="mt-2.5 text-xs sm:text-sm text-zinc-600 leading-relaxed">
-                    {card.description}
-                  </p>
-                </div>
+                      <span
+                        aria-hidden="true"
+                        data-expertise-icon={card.iconName}
+                        className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-[#FAFAFA] border border-zinc-200/90 text-zinc-600 group-hover:bg-[#09090B] group-hover:border-[#09090B] group-hover:text-white flex items-center justify-center shrink-0 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+                      >
+                        <ExpertiseIcon className="w-4 h-4 stroke-[1.85]" />
+                      </span>
+                    </div>
 
-                <div className="mt-5 pt-4 border-t border-zinc-200/80 flex flex-wrap gap-1.5 sm:gap-2">
-                  {card.keywords.map((keyword) => (
-                    <span
-                      key={keyword}
-                      className="inline-flex items-center px-2.5 py-1 rounded-md bg-zinc-100 border border-zinc-200/80 font-mono text-[10.5px] sm:text-[11px] font-medium text-zinc-700 leading-tight"
-                    >
-                      {keyword}
-                    </span>
-                  ))}
-                </div>
-              </article>
-            ))}
+                    <h3 className="mt-3 font-display font-bold text-lg sm:text-xl text-[#09090B] tracking-[-0.02em] leading-snug">
+                      {card.title}
+                    </h3>
+
+                    <p className="mt-2.5 text-xs sm:text-sm text-zinc-600 leading-relaxed">
+                      {card.description}
+                    </p>
+                  </div>
+
+                  <div className="mt-5 pt-4 border-t border-zinc-200/80 flex flex-wrap gap-1.5 sm:gap-2">
+                    {card.keywords.map((keyword) => (
+                      <span
+                        key={keyword}
+                        className="inline-flex items-center px-2.5 py-1 rounded-md bg-zinc-100 border border-zinc-200/80 font-mono text-[10.5px] sm:text-[11px] font-medium text-zinc-700 leading-tight"
+                      >
+                        {keyword}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              );
+            })}
           </div>
 
           {/* Mobile-Only Swipe Pagination Indicators (below 768px) */}
