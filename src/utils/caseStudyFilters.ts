@@ -58,6 +58,31 @@ export function filterCaseStudies(
   return projects.filter((project) => matchesPortfolioFilter(project, category));
 }
 
+export const INITIAL_PORTFOLIO_VISIBLE_COUNT = 6;
+
+export interface PartitionedCaseStudies {
+  initialProjects: CaseStudy[];
+  additionalProjects: CaseStudy[];
+  remainingCount: number;
+  hasMore: boolean;
+}
+
+export function partitionVisibleCaseStudies(
+  projects: readonly CaseStudy[],
+  initialCount: number = INITIAL_PORTFOLIO_VISIBLE_COUNT
+): PartitionedCaseStudies {
+  const safeInitial = Math.max(1, initialCount);
+  const initialProjects = projects.slice(0, safeInitial);
+  const additionalProjects = projects.slice(safeInitial);
+
+  return {
+    initialProjects,
+    additionalProjects,
+    remainingCount: additionalProjects.length,
+    hasMore: additionalProjects.length > 0,
+  };
+}
+
 export function getTrackingBadge(project: CaseStudy): {
   src: string;
   name: string;

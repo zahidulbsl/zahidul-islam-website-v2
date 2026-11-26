@@ -128,7 +128,7 @@ async function prerender() {
     if (
       !caseStudiesAppHtml ||
       !caseStudiesAppHtml.includes('<main') ||
-      !caseStudiesAppHtml.includes('Real Campaigns.')
+      !caseStudiesAppHtml.includes('Campaigns Built for')
     ) {
       throw new Error('Prerendered /case-studies/ HTML is missing expected markup.');
     }

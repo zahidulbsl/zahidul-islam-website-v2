@@ -24,10 +24,12 @@ import { OFFICIAL_CREDENTIALS } from '../data/credentials';
 
 interface TestimonialsSectionProps {
   onOpenBooking?: () => void;
+  showCtaBanner?: boolean;
 }
 
 export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
   onOpenBooking,
+  showCtaBanner = true,
 }) => {
   const [selectedReviewIndex, setSelectedReviewIndex] = useState<number | null>(
     null
@@ -256,41 +258,43 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
       {/* ===================================================================
           3. SERVICE-MATCHED REVIEW CTA BAR
       =================================================================== */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-12">
-        <div className="rounded-[24px] bg-[#FAFAFA] border border-zinc-200/90 p-6 sm:p-8 flex flex-col lg:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-4 text-center sm:text-left">
-            <div className="w-12 h-12 rounded-2xl bg-white border border-zinc-200/90 flex items-center justify-center text-emerald-600 shrink-0 hidden sm:flex shadow-2xs">
-              <Award className="w-5 h-5" />
+      {showCtaBanner && (
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-12">
+          <div className="rounded-[24px] bg-[#FAFAFA] border border-zinc-200/90 p-6 sm:p-8 flex flex-col lg:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4 text-center sm:text-left">
+              <div className="w-12 h-12 rounded-2xl bg-white border border-zinc-200/90 flex items-center justify-center text-emerald-600 shrink-0 hidden sm:flex shadow-2xs">
+                <Award className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-display font-bold text-base sm:text-lg text-[#09090B]">
+                  Ready to Scale Your Business with a Proven Ads Expert?
+                </h3>
+                <p className="text-xs sm:text-sm text-zinc-600 mt-1 max-w-2xl leading-relaxed">
+                  Work with a freelancer who is {OFFICIAL_CREDENTIALS.freelancerStatus} with{' '}
+                  {OFFICIAL_CREDENTIALS.completedOrdersLabel}—trusted for
+                  performance-driven advertising, measurable growth, and reliable
+                  campaign management.
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-display font-bold text-base sm:text-lg text-[#09090B]">
-                Ready to Scale Your Business with a Proven Ads Expert?
-              </h3>
-              <p className="text-xs sm:text-sm text-zinc-600 mt-1 max-w-2xl leading-relaxed">
-                Work with a freelancer who is {OFFICIAL_CREDENTIALS.freelancerStatus} with{' '}
-                {OFFICIAL_CREDENTIALS.completedOrdersLabel}—trusted for
-                performance-driven advertising, measurable growth, and reliable
-                campaign management.
-              </p>
-            </div>
-          </div>
 
-          <button
-            type="button"
-            onClick={() => {
-              trackCtaClick({
-                ctaText: 'Book Free Strategy Call',
-                ctaLocation: 'testimonials_section',
-              });
-              onOpenBooking?.();
-            }}
-            className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#09090B] hover:bg-zinc-800 text-white font-display font-bold text-xs sm:text-sm transition-all cursor-pointer shrink-0 shadow-sm w-full sm:w-auto"
-          >
-            <span>Book Free Strategy Call</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+            <button
+              type="button"
+              onClick={() => {
+                trackCtaClick({
+                  ctaText: 'Book Free Strategy Call',
+                  ctaLocation: 'testimonials_section',
+                });
+                onOpenBooking?.();
+              }}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#09090B] hover:bg-zinc-800 text-white font-display font-bold text-xs sm:text-sm transition-all cursor-pointer shrink-0 shadow-sm w-full sm:w-auto"
+            >
+              <span>Book Free Strategy Call</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* ===================================================================
           4. UNIFORM-DIMENSION REVIEW DETAIL MODAL

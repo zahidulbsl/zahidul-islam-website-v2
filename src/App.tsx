@@ -278,8 +278,8 @@ export default function App({ initialPath }: AppProps = {}) {
           <CaseStudiesPage
             onSelectCaseStudy={(cs) => setSelectedCaseStudy(cs)}
             onOpenBooking={handleOpenBooking}
-            onOpenContact={() => handleOpenContact()}
             onNavigateHome={handleNavigateHome}
+            initialService={serviceInquiry}
           />
         ) : (
           <>
