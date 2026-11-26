@@ -344,7 +344,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
         </div>
 
         {/* ===================================================================
-            LOWER SECTION: THREE SERVICE / EXPERTISE CARDS
+            LOWER SECTION: MY CORE EXPERTISE (THREE SERVICE / EXPERTISE CARDS)
             Desktop (1024px+): 3 equal-width cards side-by-side
             Tablet (768px–1023px): 2-column grid (3rd card spans naturally)
             Mobile (320px–767px): Horizontal swipeable carousel with next-card peek
@@ -358,8 +358,25 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
             delay: prefersReducedMotion ? 0 : 0.1,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="mt-4 sm:mt-5 lg:mt-6"
+          className="mt-8 sm:mt-10 lg:mt-12"
         >
+          <div className="mb-4 sm:mb-5 flex items-center gap-3 sm:gap-4">
+            <h3
+              id="about-core-expertise-heading"
+              className="font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-[0.18em] text-[#09090B] flex items-center gap-2 shrink-0"
+            >
+              <span
+                aria-hidden="true"
+                className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0"
+              />
+              <span>MY CORE EXPERTISE</span>
+            </h3>
+            <div
+              aria-hidden="true"
+              className="h-px flex-1 bg-zinc-200/90"
+            />
+          </div>
+
           <div
             ref={pillarsSliderRef}
             onScroll={handlePillarsScroll}
@@ -367,7 +384,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
             tabIndex={0}
             role="region"
             aria-roledescription="carousel"
-            aria-label="Core advertising and tracking expertise"
+            aria-labelledby="about-core-expertise-heading"
             data-testid="about-expertise-carousel"
             className="
               flex md:grid md:grid-cols-2 lg:grid-cols-3
@@ -408,9 +425,9 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
                       </span>
                     </div>
 
-                    <h3 className="mt-3 font-display font-bold text-lg sm:text-xl text-[#09090B] tracking-[-0.02em] leading-snug">
+                    <h4 className="mt-3 font-display font-bold text-lg sm:text-xl text-[#09090B] tracking-[-0.02em] leading-snug">
                       {card.title}
-                    </h3>
+                    </h4>
 
                     <p className="mt-2.5 text-xs sm:text-sm text-zinc-600 leading-relaxed">
                       {card.description}

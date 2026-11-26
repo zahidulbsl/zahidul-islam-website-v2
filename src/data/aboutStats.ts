@@ -130,27 +130,23 @@ export const ABOUT_EXPERTISE_CARDS: readonly AboutExpertiseCard[] = [
     iconName: 'target',
     title: 'Google Ads & Search Growth',
     description:
-      'Putting your business in front of customers actively searching to buy or book—filtering out irrelevant clicks and directing budget toward phone calls, forms, and sales.',
-    keywords: ['High-Intent Search', 'Wasted Spend Control', 'Qualified Leads'],
+      'Search campaign strategy, high-intent keyword targeting, continuous optimization, and disciplined budget management built to drive qualified leads and sales growth.',
+    keywords: ['High-Intent Search', 'Budget Management', 'Lead & Sales Growth'],
   },
   {
     index: '02',
     iconName: 'megaphone',
     title: 'Meta Ads & Customer Acquisition',
     description:
-      'Turning Facebook and Instagram reach into qualified inquiries and online store orders through structured audience targeting, ad testing, and retargeting.',
-    keywords: [
-      'Audience Strategy',
-      'Lead Qualification',
-      'eCommerce Scaling',
-    ],
+      'Facebook and Instagram advertising built around audience strategy, structured creative testing, and retargeting to scale lead generation and customer acquisition.',
+    keywords: ['Audience Strategy', 'Creative Testing', 'Customer Acquisition'],
   },
   {
     index: '03',
     iconName: 'chart-no-axes-combined',
     title: 'Analytics & Conversion Tracking',
     description:
-      'Giving you and your ad accounts dependable data—tracking phone calls, lead forms, and purchases cleanly across GA4, Google Tag Manager, and Meta CAPI.',
-    keywords: ['GA4 & GTM', 'Conversion API', 'Call & Order Tracking'],
+      'Clean GA4, Google Tag Manager, Meta Pixel, and Conversions API setups so conversion tracking and attribution reflect real phone calls, leads, and orders.',
+    keywords: ['GA4 & GTM', 'Meta Pixel & CAPI', 'Attribution'],
   },
 ] as const;

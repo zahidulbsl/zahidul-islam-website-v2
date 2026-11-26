@@ -4,9 +4,10 @@ import {
   useRef,
   useState,
   type FormEvent,
+  type KeyboardEvent as ReactKeyboardEvent,
 } from "react";
 import { createPortal } from "react-dom";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import {
   X,
   Target,
@@ -133,7 +134,11 @@ export function StrategyCallModal({
     projectDetails: "",
   });
 
+  const prefersReducedMotion = useReducedMotion();
+  const [activePillarSlide, setActivePillarSlide] = useState(0);
+
   const modalRef = useRef<HTMLDivElement>(null);
+  const pillarSliderRef = useRef<HTMLDivElement>(null);
   const formLoadedAtRef = useRef<number>(Date.now());
   const phoneRef = useRef<PhoneInputRefType>(null);
   const countryDropdownRef = useRef<HTMLDivElement>(null);
@@ -147,6 +152,60 @@ export function StrategyCallModal({
   isCountryOpenRef.current = isCountryOpen;
   isSubmittingRef.current = isSubmitting;
   onCloseRef.current = onClose;
+
+  const handlePillarScroll = () => {
+    const container = pillarSliderRef.current;
+    if (!container) return;
+    const cards = container.querySelectorAll<HTMLElement>(
+      '[data-modal-pillar-card="true"]'
+    );
+    if (!cards.length) return;
+    const paddingLeft = parseFloat(getComputedStyle(container).paddingLeft) || 0;
+    const containerAnchor = container.getBoundingClientRect().left + paddingLeft;
+    let closestIndex = 0;
+    let minDiff = Infinity;
+    cards.forEach((card, idx) => {
+      const diff = Math.abs(card.getBoundingClientRect().left - containerAnchor);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIndex = idx;
+      }
+    });
+    setActivePillarSlide(closestIndex);
+  };
+
+  const scrollToPillarSlide = (index: number) => {
+    const container = pillarSliderRef.current;
+    if (!container) return;
+    const cards = container.querySelectorAll<HTMLElement>(
+      '[data-modal-pillar-card="true"]'
+    );
+    const card = cards[index];
+    if (card) {
+      const paddingLeft = parseFloat(getComputedStyle(container).paddingLeft) || 0;
+      const containerRect = container.getBoundingClientRect();
+      const cardRect = card.getBoundingClientRect();
+      const targetScrollLeft =
+        container.scrollLeft + (cardRect.left - containerRect.left - paddingLeft);
+      container.scrollTo({
+        left: Math.max(0, targetScrollLeft),
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+      });
+      setActivePillarSlide(index);
+    }
+  };
+
+  const handlePillarKeyDown = (e: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      scrollToPillarSlide(
+        Math.min(activePillarSlide + 1, SESSION_PILLARS.length - 1)
+      );
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      scrollToPillarSlide(Math.max(activePillarSlide - 1, 0));
+    }
+  };
 
   const filteredCountries = useMemo(() => {
     const query = countrySearch.trim().toLowerCase();
@@ -173,6 +232,10 @@ export function StrategyCallModal({
 
     formLoadedAtRef.current = Date.now();
     previousActiveElementRef.current = document.activeElement as HTMLElement;
+    setActivePillarSlide(0);
+    if (pillarSliderRef.current) {
+      pillarSliderRef.current.scrollLeft = 0;
+    }
 
     const scrollY =
       window.scrollY ||
@@ -653,8 +716,8 @@ export function StrategyCallModal({
             {/* ---------------------------------------------------------------
                 LEFT COLUMN (5 COLS): EDITORIAL CONSULTATION BRIEFING
             --------------------------------------------------------------- */}
-            <div className="lg:col-span-5 bg-[#FAFAFA] border-b lg:border-b-0 lg:border-r border-zinc-200/90 p-6 sm:p-8 flex flex-col justify-between">
-              <div className="space-y-5">
+            <div className="lg:col-span-5 min-w-0 bg-[#FAFAFA] border-b lg:border-b-0 lg:border-r border-zinc-200/90 p-6 sm:p-8 flex flex-col justify-between">
+              <div className="space-y-5 min-w-0">
                 {/* Consultant Identity Card */}
                 <div className="flex items-center gap-3.5 pb-4 border-b border-zinc-200/80">
                   <div className="relative shrink-0">
@@ -708,36 +771,102 @@ export function StrategyCallModal({
                   </p>
                 </div>
 
-                {/* 3 Soft Pastel Consultation Value Cards (Matching Website Palette) */}
-                <div className="space-y-2.5">
-                  {SESSION_PILLARS.map((pillar) => {
-                    const Icon = pillar.icon;
-                    return (
-                      <div
-                        key={pillar.number}
-                        className={`rounded-2xl ${pillar.tint} border p-3.5 sm:p-4 transition-all`}
-                      >
-                        <div className="flex items-start gap-3">
-                          <div className="w-8 h-8 rounded-xl bg-white/90 border border-black/10 flex items-center justify-center shrink-0 shadow-2xs">
-                            <Icon className={`w-4 h-4 ${pillar.iconColor}`} />
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <div className="flex items-center justify-between gap-2">
-                              <h3 className="font-display font-bold text-xs sm:text-sm text-[#09090B]">
-                                {pillar.title}
-                              </h3>
-                              <span className="font-mono text-[10px] font-semibold text-zinc-500">
-                                {pillar.number}
-                              </span>
+                {/* 3 Soft Pastel Consultation Value Cards (Mobile: Swipe Carousel, Tablet/Desktop: Vertical Stack) */}
+                <div className="min-w-0">
+                  <div
+                    ref={pillarSliderRef}
+                    onScroll={handlePillarScroll}
+                    onKeyDown={handlePillarKeyDown}
+                    tabIndex={0}
+                    role="region"
+                    aria-roledescription="carousel"
+                    aria-label="What we cover during your strategy call"
+                    data-testid="modal-pillars-carousel"
+                    className="
+                      flex md:block md:space-y-2.5
+                      overflow-x-auto md:overflow-x-visible
+                      snap-x snap-mandatory md:snap-none
+                      scroll-pl-6 sm:scroll-pl-8 md:scroll-pl-0
+                      gap-3 md:gap-0
+                      -mx-6 px-6 sm:-mx-8 sm:px-8 md:mx-0 md:px-0
+                      scrollbar-none
+                      slider-touch-track
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#09090B]/30 rounded-2xl
+                    "
+                  >
+                    {SESSION_PILLARS.map((pillar) => {
+                      const Icon = pillar.icon;
+                      return (
+                        <div
+                          key={pillar.number}
+                          data-modal-pillar-card="true"
+                          className={`w-[84%] max-w-[304px] shrink-0 snap-start md:w-auto md:max-w-none md:shrink rounded-2xl ${pillar.tint} border p-3.5 sm:p-4 transition-all`}
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className="w-8 h-8 rounded-xl bg-white/90 border border-black/10 flex items-center justify-center shrink-0 shadow-2xs">
+                              <Icon className={`w-4 h-4 ${pillar.iconColor}`} />
                             </div>
-                            <p className="mt-1 text-xs text-zinc-700 leading-relaxed">
-                              {pillar.description}
-                            </p>
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-center justify-between gap-2">
+                                <h3 className="font-display font-bold text-xs sm:text-sm text-[#09090B]">
+                                  {pillar.title}
+                                </h3>
+                                <span className="font-mono text-[10px] font-semibold text-zinc-500 shrink-0">
+                                  {pillar.number}
+                                </span>
+                              </div>
+                              <p className="mt-1 text-xs text-zinc-700 leading-relaxed">
+                                {pillar.description}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
+
+                  {/* Mobile-Only Swipe Pagination Indicators (below 768px) */}
+                  <div
+                    data-testid="modal-pillars-pagination"
+                    className="md:hidden pt-3 flex items-center justify-between px-0.5"
+                  >
+                    <div className="flex items-center gap-1.5 font-mono text-[10.5px] text-zinc-600">
+                      <span className="font-bold text-[#09090B] tabular-nums">
+                        0{activePillarSlide + 1}
+                      </span>
+                      <span aria-hidden="true">/</span>
+                      <span className="tabular-nums">
+                        0{SESSION_PILLARS.length}
+                      </span>
+                      <span className="ml-1 text-zinc-500">· Swipe</span>
+                    </div>
+
+                    <div
+                      className="flex items-center gap-1"
+                      role="tablist"
+                      aria-label="Session highlights pagination"
+                    >
+                      {SESSION_PILLARS.map((pillar, i) => (
+                        <button
+                          key={pillar.number}
+                          type="button"
+                          role="tab"
+                          onClick={() => scrollToPillarSlide(i)}
+                          aria-label={`View ${pillar.title}`}
+                          aria-selected={activePillarSlide === i}
+                          className="p-2 -m-1 cursor-pointer flex items-center justify-center"
+                        >
+                          <span
+                            className={`block h-1.5 rounded-full transition-all duration-300 ${
+                              activePillarSlide === i
+                                ? "w-5 bg-[#09090B]"
+                                : "w-1.5 bg-zinc-300"
+                            }`}
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
 
