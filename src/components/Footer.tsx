@@ -4,6 +4,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { scrollToSection } from '../utils/scroll';
+import { CASE_STUDIES_PATH } from '../utils/routing';
 import { trackCtaClick } from '../utils/tracking';
 import { OFFICIAL_CREDENTIALS } from '../data/credentials';
 import { BRAND_LOGO_CONFIG, BrandLogo } from './BrandLogo';
@@ -11,10 +12,12 @@ import { BRAND_LOGO_CONFIG, BrandLogo } from './BrandLogo';
 interface FooterProps {
   onOpenBooking: () => void;
   onOpenContact: () => void;
+  onNavigate?: (href: string) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
   onOpenBooking,
+  onNavigate,
 }) => {
   const scrollToTop = () => {
     scrollToSection('#home');
@@ -24,13 +27,23 @@ export const Footer: React.FC<FooterProps> = ({
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string
   ) => {
+    if (
+      href.startsWith('/') &&
+      (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0)
+    ) {
+      return;
+    }
     e.preventDefault();
-    scrollToSection(href);
+    if (onNavigate) {
+      onNavigate(href);
+    } else {
+      scrollToSection(href);
+    }
   };
 
   const quickNav = [
     { label: 'About Zahidul', href: '#about' },
-    { label: 'Campaign Results', href: '#case-studies' },
+    { label: 'Campaign Results', href: CASE_STUDIES_PATH },
     { label: 'Services', href: '#services' },
     { label: 'Work Process', href: '#process' },
     { label: 'Client Reviews', href: '#reviews' },
@@ -62,8 +75,8 @@ export const Footer: React.FC<FooterProps> = ({
           <div className="col-span-2 md:col-span-12 lg:col-span-6 space-y-4">
             <button
               type="button"
-              onClick={scrollToTop}
-              aria-label={`${BRAND_LOGO_CONFIG.brandText} — Back to top`}
+              onClick={() => (onNavigate ? onNavigate('/') : scrollToTop())}
+              aria-label={`${BRAND_LOGO_CONFIG.brandText} — Home`}
               className="flex items-center text-left group cursor-pointer transition-opacity hover:opacity-90"
             >
               <BrandLogo className="h-9 sm:h-10 w-auto" />

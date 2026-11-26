@@ -258,20 +258,30 @@ export const Hero: React.FC<HeroProps> = ({
               <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
             </button>
 
-            <button
-              type="button"
-              onClick={() => {
+            <a
+              href="/case-studies/"
+              onClick={(e) => {
                 trackCtaClick({
                   ctaText: 'Explore Case Studies',
                   ctaLocation: 'hero',
                 });
+                if (
+                  e.metaKey ||
+                  e.ctrlKey ||
+                  e.shiftKey ||
+                  e.altKey ||
+                  e.button !== 0
+                ) {
+                  return;
+                }
+                e.preventDefault();
                 onExploreWork();
               }}
               className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:py-4 rounded-xl bg-white/[0.06] hover:bg-white/[0.11] text-white font-display font-semibold text-sm sm:text-base border border-white/15 hover:border-white/30 transition-all duration-200 cursor-pointer"
             >
               <span>Explore Case Studies</span>
               <ArrowUpRight className="w-4 h-4 text-lime-400 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </button>
+            </a>
           </div>
         </motion.div>
       </div>

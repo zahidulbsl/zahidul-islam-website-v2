@@ -23,7 +23,15 @@ export const NumberTicker: React.FC<NumberTickerProps> = ({
   useEffect(() => {
     if (!isInView) return;
 
-    let start = 0;
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion || duration <= 0) {
+      setDisplayValue(value);
+      return;
+    }
+
     const end = value;
     const totalFrames = Math.round(duration * 60);
     let frame = 0;
@@ -45,8 +53,13 @@ export const NumberTicker: React.FC<NumberTickerProps> = ({
     return () => clearInterval(counter);
   }, [isInView, value, duration]);
 
+  const hasCustomFont = /\bfont-(sans|display|serif|mono)\b/.test(className);
+
   return (
-    <span ref={ref} className={`tabular-nums font-mono ${className}`}>
+    <span
+      ref={ref}
+      className={`tabular-nums ${hasCustomFont ? '' : 'font-mono'} ${className}`.trim()}
+    >
       {prefix}
       {displayValue.toLocaleString()}
       {suffix}

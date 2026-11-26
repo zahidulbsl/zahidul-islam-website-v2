@@ -17,16 +17,19 @@ import {
   X,
 } from 'lucide-react';
 import { getNavbarOffset, scrollToSection } from '../utils/scroll';
+import { CASE_STUDIES_PATH, type AppRoute } from '../utils/routing';
 import { OFFICIAL_CREDENTIALS } from '../data/credentials';
 import { BRAND_LOGO_CONFIG, BrandLogo } from './BrandLogo';
 
 interface NavbarProps {
+  currentRoute?: AppRoute;
+  onNavigate?: (href: string) => void;
   onOpenBooking: () => void;
   onOpenContact: () => void;
 }
 
 const dockLinksLeft = [
-  { label: 'Results', href: '#case-studies' },
+  { label: 'Results', href: CASE_STUDIES_PATH },
   { label: 'Services', href: '#services' },
 ];
 
@@ -44,7 +47,7 @@ const moreMenuLinks = [
   {
     label: 'Campaign Results',
     subtitle: '12 verified Google & Meta Ads cases',
-    href: '#case-studies',
+    href: CASE_STUDIES_PATH,
     icon: ChartNoAxesCombined,
   },
   {
@@ -80,29 +83,41 @@ const moreMenuLinks = [
 ];
 
 export const Navbar: React.FC<NavbarProps> = ({
+  currentRoute = 'home',
+  onNavigate,
   onOpenBooking,
-  onOpenContact,
 }) => {
   const [moreOpen, setMoreOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const [activeSection, setActiveSection] = useState('#home');
+  const [activeSection, setActiveSection] = useState(
+    currentRoute === 'case-studies' ? CASE_STUDIES_PATH : '#home'
+  );
 
   const moreMenuRef = useRef<HTMLDivElement>(null);
   const navTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isProgrammaticScrollRef = useRef(false);
 
   useEffect(() => {
-    const trackedSections = [
-      '#home',
-      '#about',
-      '#case-studies',
-      '#services',
-      '#process',
-      '#reviews',
-      '#faq',
-      '#contact',
-    ];
+    setActiveSection(
+      currentRoute === 'case-studies' ? CASE_STUDIES_PATH : '#home'
+    );
+  }, [currentRoute]);
+
+  useEffect(() => {
+    const trackedSections =
+      currentRoute === 'case-studies'
+        ? ['#contact']
+        : [
+            '#home',
+            '#about',
+            '#case-studies',
+            '#services',
+            '#process',
+            '#reviews',
+            '#faq',
+            '#contact',
+          ];
 
     const handleScroll = () => {
       const y = window.scrollY;
@@ -113,14 +128,16 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       const navOffset = getNavbarOffset();
       const activationPoint = navOffset + 140;
-      let currentSection = '#home';
+      let currentSection =
+        currentRoute === 'case-studies' ? CASE_STUDIES_PATH : '#home';
 
       for (const href of trackedSections) {
         const element = document.getElementById(href.slice(1));
         if (!element) continue;
         const rect = element.getBoundingClientRect();
         if (rect.top <= activationPoint && rect.bottom > navOffset) {
-          currentSection = href;
+          currentSection =
+            href === '#case-studies' ? CASE_STUDIES_PATH : href;
         }
       }
 
@@ -130,7 +147,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [currentRoute]);
 
   useEffect(() => {
     if (!moreOpen) return;
@@ -157,13 +174,34 @@ export const Navbar: React.FC<NavbarProps> = ({
     e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>,
     href: string
   ) => {
+    if (
+      href.startsWith('/') &&
+      (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0)
+    ) {
+      return;
+    }
+
     e.preventDefault();
     isProgrammaticScrollRef.current = true;
-    setActiveSection(href);
+    setActiveSection(href === '/' ? '#home' : href);
     setMoreOpen(false);
 
-    scrollToSection(href);
+    if (onNavigate) {
+      onNavigate(href);
+    } else {
+      scrollToSection(href);
+    }
 
+    if (navTimeoutRef.current) clearTimeout(navTimeoutRef.current);
+    navTimeoutRef.current = setTimeout(() => {
+      isProgrammaticScrollRef.current = false;
+    }, 850);
+  };
+
+  const handleBackToTop = () => {
+    isProgrammaticScrollRef.current = true;
+    setMoreOpen(false);
+    scrollToSection('#home');
     if (navTimeoutRef.current) clearTimeout(navTimeoutRef.current);
     navTimeoutRef.current = setTimeout(() => {
       isProgrammaticScrollRef.current = false;
@@ -197,8 +235,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Center: Signature Brand Wordmark */}
           <a
-            href="#home"
-            onClick={(e) => handleNavigate(e, '#home')}
+            href="/"
+            onClick={(e) => handleNavigate(e, '/')}
             aria-label={`${BRAND_LOGO_CONFIG.brandText} — Home`}
             className="group flex items-center focus:outline-none md:mx-auto transition-opacity hover:opacity-90"
           >
@@ -232,7 +270,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       =================================================================== */}
       <button
         type="button"
-        onClick={(e) => handleNavigate(e, '#home')}
+        onClick={handleBackToTop}
         aria-label="Back to top"
         className={`fixed bottom-5 left-5 z-40 hidden lg:inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#09090D] hover:bg-[#14141B] text-white text-xs font-display font-medium border border-white/15 shadow-[0_12px_30px_rgba(0,0,0,0.35)] transition-all duration-300 cursor-pointer ${
           showBackToTop
