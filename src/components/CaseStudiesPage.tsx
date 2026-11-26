@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, useReducedMotion } from 'motion/react';
 import {
-  ArrowDown,
-  ArrowLeft,
   ArrowRight,
   ArrowUpRight,
+  Home,
   Maximize2,
-  ShieldCheck,
   Sparkles,
   X,
 } from 'lucide-react';
@@ -23,17 +21,15 @@ import {
   filterCaseStudies,
   getTrackingBadge,
 } from '../utils/caseStudyFilters';
-import { scrollToSection } from '../utils/scroll';
 import { trackCaseStudyClick, trackCtaClick } from '../utils/tracking';
 import { useBodyScrollLock } from '../utils/bodyScrollLock';
-import { ContactSection } from './ContactSection';
-import { ContactAnnouncementBanner } from './ContactAnnouncementBanner';
+import { TestimonialsSection } from './TestimonialsSection';
 
 interface CaseStudiesPageProps {
   onSelectCaseStudy: (caseStudy: CaseStudy) => void;
   onOpenBooking: () => void;
+  onOpenContact: () => void;
   onNavigateHome: () => void;
-  initialService?: string;
 }
 
 const buildFallbackSvg = (title: string, metric: string) => {
@@ -58,8 +54,8 @@ const buildFallbackSvg = (title: string, metric: string) => {
 export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
   onSelectCaseStudy,
   onOpenBooking,
+  onOpenContact,
   onNavigateHome,
-  initialService,
 }) => {
   const prefersReducedMotion = useReducedMotion();
   const [activeFilter, setActiveFilter] =
@@ -109,7 +105,7 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
       ===================================================================== */}
       <section
         aria-labelledby="portfolio-page-heading"
-        className="relative pt-22 sm:pt-24 lg:pt-26 pb-10 sm:pb-12 lg:pb-14 overflow-hidden bg-[#06070B] text-white border-b border-white/[0.08]"
+        className="relative pt-24 sm:pt-28 lg:pt-28 pb-9 sm:pb-10 lg:pb-12 overflow-hidden bg-[#06070B] text-white border-b border-white/[0.08]"
       >
         <div
           aria-hidden="true"
@@ -121,21 +117,6 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
         />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Top Breadcrumb Navigation */}
-          <div className="flex items-center justify-center mb-5 sm:mb-6">
-            <a
-              href="/"
-              onClick={(e) => {
-                e.preventDefault();
-                onNavigateHome();
-              }}
-              className="group inline-flex items-center gap-1.5 text-xs font-mono text-zinc-400 hover:text-white transition-colors"
-            >
-              <ArrowLeft className="w-3.5 h-3.5 transition-transform duration-200 motion-safe:group-hover:-translate-x-0.5" />
-              <span>Back to Home</span>
-            </a>
-          </div>
-
           <motion.div
             initial={revealInitial}
             animate={revealAnimate}
@@ -165,23 +146,8 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
               and measurable results behind each campaign.
             </p>
 
-            {/* Primary & Secondary Intro CTAs */}
-            <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-              <button
-                type="button"
-                onClick={() => {
-                  trackCtaClick({
-                    ctaText: 'Explore Case Studies',
-                    ctaLocation: 'case_studies_page_hero',
-                  });
-                  scrollToSection('portfolio-grid');
-                }}
-                className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-zinc-100 text-[#09090B] font-display font-bold text-xs sm:text-sm border border-white shadow-[0_12px_32px_rgba(255,255,255,0.16)] transition-all duration-200 motion-safe:hover:-translate-y-0.5 cursor-pointer whitespace-nowrap"
-              >
-                <span>Explore Case Studies</span>
-                <ArrowDown className="w-4 h-4 transition-transform duration-200 motion-safe:group-hover:translate-y-0.5" />
-              </button>
-
+            {/* Primary (Book a Call) & Secondary (Home Page) Hero CTAs */}
+            <div className="mt-7 flex flex-wrap items-center justify-center gap-3.5">
               <button
                 type="button"
                 onClick={() => {
@@ -191,52 +157,70 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
                   });
                   onOpenBooking();
                 }}
-                className="group inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.11] text-white font-display font-semibold text-xs sm:text-sm border border-white/15 hover:border-white/30 transition-all duration-200 cursor-pointer whitespace-nowrap"
+                className="group relative inline-flex items-center justify-center gap-2.5 px-7 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-white hover:bg-zinc-100 text-[#09090B] font-display font-bold text-sm sm:text-base border border-white shadow-[0_12px_35px_rgba(255,255,255,0.18)] transition-all duration-200 motion-safe:hover:-translate-y-0.5 cursor-pointer whitespace-nowrap"
               >
                 <span>Book a Call</span>
-                <ArrowUpRight className="w-4 h-4 text-lime-400 transition-transform duration-200 motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5" />
+                <ArrowRight className="w-4 h-4 transition-transform duration-200 motion-safe:group-hover:translate-x-1" />
               </button>
+
+              <a
+                href="/"
+                onClick={(e) => {
+                  trackCtaClick({
+                    ctaText: 'Home Page',
+                    ctaLocation: 'case_studies_page_hero',
+                  });
+                  if (
+                    e.metaKey ||
+                    e.ctrlKey ||
+                    e.shiftKey ||
+                    e.altKey ||
+                    e.button !== 0
+                  ) {
+                    return;
+                  }
+                  e.preventDefault();
+                  onNavigateHome();
+                }}
+                className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 sm:py-4 rounded-xl bg-white/[0.06] hover:bg-white/[0.11] text-white font-display font-semibold text-sm sm:text-base border border-white/15 hover:border-white/30 transition-all duration-200 cursor-pointer whitespace-nowrap"
+              >
+                <Home className="w-4 h-4 text-zinc-400 group-hover:text-white transition-colors duration-200" />
+                <span>Home Page</span>
+              </a>
             </div>
 
-            {/* Compact Verified Credibility Line (Existing Verified Facts Only) */}
+            {/* Prominent 3-Metric Verified Credibility Strip */}
             <div
               aria-label="Verified credentials summary"
-              className="mt-8 pt-6 border-t border-white/[0.08] w-full max-w-3xl flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11.5px] sm:text-xs font-mono text-zinc-400"
+              data-testid="portfolio-hero-metrics"
+              className="mt-7 sm:mt-8 pt-6 sm:pt-7 border-t border-white/[0.09] w-full max-w-2xl grid grid-cols-3 divide-x divide-white/[0.1]"
             >
-              <span className="inline-flex items-center gap-1.5 text-zinc-200">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <strong className="font-semibold text-white tabular-nums">
-                  {CASE_STUDIES.length}
-                </strong>{' '}
-                Documented Campaigns
-              </span>
-              <span aria-hidden="true" className="hidden sm:inline text-zinc-700">
-                ·
-              </span>
-              <span>
-                <strong className="font-semibold text-white tabular-nums">
+              <div className="px-2 sm:px-5 flex flex-col items-center text-center">
+                <span className="font-display font-bold text-2xl sm:text-3xl lg:text-[2rem] text-white tracking-[-0.025em] leading-none tabular-nums">
                   $22M+
-                </strong>{' '}
-                Managed Ad Spend
-              </span>
-              <span aria-hidden="true" className="hidden sm:inline text-zinc-700">
-                ·
-              </span>
-              <span>
-                <strong className="font-semibold text-white tabular-nums">
+                </span>
+                <span className="mt-1.5 text-[10.5px] min-[375px]:text-[11px] sm:text-xs font-mono text-zinc-400 leading-snug">
+                  Managed Ad Spend
+                </span>
+              </div>
+
+              <div className="px-2 sm:px-5 flex flex-col items-center text-center">
+                <span className="font-display font-bold text-2xl sm:text-3xl lg:text-[2rem] text-white tracking-[-0.025em] leading-none tabular-nums">
                   {OFFICIAL_CREDENTIALS.fiverrReviewsShort}
-                </strong>{' '}
-                5-Star Reviews
-              </span>
-              <span aria-hidden="true" className="hidden sm:inline text-zinc-700">
-                ·
-              </span>
-              <span>
-                <strong className="font-semibold text-white tabular-nums">
+                </span>
+                <span className="mt-1.5 text-[10.5px] min-[375px]:text-[11px] sm:text-xs font-mono text-zinc-400 leading-snug">
+                  5-Star Reviews
+                </span>
+              </div>
+
+              <div className="px-2 sm:px-5 flex flex-col items-center text-center">
+                <span className="font-display font-bold text-2xl sm:text-3xl lg:text-[2rem] text-white tracking-[-0.025em] leading-none tabular-nums">
                   {OFFICIAL_CREDENTIALS.upworkJssShort}
-                </strong>{' '}
-                Upwork JSS
-              </span>
+                </span>
+                <span className="mt-1.5 text-[10.5px] min-[375px]:text-[11px] sm:text-xs font-mono text-zinc-400 leading-snug">
+                  Upwork JSS
+                </span>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -248,16 +232,16 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
       <section
         id="portfolio-grid"
         aria-labelledby="portfolio-grid-heading"
-        className="relative py-12 sm:py-16 lg:py-20 bg-[#FAFAFA] text-[#09090B] border-b border-zinc-200/80 scroll-mt-20"
+        className="relative pt-7 sm:pt-9 lg:pt-10 pb-14 sm:pb-16 lg:pb-20 bg-[#FAFAFA] text-[#09090B] border-b border-zinc-200/80 scroll-mt-20"
       >
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-dot-matrix-light opacity-65 [mask-image:linear-gradient(to_bottom,#000_20%,transparent_100%)]"
+          className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-dot-matrix-light opacity-65 [mask-image:linear-gradient(to_bottom,#000_20%,transparent_100%)]"
         />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Compact Grid Header & Category Filter Controls */}
-          <div className="flex flex-col items-center text-center mb-8 sm:mb-10">
+          <div className="flex flex-col items-center text-center mb-6 sm:mb-8">
             <h2
               id="portfolio-grid-heading"
               className="sr-only"
@@ -526,7 +510,7 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
                         ctaText: "Let's Discuss Your Project",
                         ctaLocation: 'case_studies_page_cta',
                       });
-                      scrollToSection('contact');
+                      onOpenContact();
                     }}
                     className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 min-h-[44px] rounded-xl bg-white hover:bg-zinc-100 text-[#09090B] text-xs sm:text-sm font-display font-bold transition-all duration-200 motion-safe:hover:-translate-y-0.5 cursor-pointer shadow-lg whitespace-nowrap"
                   >
@@ -556,14 +540,9 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
       </section>
 
       {/* =====================================================================
-          SECTION 05 — REUSED EXISTING CONTACT SECTION & ANNOUNCEMENT BANNER
+          SECTION 05 — EXISTING HOMEPAGE REVIEWS SECTION
       ===================================================================== */}
-      <ContactSection
-        onOpenBooking={onOpenBooking}
-        initialService={initialService}
-      />
-
-      <ContactAnnouncementBanner />
+      <TestimonialsSection onOpenBooking={onOpenBooking} />
 
       {/* =====================================================================
           FULL-SCREEN CAMPAIGN SCREENSHOT LIGHTBOX PREVIEW

@@ -162,7 +162,13 @@ export default function App({ initialPath }: AppProps = {}) {
       setServiceInquiry(prefilledService);
     }
 
-    scrollToSection('contact');
+    if (typeof document !== 'undefined' && document.getElementById('contact')) {
+      scrollToSection('contact');
+      return;
+    }
+
+    pendingHashRef.current = '#contact';
+    navigateToPath(HOME_PATH, '#contact');
   };
 
   const handleExploreWork = () => {
@@ -206,7 +212,16 @@ export default function App({ initialPath }: AppProps = {}) {
     }
 
     if (normalized === '#contact') {
-      scrollToSection('#contact');
+      handleOpenContact();
+      return;
+    }
+
+    if (
+      normalized === '#reviews' &&
+      typeof document !== 'undefined' &&
+      document.getElementById('reviews')
+    ) {
+      scrollToSection('#reviews');
       return;
     }
 
@@ -263,8 +278,8 @@ export default function App({ initialPath }: AppProps = {}) {
           <CaseStudiesPage
             onSelectCaseStudy={(cs) => setSelectedCaseStudy(cs)}
             onOpenBooking={handleOpenBooking}
+            onOpenContact={() => handleOpenContact()}
             onNavigateHome={handleNavigateHome}
-            initialService={serviceInquiry}
           />
         ) : (
           <>

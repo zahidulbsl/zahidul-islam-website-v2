@@ -107,7 +107,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   useEffect(() => {
     const trackedSections =
       currentRoute === 'case-studies'
-        ? ['#contact']
+        ? ['#reviews']
         : [
             '#home',
             '#about',
