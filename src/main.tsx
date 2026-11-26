@@ -1,5 +1,4 @@
-
-import { createRoot } from 'react-dom/client';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 import { useEffect } from 'react';
 import Lenis from 'lenis';
 
@@ -45,4 +44,9 @@ function Root() {
   return <App />;
 }
 
-createRoot(document.getElementById('root')!).render(<Root />);
+const rootElement = document.getElementById('root')!;
+if (rootElement.hasChildNodes()) {
+  hydrateRoot(rootElement, <Root />);
+} else {
+  createRoot(rootElement).render(<Root />);
+}
