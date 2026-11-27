@@ -1,21 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { createPortal } from 'react-dom';
+import React, { useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
   ArrowRight,
   ChevronDown,
   ChevronUp,
   Home,
-  Maximize2,
   ShieldCheck,
-  X,
 } from 'lucide-react';
+import type { CaseStudy } from '../data/caseStudies';
 import {
-  CASE_STUDIES,
-  type CaseStudy,
-  type CaseStudyImage,
-} from '../data/caseStudies';
-import { OFFICIAL_CREDENTIALS } from '../data/credentials';
+  PORTFOLIO_INITIAL_VISIBLE_COUNT,
+  PORTFOLIO_PROJECTS,
+} from '../data/portfolioProjects';
 import {
   PORTFOLIO_FILTER_CATEGORIES,
   type PortfolioFilterCategory,
@@ -24,10 +20,11 @@ import {
   partitionVisibleCaseStudies,
 } from '../utils/caseStudyFilters';
 import { trackCaseStudyClick, trackCtaClick } from '../utils/tracking';
-import { useBodyScrollLock } from '../utils/bodyScrollLock';
 import { TestimonialsSection } from './TestimonialsSection';
 import { ContactSection } from './ContactSection';
 import { ContactAnnouncementBanner } from './ContactAnnouncementBanner';
+import { CaseStudiesHeroStats } from './CaseStudiesHeroStats';
+import { CaseStudiesPortfolioCta } from './CaseStudiesPortfolioCta';
 
 interface CaseStudiesPageProps {
   onSelectCaseStudy: (caseStudy: CaseStudy) => void;
@@ -65,35 +62,20 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
   const [activeFilter, setActiveFilter] =
     useState<PortfolioFilterCategory>('All Projects');
   const [showAllProjects, setShowAllProjects] = useState(false);
-  const [previewTarget, setPreviewTarget] = useState<{
-    image: CaseStudyImage;
-    project: CaseStudy;
-    position: number;
-  } | null>(null);
 
-  useBodyScrollLock(Boolean(previewTarget));
-
-  useEffect(() => {
-    if (!previewTarget) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setPreviewTarget(null);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [previewTarget]);
-
-  const filteredProjects = filterCaseStudies(CASE_STUDIES, activeFilter);
+  const filteredProjects = filterCaseStudies(PORTFOLIO_PROJECTS, activeFilter);
   const {
     initialProjects,
     additionalProjects,
     remainingCount,
     hasMore,
-  } = partitionVisibleCaseStudies(filteredProjects);
+  } = partitionVisibleCaseStudies(
+    filteredProjects,
+    PORTFOLIO_INITIAL_VISIBLE_COUNT
+  );
 
   const getCategoryCount = (category: PortfolioFilterCategory) =>
-    filterCaseStudies(CASE_STUDIES, category).length;
+    filterCaseStudies(PORTFOLIO_PROJECTS, category).length;
 
   const handleFilterChange = (category: PortfolioFilterCategory) => {
     setActiveFilter(category);
@@ -109,21 +91,6 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
     onSelectCaseStudy(project);
   };
 
-  const heroCredentials = [
-    {
-      value: '$22M+',
-      label: 'Managed Ad Spend',
-    },
-    {
-      value: OFFICIAL_CREDENTIALS.fiverrReviewsShort,
-      label: '5-Star Reviews',
-    },
-    {
-      value: OFFICIAL_CREDENTIALS.upworkJssShort,
-      label: 'Upwork JSS',
-    },
-  ];
-
   const revealInitial = prefersReducedMotion
     ? { opacity: 1, y: 0 }
     : { opacity: 0, y: 16 };
@@ -132,7 +99,7 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
   const renderCaseStudyCard = (project: CaseStudy, renderIndex: number) => {
     const trackingBadge = getTrackingBadge(project);
     const originalPosition =
-      CASE_STUDIES.findIndex((c) => c.id === project.id) + 1;
+      PORTFOLIO_PROJECTS.findIndex((c) => c.id === project.id) + 1;
     const formattedIndex = String(originalPosition).padStart(2, '0');
     const coverSrc =
       project.coverImage?.src ??
@@ -144,26 +111,21 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
         key={project.id}
         data-portfolio-card="true"
         data-project-id={project.id}
-        className="group h-full rounded-[22px] sm:rounded-[26px] bg-white hover:bg-[#FAFAFA] border border-zinc-200/90 hover:border-[#09090B]/40 p-4 sm:p-5 lg:p-6 flex flex-col justify-between transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:hover:-translate-y-1 motion-reduce:transition-none motion-reduce:transform-none shadow-[0_10px_30px_-12px_rgba(9,9,11,0.06)] hover:shadow-[0_24px_48px_-14px_rgba(9,9,11,0.13)]"
+        role="button"
+        tabIndex={0}
+        aria-label={`View case study: ${project.title}`}
+        onClick={() => handleOpenProject(project, originalPosition)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleOpenProject(project, originalPosition);
+          }
+        }}
+        className="group h-full rounded-[20px] sm:rounded-[26px] bg-white hover:bg-[#FAFAFA] border border-zinc-200/90 hover:border-[#09090B]/40 p-3.5 sm:p-5 lg:p-6 flex flex-col justify-between transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:hover:-translate-y-1 motion-reduce:transition-none motion-reduce:transform-none shadow-[0_10px_30px_-12px_rgba(9,9,11,0.06)] hover:shadow-[0_24px_48px_-14px_rgba(9,9,11,0.13)] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#09090B] focus-visible:ring-offset-2 touch-manipulation"
       >
         <div className="flex flex-col flex-1">
-          {/* 1. CAMPAIGN PROOF IMAGE (Consistent 16:10 Ratio + Click-to-Zoom Lightbox) */}
-          <button
-            type="button"
-            onClick={() => {
-              if (project.coverImage) {
-                setPreviewTarget({
-                  image: project.coverImage,
-                  project,
-                  position: originalPosition,
-                });
-              } else {
-                handleOpenProject(project, originalPosition);
-              }
-            }}
-            aria-label={`Preview campaign screenshot: ${project.title}`}
-            className="group/img relative block w-full aspect-[16/10] rounded-[16px] sm:rounded-[18px] overflow-hidden bg-[#0B1644] bg-gradient-to-r from-[#0D2378] via-[#0B1644] to-[#1A1443] border border-zinc-900/10 mb-4 shrink-0 cursor-zoom-in text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#09090B]"
-          >
+          {/* 1. CAMPAIGN PROOF IMAGE (Compact 16:9 on Mobile, 16:10 on sm+) */}
+          <div className="relative block w-full aspect-[16/9] sm:aspect-[16/10] rounded-[14px] sm:rounded-[18px] overflow-hidden bg-[#0B1644] bg-gradient-to-r from-[#0D2378] via-[#0B1644] to-[#1A1443] border border-zinc-900/10 mb-3 sm:mb-4 shrink-0">
             <img
               src={coverSrc}
               alt={coverAlt}
@@ -179,65 +141,59 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
                   project.primaryMetric
                 );
               }}
-              className="block w-full h-full object-contain object-center transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:group-hover/img:scale-[1.02]"
+              className="block w-full h-full object-contain object-center transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:group-hover:scale-[1.02]"
             />
 
             {/* Case Index Badge */}
-            <span className="absolute top-3 right-3 px-2.5 py-0.5 rounded-full bg-[#090B10]/85 backdrop-blur-md border border-white/15 font-mono text-[10px] text-zinc-200 tabular-nums">
+            <span className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 px-2 sm:px-2.5 py-0.5 rounded-full bg-[#090B10]/85 backdrop-blur-md border border-white/15 font-mono text-[10px] text-zinc-200 tabular-nums">
               #{formattedIndex}
             </span>
-
-            {/* Subtle Zoom Affordance */}
-            <span className="absolute bottom-2.5 right-2.5 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#090B10]/85 backdrop-blur-md border border-white/15 font-mono text-[10px] text-white opacity-90 sm:opacity-0 sm:group-hover/img:opacity-100 sm:group-focus-visible/img:opacity-100 transition-opacity duration-200">
-              <Maximize2 className="w-3 h-3 text-emerald-400" />
-              <span>Zoom</span>
-            </span>
-          </button>
+          </div>
 
           {/* 2. CATEGORY & TRACKING METADATA ROW */}
-          <div className="flex items-center justify-between gap-2 mb-3">
-            <div className="flex items-center gap-1.5 min-w-0 text-xs">
-              <span className="font-serif italic text-sm text-zinc-700 truncate">
+          <div className="flex items-center justify-between gap-2 mb-2.5 sm:mb-3 min-w-0">
+            <div className="flex items-center gap-1.5 min-w-0 flex-1 text-xs">
+              <span className="font-serif italic text-[13px] sm:text-sm text-zinc-700 truncate">
                 {project.clientIndustry}
               </span>
-              <span aria-hidden="true" className="text-zinc-300">
+              <span aria-hidden="true" className="text-zinc-300 shrink-0">
                 ·
               </span>
-              <span className="font-mono text-[10.5px] font-medium text-emerald-700 truncate">
+              <span className="font-mono text-[10px] sm:text-[10.5px] font-medium text-emerald-700 truncate">
                 {project.category}
               </span>
             </div>
 
-            <span className="inline-flex items-center gap-1 text-[10px] font-mono text-zinc-500 shrink-0 whitespace-nowrap">
+            <span className="inline-flex items-center gap-1 text-[9.5px] sm:text-[10px] font-mono text-zinc-500 shrink-0 max-w-[46%] sm:max-w-none whitespace-nowrap">
               <img
                 src={trackingBadge.src}
                 alt={trackingBadge.name}
                 width={12}
                 height={12}
-                className="w-3 h-3 object-contain"
+                className="w-3 h-3 object-contain shrink-0"
               />
-              <span>{trackingBadge.name}</span>
+              <span className="truncate">{trackingBadge.name}</span>
             </span>
           </div>
 
           {/* 3. DATA-FIRST VERIFIED METRIC STRIP */}
-          <div className="mb-3.5 rounded-xl bg-[#FAFAFA] group-hover:bg-white border border-zinc-200/80 px-3.5 py-2.5 flex items-center justify-between gap-3 transition-colors duration-300">
+          <div className="mb-2.5 sm:mb-3.5 rounded-xl bg-[#FAFAFA] group-hover:bg-white border border-zinc-200/80 px-3 sm:px-3.5 py-2 sm:py-2.5 flex items-center justify-between gap-2.5 sm:gap-3 transition-colors duration-300">
             <div className="min-w-0">
-              <div className="font-display font-extrabold text-xl sm:text-2xl text-[#09090B] tracking-[-0.025em] leading-none tabular-nums">
+              <div className="font-display font-extrabold text-[1.22rem] sm:text-2xl text-[#09090B] tracking-[-0.025em] leading-none tabular-nums">
                 {project.primaryMetric}
               </div>
-              <div className="mt-1 font-mono text-[10.5px] font-semibold text-emerald-700 truncate">
+              <div className="mt-0.5 sm:mt-1 font-mono text-[10px] sm:text-[10.5px] font-semibold text-emerald-700 truncate">
                 {project.metricLabel}
               </div>
             </div>
 
             {project.secondaryMetric && (
-              <div className="text-right shrink-0 pl-3 border-l border-zinc-200/90">
-                <div className="font-display font-bold text-xs sm:text-sm text-[#09090B] leading-tight tabular-nums">
+              <div className="text-right min-w-0 max-w-[54%] sm:max-w-none sm:shrink-0 pl-2.5 sm:pl-3 border-l border-zinc-200/90">
+                <div className="font-display font-bold text-xs sm:text-sm text-[#09090B] leading-tight tabular-nums truncate">
                   {project.secondaryMetric}
                 </div>
                 {project.secondaryMetricLabel && (
-                  <div className="mt-0.5 font-mono text-[10px] text-zinc-500 leading-tight">
+                  <div className="mt-0.5 font-mono text-[9.5px] sm:text-[10px] text-zinc-500 leading-tight truncate">
                     {project.secondaryMetricLabel}
                   </div>
                 )}
@@ -246,37 +202,36 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
           </div>
 
           {/* 4. PROJECT TITLE */}
-          <h3 className="font-display font-bold text-lg sm:text-[1.18rem] text-[#09090B] tracking-[-0.02em] leading-snug line-clamp-2 sm:min-h-[3.1rem]">
+          <h3 className="font-display font-bold text-[1.02rem] min-[390px]:text-[1.08rem] sm:text-[1.18rem] text-[#09090B] tracking-[-0.02em] leading-[1.28] sm:leading-snug line-clamp-2 sm:min-h-[3.1rem]">
             {project.title}
           </h3>
 
           {/* 5. SHORT DESCRIPTION */}
-          <p className="mt-2 text-xs sm:text-sm text-zinc-600 leading-relaxed line-clamp-3 sm:min-h-[3.9rem]">
+          <p className="mt-1.5 sm:mt-2 text-[12.5px] sm:text-sm text-zinc-600 leading-[1.55] sm:leading-relaxed line-clamp-2 sm:line-clamp-3 sm:min-h-[3.9rem]">
             {project.summary}
           </p>
         </div>
 
         {/* 6. PLATFORM TAGS & VIEW CASE STUDY CTA */}
-        <div className="mt-4 pt-3.5 border-t border-zinc-200/80 flex flex-col gap-3 shrink-0">
+        <div className="mt-3 sm:mt-4 pt-2.5 sm:pt-3.5 border-t border-zinc-200/80 flex flex-col gap-2.5 sm:gap-3 shrink-0">
           <div className="flex flex-wrap items-center gap-1.5 min-w-0">
             {project.platforms.slice(0, 3).map((platform) => (
               <span
                 key={platform}
-                className="px-2 py-0.5 rounded-md bg-zinc-100 border border-zinc-200/80 font-mono text-[10px] font-medium text-zinc-700 whitespace-nowrap"
+                className="px-2 py-0.5 rounded-md bg-zinc-100 border border-zinc-200/80 font-mono text-[10px] font-medium text-zinc-700 whitespace-nowrap max-w-full truncate"
               >
                 {platform}
               </span>
             ))}
           </div>
 
-          <button
-            type="button"
-            onClick={() => handleOpenProject(project, originalPosition)}
-            className="group/btn w-full inline-flex items-center justify-between gap-2 px-3.5 py-2.5 min-h-[40px] rounded-xl bg-[#FAFAFA] hover:bg-[#09090B] border border-zinc-200/90 hover:border-[#09090B] text-xs font-display font-bold text-[#09090B] hover:text-white transition-colors duration-200 cursor-pointer"
+          <div
+            aria-hidden="true"
+            className="w-full inline-flex items-center justify-between gap-2 px-3.5 py-2.5 min-h-[42px] sm:min-h-[40px] rounded-xl bg-[#FAFAFA] group-hover:bg-[#09090B] group-active:bg-[#09090B] group-active:text-white border border-zinc-200/90 group-hover:border-[#09090B] text-xs font-display font-bold text-[#09090B] group-hover:text-white transition-colors duration-200"
           >
             <span>View Case Study</span>
-            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 motion-safe:group-hover/btn:translate-x-0.5" />
-          </button>
+            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 motion-safe:group-hover:translate-x-0.5" />
+          </div>
         </div>
       </article>
     );
@@ -392,59 +347,62 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
                 </span>
               </a>
             </div>
-
-            {/* Redesigned Architectural 3-Stat Credibility Highlight Row */}
-            <div
-              aria-label="Verified credentials summary"
-              data-testid="portfolio-hero-metrics"
-              className="mt-9 sm:mt-11 w-full max-w-xl grid grid-cols-3 gap-4 sm:gap-10"
-            >
-              {heroCredentials.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="flex flex-col items-center text-center"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="w-6 sm:w-8 h-[1.5px] rounded-full bg-white/25 mb-3"
-                  />
-                  <span className="font-display font-bold text-[1.75rem] sm:text-4xl lg:text-[2.65rem] text-white tracking-[-0.035em] leading-none tabular-nums">
-                    {stat.value}
-                  </span>
-                  <span className="mt-2 text-[10.5px] min-[375px]:text-[11px] sm:text-xs font-sans font-medium text-zinc-400 tracking-[0.01em] leading-snug">
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
-            </div>
           </motion.div>
+
+          {/* Redesigned 5-Card Layered Hero Stats Showcase */}
+          <CaseStudiesHeroStats />
         </div>
       </section>
 
       {/* =====================================================================
-          SECTION 02 — PORTFOLIO FILTERS, 3-COLUMN GRID & SEE ALL CTA
+          SECTION 02 — SECTION HEADING, FILTERS, 3×4 GRID & SEE ALL PROJECTS CTA
       ===================================================================== */}
       <section
         id="portfolio-grid"
         aria-labelledby="portfolio-grid-heading"
-        className="relative pt-8 sm:pt-10 lg:pt-11 pb-14 sm:pb-16 lg:pb-20 bg-[#FAFAFA] text-[#09090B] border-b border-zinc-200/80 scroll-mt-20"
+        className="relative pt-10 sm:pt-16 lg:pt-20 pb-16 sm:pb-16 lg:pb-20 bg-[#FAFAFA] text-[#09090B] border-b border-zinc-200/80 scroll-mt-20"
       >
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-dot-matrix-light opacity-65 [mask-image:linear-gradient(to_bottom,#000_20%,transparent_100%)]"
+          className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-dot-matrix-light opacity-65 [mask-image:linear-gradient(to_bottom,#000_20%,transparent_100%)]"
         />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Category Filter Pills (Dynamic Counts, Zero Hardcoded Text) */}
-          <div className="flex flex-col items-center text-center mb-7 sm:mb-9">
-            <h2 id="portfolio-grid-heading" className="sr-only">
-              Case Studies Portfolio Grid
+          {/* Editorial Section Heading Matching Homepage Design System */}
+          <motion.div
+            initial={revealInitial}
+            whileInView={revealAnimate}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{
+              duration: prefersReducedMotion ? 0 : 0.55,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="max-w-3xl mx-auto text-center mb-6 sm:mb-10"
+          >
+            <span className="dm-pill-light mb-3 sm:mb-4">Case Studies</span>
+
+            <h2
+              id="portfolio-grid-heading"
+              className="font-display font-bold text-[1.75rem] min-[390px]:text-[2rem] sm:text-5xl lg:text-[3.5rem] text-[#09090B] tracking-[-0.03em] leading-[1.08]"
+            >
+              Real Campaigns.{' '}
+              <span className="font-serif italic font-normal text-[#09090B] block sm:inline">
+                Measurable Results.
+              </span>
             </h2>
 
+            <p className="mt-3 sm:mt-4 text-[13.5px] sm:text-base text-zinc-600 leading-relaxed max-w-2xl mx-auto">
+              Explore real advertising campaigns, performance data, and the
+              strategies behind measurable business growth.
+            </p>
+          </motion.div>
+
+          {/* Category Filter Pills (Dynamic Counts, Horizontally Scrollable on Mobile) */}
+          <div className="flex flex-col items-center text-center mb-6 sm:mb-10">
             <div
               role="group"
               aria-label="Filter case studies by category"
-              className="w-full flex items-center justify-start md:flex-wrap md:justify-center gap-2 overflow-x-auto md:overflow-x-visible scrollbar-none pb-2 md:pb-0 -mx-1 px-1"
+              className="w-full flex items-center justify-start md:flex-wrap md:justify-center gap-2 overflow-x-auto md:overflow-x-visible scrollbar-none slider-touch-track pb-1.5 md:pb-0 px-0.5"
             >
               {PORTFOLIO_FILTER_CATEGORIES.map((category) => {
                 const isActive = activeFilter === category;
@@ -456,7 +414,7 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
                     type="button"
                     onClick={() => handleFilterChange(category)}
                     aria-pressed={isActive}
-                    className={`shrink-0 inline-flex items-center gap-1.5 rounded-full px-4 sm:px-5 py-2.5 text-xs sm:text-sm font-display font-semibold border transition-all duration-200 cursor-pointer whitespace-nowrap ${
+                    className={`shrink-0 inline-flex items-center gap-1.5 rounded-full px-3.5 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-display font-semibold border transition-all duration-200 cursor-pointer whitespace-nowrap touch-manipulation ${
                       isActive
                         ? 'bg-[#09090B] text-white border-[#09090B] shadow-md'
                         : 'bg-white text-zinc-600 border-zinc-200/90 hover:text-[#09090B] hover:border-zinc-400'
@@ -478,32 +436,28 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
             </div>
           </div>
 
-          {/* Initial Case Studies (3-Col Desktop / 2-Col Tablet / 1-Col Mobile) */}
+          {/* Initial 12 Case Studies (3-Col × 4-Row Desktop / 2-Col Tablet / 1-Col Mobile) */}
           <div
             data-testid="portfolio-case-grid"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-7 items-stretch"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-7 items-stretch"
           >
             {initialProjects.map((project, idx) =>
               renderCaseStudyCard(project, idx)
             )}
           </div>
 
-          {/* Remaining Case Studies Revealed Dynamically by "See All Case Studies" */}
+          {/* Remaining Projects Revealed Dynamically by "See All Projects" */}
           <AnimatePresence initial={false}>
             {showAllProjects && additionalProjects.length > 0 && (
               <motion.div
                 key={`additional-${activeFilter}`}
                 initial={
                   prefersReducedMotion
-                    ? { opacity: 1, height: 'auto', marginTop: 24 }
-                    : { opacity: 0, height: 0, marginTop: 0 }
+                    ? { opacity: 1, height: 'auto' }
+                    : { opacity: 0, height: 0 }
                 }
-                animate={{ opacity: 1, height: 'auto', marginTop: 28 }}
-                exit={
-                  prefersReducedMotion
-                    ? { opacity: 0, height: 0, marginTop: 0 }
-                    : { opacity: 0, height: 0, marginTop: 0 }
-                }
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
                 transition={{
                   duration: prefersReducedMotion ? 0 : 0.45,
                   ease: [0.22, 1, 0.36, 1],
@@ -512,7 +466,7 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
               >
                 <div
                   data-testid="portfolio-additional-grid"
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-7 items-stretch pt-1"
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-7 items-stretch pt-4 sm:pt-6 lg:pt-7"
                 >
                   {additionalProjects.map((project, idx) =>
                     renderCaseStudyCard(project, initialProjects.length + idx)
@@ -522,18 +476,18 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
             )}
           </AnimatePresence>
 
-          {/* Centered Homepage-Style "See All Case Studies" Dynamic Toggle CTA */}
+          {/* Preserved Black Pill CTA: "See All Projects" Expand/Collapse Toggle */}
           {hasMore && (
-            <div className="mt-10 sm:mt-12 flex flex-col items-center justify-center">
+            <div className="mt-8 sm:mt-12 flex flex-col items-center justify-center">
               <button
                 type="button"
                 onClick={() => setShowAllProjects((prev) => !prev)}
                 aria-expanded={showAllProjects}
-                data-testid="see-all-case-studies-cta"
-                className="group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-[#09090B] hover:bg-zinc-800 text-white font-display font-bold text-xs sm:text-sm border border-[#09090B] shadow-[0_14px_34px_-10px_rgba(9,9,11,0.35)] transition-all duration-200 motion-safe:hover:-translate-y-0.5 cursor-pointer"
+                data-testid="see-all-projects-cta"
+                className="group inline-flex items-center justify-center gap-2.5 sm:gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-[#09090B] hover:bg-zinc-800 text-white font-display font-bold text-xs sm:text-sm border border-[#09090B] shadow-[0_14px_34px_-10px_rgba(9,9,11,0.35)] transition-all duration-200 motion-safe:hover:-translate-y-0.5 cursor-pointer touch-manipulation"
               >
                 <span>
-                  {showAllProjects ? 'Show Less' : 'See All Case Studies'}
+                  {showAllProjects ? 'Show Less' : 'See All Projects'}
                 </span>
                 <span className="px-2 py-0.5 rounded-full bg-white/15 font-mono text-[11px] text-emerald-300 tabular-nums">
                   {showAllProjects
@@ -549,13 +503,8 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
             </div>
           )}
 
-          {/* Transparent Performance Disclaimer (Consistent with Homepage) */}
-          <p className="mt-8 sm:mt-10 text-center text-xs text-zinc-500 max-w-2xl mx-auto leading-relaxed">
-            All screenshots and metrics come from documented historical client
-            campaigns. Revenue figures represent gross attributed store sales,
-            not net profit, and past performance does not guarantee future
-            outcomes.
-          </p>
+          {/* Integrated Portfolio Conversion CTA (Inside Case Studies Section) */}
+          <CaseStudiesPortfolioCta onOpenBooking={onOpenBooking} />
         </div>
       </section>
 
@@ -575,68 +524,6 @@ export const CaseStudiesPage: React.FC<CaseStudiesPageProps> = ({
         initialService={initialService}
       />
       <ContactAnnouncementBanner />
-
-      {/* =====================================================================
-          FULL-SCREEN CAMPAIGN SCREENSHOT LIGHTBOX PREVIEW
-      ===================================================================== */}
-      {previewTarget &&
-        typeof document !== 'undefined' &&
-        createPortal(
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-label={`Screenshot preview: ${previewTarget.project.title}`}
-            className="fixed inset-0 z-[100000] bg-black/90 backdrop-blur-lg flex items-center justify-center p-3 sm:p-6"
-            onClick={() => setPreviewTarget(null)}
-          >
-            <div
-              className="relative max-w-5xl w-full"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-                <span className="font-mono text-xs text-zinc-300 truncate max-w-[70%]">
-                  {previewTarget.project.title}
-                </span>
-
-                <div className="flex items-center gap-2 ml-auto">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const { project, position } = previewTarget;
-                      setPreviewTarget(null);
-                      handleOpenProject(project, position);
-                    }}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white hover:bg-zinc-100 text-[#09090B] text-xs font-display font-bold transition-colors cursor-pointer"
-                  >
-                    <span>View Case Study</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setPreviewTarget(null)}
-                    aria-label="Close image preview"
-                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-mono transition-colors cursor-pointer"
-                  >
-                    <span>Close</span>
-                    <X className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
-
-              <img
-                src={previewTarget.image.src}
-                alt={previewTarget.image.alt}
-                className="w-full h-auto max-h-[78dvh] object-contain rounded-2xl border border-white/15 bg-[#090D16]"
-              />
-
-              <p className="mt-3 text-center text-xs font-mono text-zinc-300 px-2">
-                {previewTarget.image.caption}
-              </p>
-            </div>
-          </div>,
-          document.body
-        )}
     </div>
   );
 };

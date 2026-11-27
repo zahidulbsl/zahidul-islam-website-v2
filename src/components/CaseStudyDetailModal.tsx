@@ -6,6 +6,7 @@ import {
   type CaseStudy,
   type CaseStudyImage,
 } from '../data/caseStudies';
+import { PORTFOLIO_PROJECTS } from '../data/portfolioProjects';
 import { trackCtaClick } from '../utils/tracking';
 import {
   X,
@@ -75,10 +76,17 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
     }
   }, [caseStudy?.id]);
 
-  const currentIndex = caseStudy
+  const baseIndex = caseStudy
     ? CASE_STUDIES.findIndex((project) => project.id === caseStudy.id)
     : -1;
-  const totalCount = CASE_STUDIES.length;
+  const activeCollection =
+    baseIndex >= 0 ? CASE_STUDIES : PORTFOLIO_PROJECTS;
+  const currentIndex = caseStudy
+    ? baseIndex >= 0
+      ? baseIndex
+      : PORTFOLIO_PROJECTS.findIndex((project) => project.id === caseStudy.id)
+    : -1;
+  const totalCount = activeCollection.length;
 
   const rawImages: CaseStudyImage[] = caseStudy
     ? [caseStudy.coverImage, ...caseStudy.galleryImages].filter(
@@ -97,15 +105,45 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
 
   const handleNextProject = () => {
     if (currentIndex < 0 || !onSelectCaseStudy || totalCount === 0) return;
+    if (modalBodyRef.current) {
+      modalBodyRef.current.scrollTop = 0;
+    }
+    if (visualSliderRef.current) {
+      visualSliderRef.current.scrollLeft = 0;
+    }
     const nextIndex = (currentIndex + 1) % totalCount;
-    onSelectCaseStudy(CASE_STUDIES[nextIndex]);
+    onSelectCaseStudy(activeCollection[nextIndex]);
   };
 
   const handlePrevProject = () => {
     if (currentIndex < 0 || !onSelectCaseStudy || totalCount === 0) return;
+    if (modalBodyRef.current) {
+      modalBodyRef.current.scrollTop = 0;
+    }
+    if (visualSliderRef.current) {
+      visualSliderRef.current.scrollLeft = 0;
+    }
     const prevIndex = (currentIndex - 1 + totalCount) % totalCount;
-    onSelectCaseStudy(CASE_STUDIES[prevIndex]);
+    onSelectCaseStudy(activeCollection[prevIndex]);
   };
+
+  // Preload adjacent case study cover images so Next/Prev switches without image decode flash
+  useEffect(() => {
+    if (currentIndex < 0 || totalCount < 2 || typeof window === 'undefined') {
+      return;
+    }
+    const adjacent = [
+      activeCollection[(currentIndex + 1) % totalCount],
+      activeCollection[(currentIndex - 1 + totalCount) % totalCount],
+    ];
+    adjacent.forEach((project) => {
+      const src = project?.coverImage?.src;
+      if (src) {
+        const preloader = new window.Image();
+        preloader.src = src;
+      }
+    });
+  }, [currentIndex, totalCount, activeCollection]);
 
   const handleVisualScroll = () => {
     if (!visualSliderRef.current) return;
@@ -196,9 +234,8 @@ export const CaseStudyDetailModal: React.FC<CaseStudyDetailModalProps> = ({
           aria-label="Close case study modal backdrop"
         />
 
-        {/* Editorial Case Study Modal Container */}
+        {/* Editorial Case Study Modal Container (kept mounted across Next/Prev to prevent blink/flicker) */}
         <motion.div
-          key={caseStudy.id}
           initial={{ opacity: 0, scale: 0.97, y: 12 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}

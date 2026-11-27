@@ -29,7 +29,7 @@ interface NavbarProps {
 }
 
 const dockLinksLeft = [
-  { label: 'Results', href: '#case-studies' },
+  { label: 'Home', href: '#home' },
   { label: 'Services', href: '#services' },
 ];
 
@@ -391,18 +391,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="pointer-events-none absolute inset-x-3 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-emerald-400/75 to-transparent"
             />
 
-            {/* Left Links: Results, Services */}
+            {/* Left Links: Home, Services */}
             {dockLinksLeft.map((link) => {
               const isActive = activeSection === link.href;
-              const resolvedHref =
-                link.href === '#case-studies' && currentRoute !== 'home'
-                  ? '/#case-studies'
-                  : link.href;
               return (
                 <a
                   key={link.href}
-                  href={resolvedHref}
-                  onClick={(e) => handleNavigate(e, resolvedHref)}
+                  href={link.href}
+                  onClick={(e) => handleNavigate(e, link.href)}
                   className={`px-1.5 min-[375px]:px-2.5 sm:px-3.5 py-2 rounded-xl text-[11px] min-[375px]:text-xs sm:text-[13px] font-display font-medium transition-colors whitespace-nowrap ${
                     isActive
                       ? 'text-white bg-white/[0.08]'
